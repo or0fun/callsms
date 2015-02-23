@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/setting_sms"
+            android:layout="@layout/custom_preference_category" >
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/SETTING_SMS_POPUP"
+            android:layout="@layout/custom_preference"
+            android:summary="@string/setting_sms_popup_summary"
+            android:switchTextOff="@string/setting_close"
+            android:switchTextOn="@string/setting_open"
+            android:title="@string/setting_sms_popup" >
+        </SwitchPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_call"
+            android:layout="@layout/custom_preference_category" >
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/SETTING_NEW_CALL_POPUP"
+            android:layout="@layout/custom_preference"
+            android:summary="@string/setting_new_call_popup_summary"
+            android:switchTextOff="@string/setting_close"
+            android:switchTextOn="@string/setting_open"
+            android:title="@string/setting_new_call_popup" >
+        </SwitchPreference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/SETTING_MISSED_CALL_POPUP"
+            android:layout="@layout/custom_preference"
+            android:summary="@string/setting_missed_call_popup_summary"
+            android:switchTextOff="@string/setting_close"
+            android:switchTextOn="@string/setting_open"
+            android:title="@string/setting_missed_call_popup" >
+        </SwitchPreference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/SETTING_OUTGOING_CALL_POPUP"
+            android:layout="@layout/custom_preference"
+            android:summary="@string/setting_outgoing_call_popup_summary"
+            android:switchTextOff="@string/setting_close"
+            android:switchTextOn="@string/setting_open"
+            android:title="@string/setting_outgoing_call_popup" >
+        </SwitchPreference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/SETTING_BROADCAST_WHEN_WIREDHEADSETON"
+            android:layout="@layout/custom_preference"
+            android:summary="@string/setting_broadcast_when_wiredheadseton_summary"
+            android:switchTextOff="@string/setting_close"
+            android:switchTextOn="@string/setting_open"
+            android:title="@string/setting_broadcast_when_wiredheadseton" >
+        </SwitchPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

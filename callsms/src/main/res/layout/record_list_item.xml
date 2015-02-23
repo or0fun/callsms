@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/record_list_item_height"
+    android:background="@color/call_record_list_background"
+    android:gravity="center_vertical|left"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/margin"
+    android:paddingRight="@dimen/margin" >
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/tipText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:textSize="@dimen/titleTextSize" />
+
+    <TextView
+        android:id="@+id/duration"
+        style="@style/tipText"
+        android:gravity="center_vertical|left"
+        android:paddingRight="@dimen/margin"
+        android:textColor="@color/hint"
+        android:textSize="@dimen/subTextSize" />
+
+    <!-- 通话类型 -->
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/incoming_type" />
+
+</LinearLayout>

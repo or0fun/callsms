@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comment_anonymous">匿名吐槽</string>
+    <string name="comment_title">我要吐槽</string>
+    
+    <string name="comment_comment">吐槽</string>
+    <string name="input_comments">输入你的吐槽，其他用户接到该号码来电就能看到您对它的吐槽啦，匿名哦～想想都好玩</string>
+    <string name="comment_number">该号码已有吐槽</string>
+    
+    <string name="comment_thank">您的吐槽已成功提交。</string>
+</resources>

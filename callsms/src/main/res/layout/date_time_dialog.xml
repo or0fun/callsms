@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/select_date"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <DatePicker
+            android:id="@+id/date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:singleLine="true"
+            android:text="@string/select_time"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/back"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/back" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <Button
+            android:id="@+id/confirm"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/confirm" />
+    </LinearLayout>
+
+</LinearLayout>

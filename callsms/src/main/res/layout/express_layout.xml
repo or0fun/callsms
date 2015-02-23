@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/companySpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/spinner_height"
+        android:layout_margin="@dimen/smallmargin" >
+    </Spinner>
+
+    <EditText
+        android:id="@+id/search"
+        style="@style/singleLineEdit"
+        android:layout_margin="@dimen/smallmargin"
+        android:hint="@string/express_input"
+        android:inputType="number" >
+    </EditText>
+
+    <Button
+        android:id="@+id/trackBtn"
+        style="@style/mainButton"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/smallmargin"
+        android:text="@string/express_track" />
+    <!-- 快递记录 -->
+
+    <ListView
+        android:id="@+id/queue"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/divider"
+        android:dividerHeight="1px"
+        android:listSelector="@drawable/list_selector" />
+
+    <Button
+        android:id="@+id/back"
+        style="@style/mainButton"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/smallmargin"
+        android:text="@string/back" />
+
+</LinearLayout>

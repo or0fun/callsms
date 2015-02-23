@@ -1,0 +1,163 @@
+package com.fang.number;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.fang.base.BaseFragment;
+import com.fang.business.BusinessHelper;
+import com.fang.callsms.R;
+import com.fang.express.ExpressListActivity;
+import com.fang.logs.LogCode;
+import com.fang.logs.LogOperate;
+import com.fang.util.DebugLog;
+import com.fang.util.MessageWhat;
+import com.fang.util.Patterns;
+import com.fang.util.StringUtil;
+import com.fang.util.Util;
+
+public class NumberFragment extends BaseFragment implements OnClickListener {
+
+	private final String TAG = "NumberFragment";
+	//显示结果
+	TextView mResultTextView;
+	//搜索框
+	EditText mSearchEditView;
+	//搜索按钮
+	Button mSearchBtn;
+	//订餐
+	LinearLayout mFoodListLayout;
+	//订酒店
+	LinearLayout mHouseListLayout;
+	//快递
+	LinearLayout mExpressListLayout;
+	//客服
+	LinearLayout mServiceListLayout;
+	//快递追踪
+	Button mSearchExpressBtn;
+	//缓存号码
+	String mNumberString = "";
+	//缓存信息
+	String mNumberInfoString = "";
+	//粘贴板里的数据
+	String mPasteNumberString;
+
+	protected Handler myHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case MessageWhat.NET_REQUEST_NUMBER:
+				if (null != msg.obj) {
+					mNumberInfoString = (String) msg.obj;
+					mResultTextView.setText(mNumberInfoString);
+				}
+				break;
+			default:
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
+	
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.number_layout, container,
+				false);
+		mResultTextView = (TextView) rootView.findViewById(R.id.result);
+		mResultTextView.setText(mNumberInfoString);
+		mSearchBtn = (Button) rootView.findViewById(R.id.searchBtn);
+		mSearchBtn.setOnClickListener(this);
+		mSearchEditView = (EditText) rootView.findViewById(R.id.search);
+		mSearchEditView.setOnKeyListener(new View.OnKeyListener() {
+		    @Override
+		    public boolean onKey(View v, int keyCode, KeyEvent event) {
+		        if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+					searchBtnClick();
+				}
+		        return false;
+		    }
+		});
+		
+		mFoodListLayout = (LinearLayout) rootView.findViewById(R.id.foodlistBtn);
+		mFoodListLayout.setOnClickListener(this);
+		mHouseListLayout = (LinearLayout) rootView.findViewById(R.id.houselistBtn);
+		mHouseListLayout.setOnClickListener(this);
+		mExpressListLayout = (LinearLayout) rootView.findViewById(R.id.expresslistBtn);
+		mExpressListLayout.setOnClickListener(this);
+		mServiceListLayout = (LinearLayout) rootView.findViewById(R.id.servicelistBtn);
+		mServiceListLayout.setOnClickListener(this);
+		
+		mSearchExpressBtn = (Button) rootView.findViewById(R.id.searchExpressBtn);
+		mSearchExpressBtn.setOnClickListener(this);
+		
+		return rootView;
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		DebugLog.d(TAG, "onResume");
+		String str = Util.paste(mContext);
+		if (str != null && str.matches(Patterns.NUMBER_PATTERN) && !str.equals(mPasteNumberString)) {
+			mSearchEditView.setText(str);
+			mPasteNumberString = str;
+			searchBtnClick();
+			
+		}
+	}
+
+	@Override
+	public boolean onBackPressed() {
+
+		return super.onBackPressed();
+	}
+
+
+	@Override
+	public void onClick(View view) {
+		if (view == mFoodListLayout) {
+			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_FOOD));
+		}else if (view == mHouseListLayout) {
+			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_HOUSE));
+		}else if (view == mExpressListLayout) {
+			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_EXPRESS));
+		}else if (view == mServiceListLayout) {
+			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_SERVICE));
+		}else if (view == mSearchBtn) {
+			searchBtnClick();
+		}else if (view == mSearchExpressBtn) {
+			mContext.startActivity(new Intent(mContext, ExpressListActivity.class));
+		}
+	}
+	
+	/**
+	 *  搜索号码
+	 */
+	protected void searchBtnClick() {
+		String str = mSearchEditView.getText().toString();
+		if (!str.equals(mNumberString) || StringUtil.isEmpty(mNumberInfoString)) {
+			mResultTextView.setText(mContext.getString(R.string.number_seaching));
+			mNumberString = String.format("%s", str);
+			BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
+		}
+		//日志
+		LogOperate.updateLog(mContext, LogCode.SEARCH_NUMBER);
+	}
+}

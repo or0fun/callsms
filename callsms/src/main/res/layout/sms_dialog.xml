@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/smallmargin"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/logo"
+            android:layout_width="@dimen/dialg_icon_width"
+            android:layout_height="@dimen/dialg_icon_height"
+            android:layout_marginLeft="@dimen/margin"
+            android:background="@drawable/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/sender"
+                style="@style/titleText"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/info"
+                style="@style/subText"
+                android:gravity="center_horizontal"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dialog_icon_width"
+            android:layout_height="@dimen/dialog_icon_width"
+            android:src="@drawable/sms" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/subbuttonHeight"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/copy"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/subbuttonHeight"
+            android:layout_weight="1"
+            android:text="@string/copyNumber" />
+
+        <View
+            style="@style/vsplitViewWhite"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/add"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/subbuttonHeight"
+            android:layout_weight="1"
+            android:text="@string/add" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:maxHeight="400dp"
+        android:minLines="6"
+        android:paddingBottom="@dimen/topmargin"
+        android:paddingLeft="@dimen/leftmargin"
+        android:paddingRight="@dimen/leftmargin"
+        android:paddingTop="@dimen/topmargin"
+        android:textColor="@color/body" >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/subbuttonHeight"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/delete"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/subbuttonHeight"
+            android:layout_weight="1"
+            android:text="@string/delete" />
+
+        <View
+            style="@style/vsplitViewWhite"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/broadcast"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/subbuttonHeight"
+            android:layout_weight="1"
+            android:text="@string/broadcast" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/call"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/call" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <Button
+            android:id="@+id/close"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/close" />
+    </LinearLayout>
+
+    <View style="@style/hsplitViewWhite" />
+
+    <!-- 回复 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/content"
+            style="@style/singleLineEdit"
+            android:hint="@string/sms_input_content"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/smallmargin"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/reply"
+            style="@style/mainButton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:text="@string/reply" />
+    </LinearLayout>
+
+</LinearLayout>

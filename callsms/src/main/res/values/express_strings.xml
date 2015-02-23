@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="express_input">输入快递单号</string>
+    <string name="express_track">追踪</string>
+    <string name="express_tracking">正在查询…</string>
+    <string name="express_number_tip">请填写快递单号</string>
+    <string name="express_company_tip">请选择快递公司</string>
+</resources>

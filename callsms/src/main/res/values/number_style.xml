@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- 号码信息 -->
+    <style name="number_info" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/titleTextSize</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

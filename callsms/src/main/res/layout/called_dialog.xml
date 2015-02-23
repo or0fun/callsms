@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <!-- LOGO -->
+
+        <ImageButton
+            android:id="@+id/logo"
+            android:layout_width="@dimen/dialg_icon_width"
+            android:layout_height="@dimen/dialg_icon_height"
+            android:layout_marginLeft="@dimen/margin"
+            android:background="@drawable/ic_launcher" />
+
+        <!-- 中间内容 -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/smallmargin"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <!-- 电话号码或姓名 -->
+
+            <TextView
+                android:id="@+id/sender"
+                style="@style/titleText"
+                android:ellipsize="marquee"
+                android:textColor="@color/white" />
+
+            <!-- 标记信息 来自网络 -->
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/info"
+                style="@style/subText"
+                android:textColor="@color/white" />
+
+            <!-- 次数统计 -->
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/record"
+                style="@style/subText"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:maxHeight="@dimen/contact_photo_height"
+                android:maxWidth="@dimen/contact_photo_width" />
+
+            <TextView
+                android:id="@+id/tip"
+                style="@style/tipText"
+                android:text="@string/record_missed"
+                android:textColor="@color/missed"
+                android:textSize="@dimen/callTypeTextSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/copy"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:text="@string/copyNumber" />
+
+        <View
+            style="@style/vsplitViewWhite"
+            android:layout_height="15dp" />
+
+        <Button
+            android:id="@+id/add"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:text="@string/add" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/recordlist"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/record_list_height"
+        android:background="@color/call_record_list_background"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/divider"
+        android:dividerHeight="1px" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/reply"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/replyMsg" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <Button
+            android:id="@+id/call"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/call" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <Button
+            android:id="@+id/close"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/close" />
+    </LinearLayout>
+
+</LinearLayout>

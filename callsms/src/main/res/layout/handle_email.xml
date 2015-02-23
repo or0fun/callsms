@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_weight="1"
+        android:background="@color/background"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tip"
+                style="@style/titleText"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <View style="@style/hsplitView" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/email"
+                style="@style/mainButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/email" />
+
+            <View style="@style/vsplitView" />
+
+            <Button
+                android:id="@+id/copy"
+                style="@style/mainButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/copy" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/hsplitView" />
+
+    <Button
+        android:id="@+id/cancel"
+        style="@style/mainButton"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:text="@string/cancel" />
+
+</LinearLayout>

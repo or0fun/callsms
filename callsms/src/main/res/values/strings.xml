@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">知号码</string>
+    <string name="apk_name">we.apk</string>
+    <string name="action_settings">Settings</string>
+    <string name="company">V2.1  白湾路工作室</string>
+    
+    <string name="title_bar">知号码</string>
+    <string name="title_bar_call">通话记录</string>
+    <string name="title_bar_sms">定时短信</string>
+    <string name="title_bar_contact">个性通讯录</string>
+    <string name="title_bar_number">号码通</string>
+    <string name="title_bar_setting">设置</string>
+    <string name="title_bar_sms_queue">定时短信列表</string>
+    
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="back">返回</string>
+    
+    <string name="qq_group">344944406</string>
+    
+    <string name="qq">官方QQ群 344944406 (点击复制)</string>
+    
+    <string name="prompt">提示</string>
+    <string name="exit_app">你确定要退出应用吗?</string>
+    
+    <!-- 加载中 -->
+    <string name="loading">加载中…</string>
+    <string name="noMoreData">没有更多数据。</string>
+    
+    <!-- 短信弹窗 -->
+    <string name="close">关闭</string>
+    <string name="reply">回复</string>
+    <string name="call">拨打</string>
+    
+    <string name="copied">已复制</string>
+    <string name="email">发送邮件</string>
+    <string name="open">打开</string>
+    <string name="copy">复制</string>
+    <string name="copyNumber">复制号码</string>
+    <string name="add">添加为联系人</string>
+    <string name="copyName">复制姓名</string>
+    
+    <string name="delete">删除</string>
+    <string name="broadcast">播报</string>
+    <string name="stop_broadcast">停止播报</string>
+
+    <!-- 主按钮 -->
+    <drawable name="main_normal">@color/background</drawable>
+    <drawable name="main_pressed">#ff1884DF</drawable>
+    <!-- 子按钮 -->
+    <drawable name="sub_normal">#ff463265</drawable>
+    <drawable name="sub_pressed">#aa463265</drawable>
+    
+    <!-- 来电弹窗 -->
+    <string name="hangup">挂断</string>
+    <string name="answer">接听</string>
+    <string name="incoming">新来电</string>
+    <string name="outgoing">去电</string>
+    <string name="missed">未接来电</string>
+    <string name="replyMsg">回复短信</string>
+    <string name="recall">回拨</string>
+    <string name="getting_info">正在获取号码信息…</string>
+    <string name="last_record">上次通话：</string>
+    
+    <!-- 通话记录弹窗 -->
+    <string name="record_incoming">呼入</string>
+    <string name="record_outgoing">呼出</string>
+    <string name="record_missed">未接</string>
+    <string name="record_idle">挂断</string>
+    <string name="record_all">全部</string>
+    
+    <!-- 提示语 -->
+    <string name="delete_success">删除成功</string>
+    <string name="delete_tip">确定删除吗?</string>
+    <string name="todelete">删除</string>
+    <string name="open_network_to_recognise_number">开启网络，就可以识别号码。</string>
+    <string name="open_network_to_recognise_express">开启网络，就可以查询快递。</string>
+    <string name="open_network">请先开启网络。</string>
+    
+    <!-- main -->
+    <string name="setting">设置</string>
+    <string name="setting_sms">短信设置</string>
+    <string name="setting_sms_popup">新短信弹窗提醒</string>
+    <string name="setting_sms_popup_summary">方便处理来信号码和内容</string>
+    <string name="setting_call">电话设置</string>
+    <string name="setting_new_call_popup">来电弹窗提醒</string>
+    <string name="setting_new_call_popup_summary">显示来电归属地和来电类型</string>
+    <string name="setting_missed_call_popup">未接来电弹窗提醒</string>
+    <string name="setting_missed_call_popup_summary">方便了解和处理未接来电</string>
+    <string name="setting_outgoing_call_popup">拨出电话弹窗提醒</string>
+    <string name="setting_outgoing_call_popup_summary">显示拨出接入次数</string>
+    <string name="setting_broadcast_when_wiredheadseton">耳机插入时，开启播报</string>
+    <string name="setting_broadcast_when_wiredheadseton_summary">在插入耳机时，来电来信自动播报</string>
+    <string name="setting_express_track">后台自动追踪快递状态</string>
+    <string name="setting_express_track_summary">自动追踪快递单号状态，有变化时通知栏通知</string>
+    
+    <string name="setting_open">已开启</string>
+    <string name="setting_close">已关闭</string>
+    <string name="setting_call_manager">电话</string>
+    <string name="setting_sms_manager">短信</string>
+    
+    <!-- 设置项 -->
+    <string name="SENT_SMS_LAST_TIME">SENT_SMS_LAST_TIME</string>
+    <string name="SETTING_SMS_POPUP">SETTING_SMS_POPUP</string>
+    <string name="SETTING_NEW_CALL_POPUP">SETTING_NEW_CALL_POPUP</string>
+    <string name="SETTING_MISSED_CALL_POPUP">SETTING_MISSED_CALL_POPUP</string>
+    <string name="SETTING_OUTGOING_CALL_POPUP">SETTING_OUTGOING_CALL_POPUP</string>
+    <string name="SETTING_BROADCAST_WHEN_WIREDHEADSETON">SETTING_BROADCAST_WHEN_WIREDHEADSETON</string>
+    <string name="SETTING_EXPRESS_TRACK">SETTING_EXPRESS_TRACK</string>
+    
+    <!-- 短信页面 -->
+    <string name="sms_contactSelectedTip">已选择%d个联系人</string>
+    <string name="sms_selectContact">选择联系人</string>
+    <string name="sms_search">查找联系人</string>
+    <string name="sms_receiver">收件人</string>
+    <string name="sms_content">短信内容</string>
+    <string name="sms_send">发送</string>
+    <string name="sms_sendTime">发送时间</string>
+    <string name="sms_selectSendTime">点击选择发送时间， 默认立即发送</string>
+    <string name="no_sms_queue">目前没有短信定时发送。</string>
+    <string name="sms_into_queue">已送入发送队列。</string>
+    <string name="sms_empty_content_tip">请输入短信内容。</string>
+    <string name="sms_empty_contact_tip">请选择联系人。</string>
+    <string name="sms_input_content">输入文本信息</string>
+    
+    <!-- 选择日期时间 -->
+    <string name="select_date">请选择日期</string>
+    <string name="select_time">请选择时间</string>
+    <string name="select_date_time">请选择发送时间</string>
+    
+    <!-- 版本更新 -->
+	<string name="app_update">应用更新</string>
+	<string name="update">更新</string>
+	<string name="waiting">请稍候…</string>
+	<string name="getting_size">正在获取文件大小…</string>
+	<string name="download_in_background">后台下载</string>
+	<string name="cancel_download">取消</string>
+	<string name="downloading">正在下载</string>
+	<string name="findnewversion">发现新版本</string>
+	<string name="new_content">更新内容:</string>
+	<string name="is_pdate">是否更新?</string>
+	<string name="no_update">暂不更新</string>
+	<string name="confirm_exit">确定退出吗？</string>
+	<string name="exit">退出</string>
+	<string name="download_http_error">更新失败。请直接去豌豆荚应用商店下载</string>
+	<string name="download_sdcard_error">SD卡不可用，无法更新下载。</string>
+	<string name="download_timeout_error">网络连接超时。</string>
+
+	<!-- 通讯录 -->
+	<string name="contact_last_record">最近通话：</string>
+	<string name="contact_no_record">该号码无通话记录</string>
+	<string name="contact_times">通话总次数：</string>
+    <string name="contact_by_sortkey">按姓名排序</string>
+    <string name="contact_by_times">按通话次数排序</string>
+	<!-- ad -->
+	<string name="hot_app">不要点我</string>
+    <string name="ads">你可能喜欢的应用</string>
+	<!-- 播报 -->
+	<string name="sms_broadcast_content">你有短信来自%1$s,内容是：%2$s</string>
+	<string name="call_broadcast_content">你有电话来自%1$s, %2$s</string>
+	<!-- 反馈 -->
+    <string name="feedback">反馈意见</string>
+    <string name="feedback_contact">QQ或邮箱,方便我们跟您沟通</string>
+    <string name="submit">提交</string>
+    <string name="input_feedback">欢迎反馈意见</string>
+    <string name="please_input_feedback">请输入反馈意见</string>
+    <string name="please_input_contact">请输入联系方式(选填)</string>
+    <string name="thank_feedback">已提交，谢谢反馈</string>
+    
+    <!-- 创建快捷方式 -->
+    <string name="create_short">创建桌面图标</string>
+    <string name="create_short_desc">创建桌面图标，使您更快捷地实用知号码，查电话查快递！</string>
+	<!-- 反馈 -->
+    <string name="checkupdate">检查更新</string>
+    <!-- 创建快捷方式 -->
+    <string name="open_float">开启悬浮窗</string>
+    <string name="open_float_desc">开启悬浮窗，才能使您更方便处理来电来信。</string>
+	
+</resources>

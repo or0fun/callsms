@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 号码通 -->
+<resources>
+    <string name="number_unknow">未知号码</string>
+    <string name="number_search">查找号码</string>
+    <string name="number_searchBtn">搜索</string>
+    <string name="number_seaching">正在查询…</string>
+    <string name="number_common">常用服务号码</string>
+    <string name="number_house">订酒店</string>
+    <string name="number_meal">订餐</string>
+    <string name="number_express">找快递</string>
+    <string name="number_service">找客服</string>
+    <string name="number_searchExpress">【特色功能】快递追踪</string>
+</resources>

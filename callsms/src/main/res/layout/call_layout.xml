@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 标题栏 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/title_backgound"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_width"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_margin="@dimen/smallmargin"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingTop="1dip"
+            android:text="@string/title_bar_call"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+    <!-- 电话记录 -->
+
+    <ListView
+        android:id="@+id/callRecord"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/divider"
+        android:dividerHeight="1px"
+        android:listSelector="@drawable/list_selector" >
+    </ListView>
+
+    <!-- 分类 -->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/byAll"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/record_all" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <ImageButton
+            android:id="@+id/byOutgoing"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/outgoing_type"
+            android:text="@string/record_outgoing" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <ImageButton
+            android:id="@+id/byIncoming"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/incoming_type"
+            android:text="@string/record_incoming" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <ImageButton
+            android:id="@+id/byMissed"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/missed_type"
+            android:text="@string/record_missed" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical" >
+
+    <!-- 标题栏 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/title_backgound"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_width"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_margin="@dimen/smallmargin"
+            android:gravity="bottom"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingTop="1dip"
+            android:text="@string/title_bar"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/selectedAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="36dip"
+            android:focusable="false" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/search"
+        style="@style/singleLineEdit"
+        android:hint="@string/sms_search" >
+    </EditText>
+
+    <ListView
+        android:id="@+id/contact_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/divider"
+        android:dividerHeight="1px"
+        android:listSelector="@drawable/list_selector" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/back"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/back" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <Button
+            android:id="@+id/confirm"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/confirm" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res/com.fang.callsms"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical"
+    android:padding="@dimen/margin" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_SMS_POPUP"
+            custom:summary="@string/setting_sms_popup_summary"
+            custom:title="@string/setting_sms_popup" >
+        </com.fang.controls.CustomSwitchPreference>
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_NEW_CALL_POPUP"
+            custom:summary="@string/setting_new_call_popup_summary"
+            custom:title="@string/setting_new_call_popup" >
+        </com.fang.controls.CustomSwitchPreference>
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_MISSED_CALL_POPUP"
+            custom:summary="@string/setting_missed_call_popup_summary"
+            custom:title="@string/setting_missed_call_popup" >
+        </com.fang.controls.CustomSwitchPreference>
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_OUTGOING_CALL_POPUP"
+            custom:summary="@string/setting_outgoing_call_popup_summary"
+            custom:title="@string/setting_outgoing_call_popup" >
+        </com.fang.controls.CustomSwitchPreference>
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_BROADCAST_WHEN_WIREDHEADSETON"
+            custom:summary="@string/setting_broadcast_when_wiredheadseton_summary"
+            custom:title="@string/setting_broadcast_when_wiredheadseton" >
+        </com.fang.controls.CustomSwitchPreference>
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_EXPRESS_TRACK"
+            custom:summary="@string/setting_express_track_summary"
+            custom:title="@string/setting_express_track" >
+        </com.fang.controls.CustomSwitchPreference>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/feedback"
+        style="@style/mainButton"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/smallmargin"
+        android:text="@string/feedback" />
+
+    <TextView
+        style="@style/subText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/hint"
+        android:text="@string/company" />
+    <!--
+         <Button
+        android:id="@+id/ads"
+        style="@style/mainButton"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/smallmargin"
+        android:text="@string/ads" />
+    -->
+
+</LinearLayout>

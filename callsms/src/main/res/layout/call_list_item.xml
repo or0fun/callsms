@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/margin"
+    android:paddingRight="@dimen/margin" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <!-- 通话类型 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/incoming_type" />
+
+            <TextView
+                android:id="@+id/tip"
+                style="@style/tipText"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/callTypeTextSize" />
+        </LinearLayout>
+
+        <View style="@style/vsplitView" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin"
+            android:layout_marginRight="@dimen/margin"
+            android:gravity="left|center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <com.fang.controls.AlwaysMarqueeTextView
+                    android:id="@+id/name"
+                    style="@style/tipText"
+                    android:textSize="@dimen/titleTextSize" />
+
+                <com.fang.controls.AlwaysMarqueeTextView
+                    android:id="@+id/count"
+                    style="@style/tipText"
+                    android:textColor="@color/hint"
+                    android:textSize="@dimen/subTextSize" />
+            </LinearLayout>
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/number"
+                style="@style/tipText"
+                android:gravity="left"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/subTextSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 通话时间 通话时长 -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/margin"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/tipText"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/subTextSize" />
+
+        <TextView
+            android:id="@+id/duration"
+            style="@style/tipText"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/subTextSize" />
+    </LinearLayout>
+
+    <View style="@style/vsplitView" />
+
+    <Button
+        android:id="@+id/commentBtn"
+        style="@style/mainButton"
+        android:layout_width="@dimen/comment_button_width"
+        android:layout_height="@dimen/comment_button_height"
+        android:layout_marginBottom="@dimen/smallmargin"
+        android:layout_marginLeft="@dimen/smallmargin"
+        android:layout_marginTop="@dimen/smallmargin"
+        android:text="@string/comment_comment"
+        android:textSize="@dimen/subTextSize" />
+
+</LinearLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:background="@color/incoming_dialog_background"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <!-- LOGO -->
+
+        <ImageView
+            android:layout_width="@dimen/dialg_icon_width"
+            android:layout_height="@dimen/dialg_icon_height"
+            android:layout_marginLeft="@dimen/margin"
+            android:src="@drawable/ic_launcher" />
+
+        <!-- 中间内容 -->
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallmargin"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <!-- 电话号码或姓名 -->
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/sender"
+                style="@style/titleText"
+                android:textColor="@color/white"
+                android:textSize="@dimen/incomingCallTitleTextSize" />
+
+            <!-- 标记信息 来自网络 -->
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/info"
+                style="@style/subText"
+                android:textColor="@color/white"
+                android:textSize="@dimen/incomingCallInfoTextSize" />
+
+            <!-- 次数统计 -->
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/record"
+                style="@style/subText"
+                android:textColor="@color/white" />
+
+            <!-- 上一次通话时间 -->
+
+            <com.fang.controls.AlwaysMarqueeTextView
+                android:id="@+id/lastRecord"
+                style="@style/subText"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- 弹窗类型 -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:maxHeight="@dimen/contact_photo_height"
+                android:maxWidth="@dimen/contact_photo_width"
+                android:src="@drawable/incoming_type" />
+
+            <TextView
+                android:id="@+id/tip"
+                style="@style/tipText"
+                android:textColor="@color/incoming"
+                android:textSize="@dimen/callTypeTextSize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 天气 -->
+
+    <com.fang.controls.AlwaysMarqueeTextView
+        android:id="@+id/weather"
+        style="@style/subText"
+        android:textColor="@color/green"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallmargin"
+            android:text="@string/comment_number"
+            android:textColor="@color/green" >
+        </TextView>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/yt_line" >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallmargin"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

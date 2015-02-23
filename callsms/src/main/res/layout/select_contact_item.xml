@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/smallmargin" >
+
+    <ImageView
+        android:id="@+id/friend_image"
+        android:layout_width="@dimen/contact_photo_width"
+        android:layout_height="@dimen/contact_photo_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/smallmargin" />
+
+    <TextView
+        android:id="@+id/friend_username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/friend_image"
+        android:paddingRight="2dip"
+        android:paddingTop="6dip"
+        android:textColor="@color/black"
+        android:textSize="@dimen/titleTextSize" />
+
+    <TextView
+        android:id="@+id/friend_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friend_username"
+        android:layout_marginRight="36dip"
+        android:layout_toRightOf="@id/friend_image"
+        android:maxLines="2"
+        android:paddingRight="2dip"
+        android:textColor="@color/hint" />
+
+    <CheckBox
+        android:id="@+id/selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="36dip"
+        android:focusable="false" />
+
+</RelativeLayout>

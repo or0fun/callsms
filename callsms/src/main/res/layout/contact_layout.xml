@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 标题栏 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/title_backgound"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/title_bar_icon_width"
+            android:layout_height="@dimen/title_bar_icon_height"
+            android:layout_margin="@dimen/smallmargin"
+            android:gravity="bottom"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:paddingTop="1dip"
+            android:text="@string/title_bar_contact"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/search"
+        style="@style/singleLineEdit"
+        android:hint="@string/sms_search" >
+    </EditText>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/divider"
+            android:dividerHeight="1px"
+            android:listSelector="@drawable/list_selector"
+            android:scrollbars="none" >
+        </ListView>
+
+        <com.fang.contact.MyLetterListView
+            android:id="@+id/my_list_view"
+            android:layout_width="30dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/byName"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/contact_by_sortkey" />
+        
+        <View style="@style/vsplitViewWhite"/>
+        <Button
+            android:id="@+id/byTimes"
+            style="@style/subButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/contact_by_times" />
+    </LinearLayout>
+
+</LinearLayout>
