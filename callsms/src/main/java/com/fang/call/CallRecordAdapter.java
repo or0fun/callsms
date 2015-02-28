@@ -2,6 +2,7 @@ package com.fang.call;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.CallLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,7 +106,14 @@ public class CallRecordAdapter extends BaseAdapter {
 		holder.icon.setImageResource((Integer)record.get(CallHelper.PARAM_ICON));
 		holder.date.setText(Util.longDateToStringDate(Long
                 .parseLong(record.get(CallHelper.PARAM_DATE).toString())));
-		holder.duration.setText(record.get(CallHelper.PARAM_DURATION).toString());
+        if (callType != CallLog.Calls.MISSED_TYPE) {
+            holder.duration.setText(record.get(CallHelper.PARAM_DURATION).toString());
+        } else {
+            holder.duration.setText("响铃" + record.get(CallHelper.PARAM_DURATION).toString());
+        }
+        if (StringUtil.isEmpty(record.get(CallHelper.PARAM_DURATION).toString())) {
+            holder.duration.setText("未接通");
+        }
 		
 		holder.comment.setFocusable(false);//无此句点击item无响应的  
 		holder.comment.setOnClickListener(new OnClickListener() {

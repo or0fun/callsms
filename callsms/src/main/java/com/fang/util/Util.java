@@ -1,10 +1,5 @@
 package com.fang.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -39,6 +34,10 @@ import com.fang.callsms.R;
 import com.fang.controls.CustomDialog;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.receiver.AlarmReceiver;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class Util {
 
@@ -318,33 +317,30 @@ public class Util {
 			final int position, final IDeleteConfirmListener deleteConfirm) {
 		final View confirmView = LayoutInflater.from(context).inflate(
 				R.layout.delete_confirm, null);
-		confirmView.findViewById(R.id.todelete).setOnClickListener(
-				new OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						if (null != windowManager) {
-							windowManager.removeView(confirmView);
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									if (null != deleteConfirm) {
-										deleteConfirm.delete(id, position);
-									}
-								}
-							}).start();
-						}
-					}
-				});
+        final Dialog dialog = new CustomDialog.Builder(context).setContentView(confirmView)
+                .create();
+        confirmView.findViewById(R.id.todelete).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (null != deleteConfirm) {
+                            deleteConfirm.delete(id, position);
+                        }
+                    }
+                }).start();
+            }
+        });
 		confirmView.findViewById(R.id.cancel).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
-						if (null != windowManager) {
-							windowManager.removeView(confirmView);
-						}
+                        dialog.dismiss();
 					}
 				});
-		Util.addView(windowManager, confirmView);
+        dialog.show();
 	}
 
 	/**
@@ -562,4 +558,5 @@ public class Util {
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 	}
+
 }

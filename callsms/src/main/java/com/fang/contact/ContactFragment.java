@@ -1,10 +1,5 @@
 package com.fang.contact;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -15,10 +10,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -40,6 +37,11 @@ import com.fang.logs.LogOperate;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * 通讯录页面
@@ -212,6 +214,16 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			public void afterTextChanged(Editable arg0) {
 			}
 		});
+
+        mSearchEditText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager inputManager =
+                        (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(mSearchEditText, InputMethodManager.SHOW_FORCED);
+                return true;
+            }
+        });
 		DebugLog.d(TAG, "onCreateView");
 		return rootView;
 	}
