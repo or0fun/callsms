@@ -1,6 +1,7 @@
 package com.fang.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -48,7 +49,8 @@ public class Util {
 	/**
 	 * 复制
 	 * 
-	 * @param content要分享的字符串
+	 * @param context
+     * @param content
 	 **/
 
 	@SuppressLint("NewApi")
@@ -124,7 +126,7 @@ public class Util {
 	 * 启动新的Activity
 	 * 
 	 * @param context
-	 * @param intent
+	 * @param name
 	 */
 	public static void startActivity(Context context, Class<?> name) {
 		Intent intent = new Intent(context, name);
@@ -213,36 +215,38 @@ public class Util {
 	 */
 	public static String longDateToStringDate(long d) {
 		String time = "";
-		Date date = new Date(d);
-		Date now = new Date();
-		if (date.getYear() == now.getYear()) {
-			if (date.getMonth() == now.getMonth()) {
-				if (date.getDay() == now.getDay()) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(d);
+
+        Calendar now = Calendar.getInstance();
+		if (calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR)) {
+			if (calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH)) {
+				if (calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)) {
 					SimpleDateFormat sfd = new SimpleDateFormat("HH:mm",
 							Locale.US);
-					time = "今天" + sfd.format(date);
-				} else if (date.getDay() == now.getDay() - 1) {
+					time = "今天" + sfd.format(calendar.getTime());
+				} else if (calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) - 1) {
 					SimpleDateFormat sfd = new SimpleDateFormat("HH:mm",
 							Locale.US);
-					time = "昨天" + sfd.format(date);
-				} else if (date.getDay() == now.getDay() - 2) {
+					time = "昨天" + sfd.format(calendar.getTime());
+				} else if (calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH) - 2) {
 					SimpleDateFormat sfd = new SimpleDateFormat("HH:mm",
 							Locale.US);
-					time = "前天" + sfd.format(date);
+					time = "前天" + sfd.format(calendar.getTime());
 				} else {
 					SimpleDateFormat sfd = new SimpleDateFormat("MM-dd HH:mm",
 							Locale.US);
-					time = sfd.format(date);
+					time = sfd.format(calendar.getTime());
 				}
 			} else {
 				SimpleDateFormat sfd = new SimpleDateFormat("MM-dd HH:mm",
 						Locale.US);
-				time = sfd.format(date);
+				time = sfd.format(calendar.getTime());
 			}
 		} else {
 			SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd HH:mm",
 					Locale.US);
-			time = sfd.format(date);
+			time = sfd.format(calendar.getTime());
 		}
 		return time;
 	}
@@ -294,9 +298,7 @@ public class Util {
 	 * 取消闹钟
 	 * 
 	 * @param context
-	 * @param intent
 	 * @param requestCode
-	 * @param l
 	 */
 	public static void cancelAlarm(Context context, int requestCode) {
 		AlarmManager am = (AlarmManager) context
@@ -414,9 +416,12 @@ public class Util {
 
 	/**
 	 * 显示通知栏
-	 * 
+	 *
+     * @param context
+     * @param id
 	 * @param title
-	 * @param intent
+	 * @param content
+     * @param notificationIntent
 	 */
 	public static void showNotification(Context context, int id, String title,
 			String content, Intent notificationIntent) {

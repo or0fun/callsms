@@ -1,8 +1,5 @@
 package com.fang.call;
 
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,6 +14,10 @@ import android.widget.TextView;
 import com.fang.callsms.R;
 import com.fang.comment.CommentActivity;
 import com.fang.util.StringUtil;
+import com.fang.util.Util;
+
+import java.util.List;
+import java.util.Map;
 
 public class CallRecordAdapter extends BaseAdapter {
 	
@@ -99,7 +100,8 @@ public class CallRecordAdapter extends BaseAdapter {
 			holder.number.setText(record.get(CallHelper.PARAM_NUMBER).toString());
 		}
 		holder.icon.setImageResource((Integer)record.get(CallHelper.PARAM_ICON));
-		holder.date.setText(record.get(CallHelper.PARAM_DATE).toString());
+		holder.date.setText(Util.longDateToStringDate(Long
+                .parseLong(record.get(CallHelper.PARAM_DATE).toString())));
 		holder.duration.setText(record.get(CallHelper.PARAM_DURATION).toString());
 		
 		holder.comment.setFocusable(false);//无此句点击item无响应的  

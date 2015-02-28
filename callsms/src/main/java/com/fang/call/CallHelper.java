@@ -1,11 +1,5 @@
 package com.fang.call;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +14,12 @@ import com.fang.database.NumberDatabaseManager;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * 电话帮助类
@@ -418,9 +418,8 @@ public class CallHelper {
 					}
 					callRecord.put(PARAM_TYPE, Integer.parseInt(cursor
 							.getString(cursor.getColumnIndex(Calls.TYPE))));
-					callRecord.put(PARAM_DATE, Util.longDateToStringDate(Long
-							.parseLong(cursor.getString(cursor
-									.getColumnIndexOrThrow(Calls.DATE)))));
+					callRecord.put(PARAM_DATE, cursor.getString(cursor
+									.getColumnIndexOrThrow(Calls.DATE)));
 					long duration = Long.parseLong(cursor.getString(cursor
 							.getColumnIndexOrThrow(Calls.DURATION)));
 
@@ -452,8 +451,9 @@ public class CallHelper {
 
 	/**
 	 * 获取通话类型对中文描述
-	 * 
-	 * @param type
+	 *
+     * @param context
+	 * @param callType
 	 * @return
 	 */
 	public static String getCallTypeString(Context context, int callType) {
@@ -478,8 +478,9 @@ public class CallHelper {
 
 	/**
 	 * 获取通话类型对中文描述
-	 * 
-	 * @param type
+	 *
+     * @param context
+	 * @param callType
 	 * @return
 	 */
 	public static int getCallTypeColor(Context context, int callType) {
