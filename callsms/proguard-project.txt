@@ -19,8 +19,6 @@
 #   public *;
 #}
 
--libraryjars libs/MSC.jar
--libraryjars libs/android-support-v3.jar
 
 -keep public class * extends android.app.Fragment  
 -keep public class * extends android.app.Activity

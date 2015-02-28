@@ -1,8 +1,5 @@
 package com.fang.business;
 
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.os.Handler;
 
@@ -12,9 +9,13 @@ import com.fang.database.NumberDatabaseManager;
 import com.fang.express.ExpressInfo;
 import com.fang.net.IResponseListener;
 import com.fang.net.ServerUtil;
+import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.StringUtil;
+
+import java.util.List;
+import java.util.Map;
 /**
  * 共用帮助类
  * @author fang
@@ -22,6 +23,7 @@ import com.fang.util.StringUtil;
  */
 public class BusinessHelper {
 
+    private static final String TAG = "BusinessHelper";
 	/**
 	 * 获取号码资源
 	 * 
@@ -59,8 +61,9 @@ public class BusinessHelper {
 	}
 	/**
 	 * 获取号码资源
-	 * 
-	 * @param number
+	 *
+     * @param context
+	 * @param callRecords
 	 * @param handler
 	 */
 	public static void getNumberInfo(final Context context, final List<Map<String, Object>> callRecords,
@@ -71,6 +74,7 @@ public class BusinessHelper {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+                int len = 5;
 				for (Map<String, Object> map : callRecords) {
 					String number = map.get(CallHelper.PARAM_NUMBER).toString();
 					String infoString = NumberDatabaseManager.getInstance(context).query(
@@ -78,7 +82,15 @@ public class BusinessHelper {
 					if (StringUtil.isEmpty(infoString) && NetWorkUtil.isNetworkAvailable(context)) {
 						infoString = NetWorkUtil.getInstance().searchPhone(context, number, ServerUtil.getInstance(context).getUserID());
 						NumberDatabaseManager.getInstance(context).update(number, infoString);
+                        DebugLog.d(TAG, number + ": " + infoString);
 					}
+                    len++;
+
+                    if (len % 5 == 0) {
+                        if (null != handler) {
+                            handler.sendEmptyMessage(MessageWhat.UPDATE_NUMBER_DATABASE);
+                        }
+                    }
 				}
 				if (null != handler) {
 					handler.sendEmptyMessage(MessageWhat.UPDATE_NUMBER_DATABASE);
@@ -90,7 +102,8 @@ public class BusinessHelper {
 	/**
 	 * 获取号码资源
 	 * 
-	 * @param number
+	 * @param context
+     * @param info
 	 * @param handler
 	 */
 	public static void getExpressInfo(final Context context, final ExpressInfo info,
@@ -171,8 +184,9 @@ public class BusinessHelper {
 
 	/**
 	 * 获取号码资源
-	 * 
-	 * @param number
+	 *
+     * @param context
+	 * @param city
 	 * @param handler
 	 */
 	public static void getWeatherInfo(final Context context, final String city,

@@ -1,9 +1,5 @@
 package com.fang.call;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,6 +30,10 @@ import com.fang.receiver.PhoneReceiver;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class CallFragment extends BaseFragment implements OnClickListener, ICallRecordListener {
 	/** 电话记录List */
@@ -112,7 +112,9 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 											.query(map.get(
 													CallHelper.PARAM_NUMBER)
 													.toString()));
-						}
+						} else {
+                            break;
+                        }
 					}
 					UpdateList();
 				}

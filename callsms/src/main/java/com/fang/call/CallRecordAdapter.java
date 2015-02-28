@@ -59,7 +59,6 @@ public class CallRecordAdapter extends BaseAdapter {
 			convertView = mInflater
 					.inflate(R.layout.call_list_item, null);
 			holder = new ViewHolder();
-			holder.tip = (TextView) convertView.findViewById(R.id.tip);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.count = (TextView) convertView.findViewById(R.id.count);
 			holder.number = (TextView) convertView.findViewById(R.id.number);
@@ -75,30 +74,34 @@ public class CallRecordAdapter extends BaseAdapter {
 		
 		final Map<String, Object> record = mCallRecords.get(index);
 		int callType = Integer.parseInt(record.get(CallHelper.PARAM_TYPE).toString());
-		holder.tip.setText(CallHelper.getCallTypeString(mContext, callType));
+        // 如果名字为空，就显示号码
 		if (StringUtil.isEmpty(record.get(CallHelper.PARAM_NAME).toString())) {
 			holder.name.setText(record.get(CallHelper.PARAM_NUMBER).toString());
+
+            if (null == record.get(CallHelper.PARAM_INFO)) {
+                holder.number.setText("");
+            } else {
+                String info = record.get(CallHelper.PARAM_INFO).toString();
+                if (StringUtil.isEmpty(info)) {
+                    holder.number.setText("");
+                }else {
+                    holder.number.setText(info);
+                }
+            }
 		}else {
 			holder.name.setText(record.get(CallHelper.PARAM_NAME).toString());
+            holder.number.setText(record.get(CallHelper.PARAM_NUMBER).toString());
 		}
+        // 根据类型显示名字的颜色
 		holder.name.setTextColor(CallHelper.getCallTypeColor(mContext, callType));
+        // 显示次数
 		int count = (Integer) record.get(CallHelper.PARAM_COUNT);
 		if (count > 1) {
 			holder.count.setText("(" + count + ")");
 		}else {
 			holder.count.setText("");
 		}
-		if (StringUtil.isEmpty(record.get(CallHelper.PARAM_NAME).toString()) ||
-				record.get(CallHelper.PARAM_NUMBER).toString().equals(record.get(CallHelper.PARAM_NAME).toString())) {
-			if (null == record.get(CallHelper.PARAM_INFO) ||
-					StringUtil.isEmpty(record.get(CallHelper.PARAM_INFO).toString())) {
-				holder.number.setText("");
-			}else {
-				holder.number.setText(record.get(CallHelper.PARAM_INFO).toString());
-			}
-		}else {
-			holder.number.setText(record.get(CallHelper.PARAM_NUMBER).toString());
-		}
+
 		holder.icon.setImageResource((Integer)record.get(CallHelper.PARAM_ICON));
 		holder.date.setText(Util.longDateToStringDate(Long
                 .parseLong(record.get(CallHelper.PARAM_DATE).toString())));
@@ -123,7 +126,6 @@ public class CallRecordAdapter extends BaseAdapter {
 	}
 	
 	private class ViewHolder {
-		TextView tip;
 		ImageView icon;
 		TextView name;
 		TextView count;
