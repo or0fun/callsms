@@ -1,8 +1,5 @@
 package com.fang.receiver;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,6 +18,9 @@ import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.util.DebugLog;
 import com.fang.util.SharedPreferencesHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 电话广播接听
  * @author fang
@@ -151,14 +151,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 					.getSystemService(Service.TELEPHONY_SERVICE);
 			
 			int state = tm.getCallState();
-			//fixme 来电测试语句
-			String statesString = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-			if (RINGING.equals(statesString)) {
-				state = TelephonyManager.CALL_STATE_RINGING;
-			}else {
-				state = TelephonyManager.CALL_STATE_IDLE;
-			}
-			
+
 			switch (state) {
 			case TelephonyManager.CALL_STATE_IDLE: // 空闲
 				DebugLog.d(TAG, "CALL_STATE_IDLE");

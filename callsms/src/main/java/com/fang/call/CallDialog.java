@@ -1,9 +1,5 @@
 package com.fang.call;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Handler;
@@ -41,6 +37,10 @@ import com.fang.util.Util;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 来电弹窗
@@ -250,6 +250,13 @@ public class CallDialog implements OnClickListener {
 		mCommentTextView = (TextView) mView.findViewById(R.id.comments);
 		mWeatherTextView = (TextView) mView.findViewById(R.id.weather);
 		mLastRecordTextView = (TextView) mView.findViewById(R.id.lastRecord);
+
+        mView.findViewById(R.id.closeBtn).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remove();
+            }
+        });
 		setType(type);
 		setContent(number);
 	}
@@ -364,10 +371,10 @@ public class CallDialog implements OnClickListener {
 	 * 关闭弹窗
 	 */
 	public void remove() {
-//		if (mIsShowing) {
+		if (mIsShowing) {
 			mIsShowing = false;
 			mWindowManager.removeView(mView);
-//		}
+		}
 	}
 
 	/**
