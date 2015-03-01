@@ -5,6 +5,7 @@
     <string name="apk_name">we.apk</string>
     <string name="action_settings">Settings</string>
     <string name="company">V2.2  白湾路工作室</string>
+    <string name="check_update"><u>检查更新</u></string>
     
     <string name="title_bar">知号码</string>
     <string name="title_bar_call">通话记录</string>
@@ -94,7 +95,9 @@
     <string name="setting_broadcast_when_wiredheadseton">耳机插入时，开启播报</string>
     <string name="setting_broadcast_when_wiredheadseton_summary">在插入耳机时，来电来信自动播报</string>
     <string name="setting_express_track">后台自动追踪快递状态</string>
-    <string name="setting_express_track_summary">自动追踪快递单号状态，有变化时通知栏通知</string>
+    <string name="setting_express_track_summary">自动追踪快递单号状态，及时通知</string>
+    <string name="setting_weather_notification_title">天气预报常驻通知栏</string>
+    <string name="setting_weather_notification_summary">实时在通知栏显示天气，方便查看</string>
     
     <string name="setting_open">已开启</string>
     <string name="setting_close">已关闭</string>
@@ -109,7 +112,8 @@
     <string name="SETTING_OUTGOING_CALL_POPUP">SETTING_OUTGOING_CALL_POPUP</string>
     <string name="SETTING_BROADCAST_WHEN_WIREDHEADSETON">SETTING_BROADCAST_WHEN_WIREDHEADSETON</string>
     <string name="SETTING_EXPRESS_TRACK">SETTING_EXPRESS_TRACK</string>
-    
+    <string name="SETTING_WEATHER_NOTIFICATION">SETTING_WEATHER_NOTIFICATION</string>
+
     <!-- 短信页面 -->
     <string name="sms_contactSelectedTip">已选择%d个联系人</string>
     <string name="sms_selectContact">选择联系人</string>

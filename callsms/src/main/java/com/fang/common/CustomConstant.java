@@ -15,9 +15,9 @@ public class CustomConstant {
     /** 信息获取的API */
     public static final String API_URL = "http://115.29.17.79/icoding/api.php";
     /** 接收post请求的服务器地址 */
-    //public static final String DEFAULT_POST_URL = "http://115.29.17.79/we/api.php";
+    public static final String DEFAULT_POST_URL = "http://115.29.17.79/we/api.php";
     /** 接收post请求的服务器地址 测试地址*/
-    public static final String DEFAULT_POST_URL = "http://115.29.17.79/we/api_test.php";
+    //public static final String DEFAULT_POST_URL = "http://115.29.17.79/we/api_test.php";
     /** 接收get请求的服务器地址 */
     public static final String DEFAULT_GET_URL = "";
 	/** 版本更新地址 */

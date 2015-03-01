@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.fang.util.StringUtil;
+
+import java.util.HashMap;
+
 /**
  * 数据库操作类
  * @author fang
@@ -21,6 +24,8 @@ public class NumberDatabaseManager {
     private SQLiteDatabase mDb; 
     
     private static NumberDatabaseManager mInstance;
+
+    private HashMap<String, String> numbersMap = new HashMap<String, String>();
       
     private NumberDatabaseManager(Context context) {  
         String sql = "create table if not exists " + TABLE_NAME + "(num text not null , info text );";          
@@ -66,6 +71,8 @@ public class NumberDatabaseManager {
         number = number.replace(" ", "");
         number = number.replace("-", "");
 
+        numbersMap.put(number, info);
+
     	if (StringUtil.isEmpty(query(number))) {
 			insert(number, info);
 		}else {
@@ -88,15 +95,19 @@ public class NumberDatabaseManager {
         number = number.replace(" ", "");
         number = number.replace("-", "");
 
-    	Cursor cursor = mDb.rawQuery("select * from " + TABLE_NAME + " where num=?",new String[]{number});
-    	if(null != cursor) {
-    		if(cursor.moveToFirst()) {
-    			String info = cursor.getString(cursor.getColumnIndex("info"));
-    			cursor.close();
-    			return info;
-    		}
-			cursor.close();
-    	}
-    	return null;
+        String info = numbersMap.get(number);
+        if (StringUtil.isEmpty(info)) {
+            Cursor cursor = mDb.rawQuery("select * from " + TABLE_NAME + " where num=?",new String[]{number});
+            if(null != cursor) {
+                if(cursor.moveToFirst()) {
+                    info = cursor.getString(cursor.getColumnIndex("info"));
+                    cursor.close();
+                    return info;
+                }
+                cursor.close();
+            }
+            return null;
+        }
+    	return info;
     }
 }

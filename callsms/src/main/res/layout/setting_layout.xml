@@ -67,6 +67,15 @@
             custom:summary="@string/setting_express_track_summary"
             custom:title="@string/setting_express_track" >
         </com.fang.controls.CustomSwitchPreference>
+
+        <com.fang.controls.CustomSwitchPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            custom:defaultValue="true"
+            custom:key="@string/SETTING_WEATHER_NOTIFICATION"
+            custom:summary="@string/setting_weather_notification_summary"
+            custom:title="@string/setting_weather_notification_title" >
+        </com.fang.controls.CustomSwitchPreference>
     </LinearLayout>
 
     <Button
@@ -76,13 +85,29 @@
         android:layout_margin="@dimen/smallmargin"
         android:text="@string/feedback" />
 
-    <TextView
-        style="@style/subText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/hint"
-        android:text="@string/company" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            style="@style/subText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/hint"
+            android:text="@string/company" />
+
+        <TextView
+            android:id="@+id/check_update"
+            style="@style/subText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/blue"
+            android:text="@string/check_update" />
+    </LinearLayout>
     <!--
          <Button
         android:id="@+id/ads"

@@ -1,9 +1,5 @@
 package com.fang.callsms;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.AsyncQueryHandler;
@@ -40,6 +36,10 @@ import com.fang.util.MIUIHelper;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
 import com.fang.version.UpdateVersion;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements OnClickListener {
 
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case MSG_CHECK_VERSION:
-				checkUpdateVersion();
+				checkUpdateVersion(false);
 				break;
 			case MSG_CREATE_SHORT:
 				Util.showCreateShortDialog(mContext);
@@ -344,14 +344,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	/**
 	 * 更新版本
 	 */
-	private void checkUpdateVersion() {
+	public void checkUpdateVersion(boolean manual) {
 		long now = new Date().getTime();
 		long last = SharedPreferencesHelper.getLong(mContext,
 				SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
 		SharedPreferencesHelper.setLong(mContext,
 				SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
-		if (now - last > CustomConstant.ONE_DAY) {
-			UpdateVersion.checkVersion(mContext, mDownloadListener);
+		if (manual || now - last > CustomConstant.ONE_DAY) {
+			UpdateVersion.checkVersion(mContext, manual, mDownloadListener);
 			//日志
 			LogOperate.updateLog(mContext, LogCode.ACTIVE_APP);
 		}

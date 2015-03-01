@@ -9,7 +9,6 @@ import android.os.IBinder;
 import android.os.Message;
 
 import com.fang.call.CallHelper;
-import com.fang.callsms.MainActivity;
 import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressHelper;
@@ -18,10 +17,8 @@ import com.fang.sms.SendSMSInfo;
 import com.fang.speach.SpeachHelper;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
-import com.fang.util.NetWorkUtil;
-import com.fang.util.NotifycationHelper;
-import com.fang.util.StringUtil;
 import com.fang.util.Util;
+import com.fang.weather.WeatherHelper;
 
 import java.util.List;
 
@@ -42,7 +39,6 @@ public class MainService extends Service {
 	protected ContactContentObserver mContactContentObserver;
 	/** 定时发送的短信 */
 	protected static List<SendSMSInfo> mSendSMSInfoList;
-
 
 	private Handler mHandler = new Handler() {
 		@Override
@@ -84,7 +80,7 @@ public class MainService extends Service {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                postWeatherNotification();
+                WeatherHelper.postWeatherNotification(mContext);
             }
         }, 1000 * 10);
 	}
@@ -115,9 +111,11 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        int task = intent.getIntExtra(TASK, 0);
-        if (TASK_POST_WEATHER_NOTIFICATION == task) {
-            postWeatherNotification();
+        if (null != intent) {
+            int task = intent.getIntExtra(TASK, 0);
+            if (TASK_POST_WEATHER_NOTIFICATION == task) {
+                WeatherHelper.postWeatherNotification(mContext);
+            }
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -170,30 +168,4 @@ public class MainService extends Service {
 		}
 	}
 
-    /**
-     * 显示天气的常驻通知栏
-     */
-    private void postWeatherNotification() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (NetWorkUtil.isNetworkAvailable(mContext)) {
-                    String weather = NetWorkUtil.getInstance().searchWeather();
-                    if (!StringUtil.isEmpty(weather)) {
-                        Intent notificationIntent = new Intent(
-                                mContext,
-                                MainActivity.class);
-                        String[] str = weather.split("\\|");
-                        Util.showResidentNotification(
-                                mContext,
-                                NotifycationHelper.WEATHER_ID,
-                                str[0],
-                                "明天" + str[1],
-                                notificationIntent);
-                    }
-                }
-            }
-        }).start();
-    }
 }

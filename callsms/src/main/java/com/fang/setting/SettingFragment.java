@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.fang.base.BaseFragment;
+import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 
 /**
@@ -38,6 +39,14 @@ public class SettingFragment extends BaseFragment {
 				startActivity(new Intent(mContext, FeedbackActivity.class));
 			}
 		});
+
+        // 立即更新
+        rootView.findViewById(R.id.check_update).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).checkUpdateVersion(true);
+            }
+        });
 
 //		Button adsBtn = (Button)rootView.findViewById(R.id.ads);
 //		adsBtn.setOnClickListener(new OnClickListener() {

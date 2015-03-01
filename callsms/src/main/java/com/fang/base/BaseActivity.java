@@ -1,7 +1,5 @@
 package com.fang.base;
 
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.widget.Toast;
 
 import com.fang.common.CustomConstant;
 import com.fang.util.SharedPreferencesHelper;
+
+import java.util.Date;
 
 public class BaseActivity extends Activity {
 	
@@ -20,6 +20,7 @@ public class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 	}
+
 	/**
 	 * 显示 Toast
 	 * @param str

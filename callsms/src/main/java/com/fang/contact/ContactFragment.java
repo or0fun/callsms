@@ -433,11 +433,15 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		mOverlay = (TextView) inflater.inflate(R.layout.contact_overlay, null);
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams(120,
-				120, 100, 0, WindowManager.LayoutParams.TYPE_APPLICATION,
+				240, 100, 0, WindowManager.LayoutParams.TYPE_APPLICATION,
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 						| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 				PixelFormat.TRANSLUCENT);
-		mWindowManager.addView(mOverlay, lp);
+        try {
+            mWindowManager.addView(mOverlay, lp);
+        }catch (Exception e) {
+            DebugLog.e(TAG, "initOverlay: " + e.toString());
+        }
 	}
 
 	/**

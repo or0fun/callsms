@@ -20,7 +20,6 @@ import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
 import com.fang.controls.CustomProgressDialog;
-import com.fang.database.NumberDatabaseManager;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
 import com.fang.logs.LogCode;
@@ -28,7 +27,6 @@ import com.fang.logs.LogOperate;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.util.MessageWhat;
-import com.fang.util.StringUtil;
 import com.fang.util.Util;
 
 import java.util.ArrayList;
@@ -103,19 +101,6 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 				break;
 			case MessageWhat.UPDATE_NUMBER_DATABASE:
 				if (null != mAllCallRecords) {
-					for (Map<String, Object> map : mAllCallRecords) {
-						if (null == map.get(CallHelper.PARAM_INFO)
-								|| StringUtil.isEmpty(map.get(
-										CallHelper.PARAM_INFO).toString())) {
-							map.put(CallHelper.PARAM_INFO,
-									NumberDatabaseManager.getInstance(mContext)
-											.query(map.get(
-													CallHelper.PARAM_NUMBER)
-													.toString()));
-						} else {
-                            break;
-                        }
-					}
 					UpdateList();
 				}
 				break;

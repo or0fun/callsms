@@ -22,9 +22,12 @@ import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
+import com.fang.util.NetWorkUtil;
 import com.fang.util.Patterns;
+import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
+import com.fang.weather.WeatherHelper;
 
 public class NumberFragment extends BaseFragment implements OnClickListener {
 
@@ -45,6 +48,10 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	LinearLayout mServiceListLayout;
 	//快递追踪
 	Button mSearchExpressBtn;
+    // 天气列表
+    LinearLayout mWeatherList;
+    // 城市
+    TextView mWeatherCity;
 	//缓存号码
 	String mNumberString = "";
 	//缓存信息
@@ -62,6 +69,12 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 					mResultTextView.setText(mNumberInfoString);
 				}
 				break;
+            case MessageWhat.NET_REQUEST_WEATHER:
+                if (null != msg.obj) {
+                    String weather = (String) msg.obj;
+                    handlerWeather(weather);
+                }
+                break;
 			default:
 				break;
 			}
@@ -106,6 +119,9 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		
 		mSearchExpressBtn = (Button) rootView.findViewById(R.id.searchExpressBtn);
 		mSearchExpressBtn.setOnClickListener(this);
+
+        mWeatherList = (LinearLayout) rootView.findViewById(R.id.weatherList);
+        mWeatherCity = (TextView) rootView.findViewById(R.id.weather_city);
 		
 		return rootView;
 	}
@@ -119,8 +135,9 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mSearchEditView.setText(str);
 			mPasteNumberString = str;
 			searchBtnClick();
-			
 		}
+
+        searchWeather();
 	}
 
 	@Override
@@ -160,4 +177,39 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		//日志
 		LogOperate.updateLog(mContext, LogCode.SEARCH_NUMBER);
 	}
+
+    private void searchWeather() {
+        if (System.currentTimeMillis() - SharedPreferencesHelper.getLong(mContext, SharedPreferencesHelper.WEATHER_UPDATE_TIME, 0)
+                 < 600000) {
+            DebugLog.d(TAG, "searchWeather: the time is too short");
+//            return;
+        }
+        SharedPreferencesHelper.setLong(mContext, SharedPreferencesHelper.WEATHER_UPDATE_TIME, System.currentTimeMillis());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // 最多7天
+                String weather = NetWorkUtil.getInstance().searchWeather(7);
+                myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_WEATHER, weather));
+            }
+        }).start();
+    }
+
+    /**
+     * 处理获取到的天气信息
+     * @param weather
+     */
+    private void handlerWeather(String weather) {
+        int index = weather.indexOf(" ");
+        String city = weather.substring(0, index);
+        weather = weather.substring(index + 1);
+        mWeatherCity.setText( city + " " +  mContext.getString(R.string.number_weather));
+        String[] str = weather.split("\\|");
+
+        mWeatherList.removeAllViews();
+        for (int i = 0; i < str.length; i++) {
+            mWeatherList.addView(WeatherHelper.createWeatherItem(mContext, str[i], i));
+        }
+    }
+
 }

@@ -45,7 +45,7 @@
     <!-- 号码 -->
     <dimen name="titleHeight">36.0dp</dimen>
     <dimen name="titleWidth">300.0dp</dimen>
-    <dimen name="titleTextSize">20.0sp</dimen>
+    <dimen name="titleTextSize">18.0sp</dimen>
     
     <dimen name="incomingCallTitleTextSize">22.0sp</dimen>
     <dimen name="incomingCallInfoTextSize">18.0sp</dimen>
@@ -70,7 +70,7 @@
     <dimen name="dialog_icon_height">40dp</dimen>
     <!-- switch -->
     <dimen name="switch_width">116dp</dimen>
-    <dimen name="switch_height">46dp</dimen>
+    <dimen name="switch_height">36dp</dimen>
     <!-- item 高度 -->
     <dimen name="record_list_item_height">30dp</dimen>
     <!-- 弹窗通话记录高度 -->

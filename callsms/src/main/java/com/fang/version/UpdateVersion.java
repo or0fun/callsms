@@ -1,16 +1,5 @@
 package com.fang.version;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Query;
@@ -29,6 +18,7 @@ import android.os.Handler.Callback;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
@@ -44,6 +34,17 @@ import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.Util;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 /**
  * 版本更新类
@@ -83,6 +84,9 @@ public class UpdateVersion {
 	/** 下载监听 */
 	IDownloadListener mDownloadListener;
 
+    /**  手动下载 */
+    private static boolean mManualCheck = false;
+
 	public UpdateVersion(Context ctx, IDownloadListener downloadListener) {
 		mContext = ctx;
 		mDownloadListener = downloadListener;
@@ -95,14 +99,15 @@ public class UpdateVersion {
 	/**
 	 * 检查版本号
 	 */
-	public static void checkVersion(final Context context,
+	public static void checkVersion(final Context context, final boolean manualCheck,
 			final IDownloadListener downloadListener) {
+
 		new Thread() {
 			@Override
 			public void run() {
 				super.run();
 				UpdateVersion uv = new UpdateVersion(context, downloadListener);
-				uv.getLatestVerFromServer();
+				uv.getLatestVerFromServer(manualCheck);
 			}
 		}.start();
 	}
@@ -112,7 +117,8 @@ public class UpdateVersion {
 	 * 
 	 * @return
 	 */
-	protected boolean getLatestVerFromServer() {
+	protected boolean getLatestVerFromServer(boolean manualCheck) {
+        mManualCheck = manualCheck;
 		try {
 			ServerUtil server = ServerUtil.getInstance(mContext);
 			NetRequest request = new NetRequest();
@@ -277,14 +283,10 @@ public class UpdateVersion {
 				}
 				if (verjson != null) {
 					try {
-						newVerCode = Integer.parseInt(verjson
-								.getString(VERSION_CODE));
-						if (Util.getVersionCode(mContext) < newVerCode) {
-							Message msg = new Message();
-							msg.obj = verjson;
-							msg.what = MSG_EVENT_UPDATE;
-							mHandler.sendMessage(msg);
-						}
+						Message msg = new Message();
+						msg.obj = verjson;
+						msg.what = MSG_EVENT_UPDATE;
+						mHandler.sendMessage(msg);
 					} catch (Exception e) {
 						DebugLog.d(TAG, e.toString());
 						return;
@@ -304,15 +306,21 @@ public class UpdateVersion {
 		public boolean handleMessage(Message msg) {
 			switch (msg.what) {
 			case MSG_EVENT_UPDATE:
-				JSONObject jsonObj = (JSONObject) msg.obj;
-				try {
-					doNewVersionUpdate(mContext,
-							jsonObj.getString(VERSION_NAME),
-							jsonObj.getString(VERSION_ADDRESS),
-							jsonObj.getString(VERSION_CONTENT));
-				} catch (JSONException e) {
-					DebugLog.d(TAG, e.toString());
-				}
+
+                JSONObject jsonObj = (JSONObject) msg.obj;
+                try {
+                    int newVerCode = Integer.parseInt(jsonObj.getString(VERSION_CODE));
+                    if (Util.getVersionCode(mContext) < newVerCode) {
+                        doNewVersionUpdate(mContext,
+                                jsonObj.getString(VERSION_NAME),
+                                jsonObj.getString(VERSION_ADDRESS),
+                                jsonObj.getString(VERSION_CONTENT));
+                    } else if (mManualCheck) {
+                        Toast.makeText(mContext, "已经是最新版本了。", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    DebugLog.d(TAG, e.toString());
+                }
 				break;
 			case MSG_DOWNLOAD_STATUS:
 				if (null != mProgressBar && mProgressBar.isShowing()) {

@@ -1,14 +1,14 @@
 package com.fang.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Base64;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Base64;
 
 public class SharedPreferencesHelper {
 	/** 短信最后时间*/
@@ -22,6 +22,7 @@ public class SharedPreferencesHelper {
 	public static final String SETTING_OUTGOING_CALL_POPUP = "SETTING_OUTGOING_CALL_POPUP";
 	public static final String SETTING_BROADCAST_WHEN_WIREDHEADSETON = "SETTING_BROADCAST_WHEN_WIREDHEADSETON";
 	public static final String SETTING_EXPRESS_TRACK = "SETTING_EXPRESS_TRACK";
+	public static final String SETTING_WEATHER_NOTIFICATION = "SETTING_WEATHER_NOTIFICATION";
 	/** 定时短信*/
 	public static final String TIMING_SMS_INFO = "TIMING_SMS_INFO";
     /** 最后启动的时间 */
@@ -39,6 +40,12 @@ public class SharedPreferencesHelper {
 	public static final String SELECTED_EXPRESS_COMPANY = "SELECTED_EXPRESS_COMPANY";
 	/** 最后开启点页面 */
 	public static final String SELECTED_PAGE = "SELECTED_PAGE";
+
+    /** 天气通知时间 */
+    public static final String WEATHER_NOTIFICATION_TIME = "WEATHER_NOTIFICATION_TIME";
+
+    /** 7天天气预报更新时间 */
+    public static final String WEATHER_UPDATE_TIME = "WEATHER_UPDATE_TIME";
 	
 	public static String getString(Context ctx, String key) {
 		
@@ -76,13 +83,22 @@ public class SharedPreferencesHelper {
 		
 	}
 
-	public static long getLong(Context ctx, String key, long i) {
+	public static long getLong(Context ctx, String key, long defaultvalue) {
 		
 		SharedPreferences sharedata = ctx.getSharedPreferences(key, Context.MODE_PRIVATE );
-		long value = sharedata.getLong(key, i);
+		long value = sharedata.getLong(key, defaultvalue);
 		return value;
 		
 	}
+
+    public static long getLong(Context ctx, String key) {
+
+        SharedPreferences sharedata = ctx.getSharedPreferences(key, Context.MODE_PRIVATE );
+        long value = sharedata.getLong(key, 0);
+        return value;
+
+    }
+
 	public static void setLong(Context ctx, String key, long value) {
 
 	    SharedPreferences.Editor sharedata = ctx.getSharedPreferences(key, Context.MODE_PRIVATE ).edit();  
@@ -105,7 +121,9 @@ public class SharedPreferencesHelper {
 	}
 	/**
 	 * 保存对象信息
-	 * @param smsInfos
+	 * @param ctx
+     * @param key
+     * @param object
 	 */
 	public static void setObject(Context ctx, String key, Object object) {
 		try {
@@ -121,7 +139,8 @@ public class SharedPreferencesHelper {
 	}
 	/**
 	 * 保存对象信息
-	 * @param smsInfos
+	 * @param ctx
+     * @param key
 	 */
 	public static Object getObject(Context ctx, String key) {
 		try {

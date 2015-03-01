@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.comment.CommentActivity;
+import com.fang.database.NumberDatabaseManager;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
 
@@ -77,12 +78,13 @@ public class CallRecordAdapter extends BaseAdapter {
 		int callType = Integer.parseInt(record.get(CallHelper.PARAM_TYPE).toString());
         // 如果名字为空，就显示号码
 		if (StringUtil.isEmpty(record.get(CallHelper.PARAM_NAME).toString())) {
-			holder.name.setText(record.get(CallHelper.PARAM_NUMBER).toString());
+            String number = record.get(CallHelper.PARAM_NUMBER).toString();
+			holder.name.setText(number);
 
-            if (null == record.get(CallHelper.PARAM_INFO)) {
+            String info = NumberDatabaseManager.getInstance(mContext).query(number);
+            if (null == info) {
                 holder.number.setText("");
             } else {
-                String info = record.get(CallHelper.PARAM_INFO).toString();
                 if (StringUtil.isEmpty(info)) {
                     holder.number.setText("");
                 }else {

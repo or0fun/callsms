@@ -6,6 +6,7 @@
     <string name="number_searchBtn">搜索</string>
     <string name="number_seaching">正在查询…</string>
     <string name="number_common">常用服务号码</string>
+    <string name="number_weather">天气预报</string>
     <string name="number_house">订酒店</string>
     <string name="number_meal">订餐</string>
     <string name="number_express">找快递</string>

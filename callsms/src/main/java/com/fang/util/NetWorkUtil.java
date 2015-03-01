@@ -175,9 +175,9 @@ public class NetWorkUtil {
     /**
      * 查询天气
      */
-    public String searchWeather() {
+    public String searchWeather(int days) {
 
-        String url = CustomConstant.API_URL + "?t=weather&w=&u=&e=1";
+        String url = CustomConstant.API_URL + "?t=weather&w=&u=&e=1&d=" + days;
         String infoString = getHttpRequest(url);
         if (StringUtil.isEmpty(infoString)) {
             return "";

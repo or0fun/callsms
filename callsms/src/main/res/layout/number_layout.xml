@@ -29,6 +29,7 @@
             android:text="@string/title_bar_number"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -69,6 +70,33 @@
             android:layout_weight="1" >
         </TextView>
 
+        <!-- 天气预报 -->
+        <TextView
+            android:id="@+id/weather_city"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/number_weather"
+            android:textColor="@color/green" >
+        </TextView>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/yt_line" >
+        </ImageView>
+
+        <HorizontalScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <LinearLayout
+                android:id="@+id/weatherList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/smallmargin"
+                android:gravity="center"
+                android:orientation="horizontal"></LinearLayout>
+        </HorizontalScrollView>
+        <!-- 常用服务号码 -->
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
