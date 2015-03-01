@@ -1,8 +1,5 @@
 package com.fang.call;
 
-import java.util.List;
-import java.util.Map;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +18,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +32,9 @@ import com.fang.logs.LogOperate;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
+
+import java.util.List;
+import java.util.Map;
 
 public class CallRecordDialog implements OnClickListener {
 
@@ -206,6 +207,8 @@ public class CallRecordDialog implements OnClickListener {
 		mSenderTextView.setText(senderString);
 		mTypeTip.setVisibility(View.GONE);
 		mTypeIcon.setImageBitmap(icon);
+        mTypeIcon.setLayoutParams(new LinearLayout.LayoutParams(Util.dip2px(mContext, 40), Util.dip2px(mContext, 40)));
+
 	}
 
 	// 填充内容

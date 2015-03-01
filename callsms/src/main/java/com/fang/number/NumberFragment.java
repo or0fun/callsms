@@ -1,6 +1,7 @@
 package com.fang.number;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
+import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
+import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
@@ -58,6 +61,9 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	String mNumberInfoString = "";
 	//粘贴板里的数据
 	String mPasteNumberString;
+
+    // 号码信息对话框
+    CallRecordDialog mCallRecordDialog;
 
 	protected Handler myHandler = new Handler() {
 		@Override
@@ -170,6 +176,19 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	protected void searchBtnClick() {
 		String str = mSearchEditView.getText().toString();
 		if (!str.equals(mNumberString) || StringUtil.isEmpty(mNumberInfoString)) {
+            if (null == mCallRecordDialog) {
+                mCallRecordDialog = new CallRecordDialog(mContext, str,
+                        ContactHelper.getPerson(mContext, str),
+                        BitmapFactory.decodeResource(
+                                mContext.getResources(), R.drawable.contact_photo));
+            } else {
+                mCallRecordDialog.setContent(str,
+                        ContactHelper.getPerson(mContext, str),
+                        BitmapFactory.decodeResource(
+                                mContext.getResources(), R.drawable.contact_photo));
+            }
+            mCallRecordDialog.show();
+
 			mResultTextView.setText(mContext.getString(R.string.number_seaching));
 			mNumberString = String.format("%s", str);
 			BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
