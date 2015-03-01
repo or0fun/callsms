@@ -1,7 +1,5 @@
 package com.fang.receiver;
 
-import java.util.List;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +9,7 @@ import android.os.IBinder;
 import android.os.Message;
 
 import com.fang.call.CallHelper;
+import com.fang.callsms.MainActivity;
 import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressHelper;
@@ -19,7 +18,12 @@ import com.fang.sms.SendSMSInfo;
 import com.fang.speach.SpeachHelper;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
+import com.fang.util.NetWorkUtil;
+import com.fang.util.NotifycationHelper;
+import com.fang.util.StringUtil;
 import com.fang.util.Util;
+
+import java.util.List;
 
 /**
  * 后台Service
@@ -31,6 +35,9 @@ public class MainService extends Service {
 
 	private final String TAG = "MainService";
 	private static Context mContext;
+    public static String TASK = "task";
+
+    public static int TASK_POST_WEATHER_NOTIFICATION = 1;
 	protected SMSContentObserver mSMSContentObserver;
 	protected ContactContentObserver mContactContentObserver;
 	/** 定时发送的短信 */
@@ -73,6 +80,13 @@ public class MainService extends Service {
 		
 		mHandler.sendEmptyMessageDelayed(MessageWhat.TIMER_REQUEST_EXPRESS, CustomConstant.QUARTER_HOUR);
 
+        //延时显示天气通知栏
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                postWeatherNotification();
+            }
+        }, 1000 * 10);
 	}
 
 	@Override
@@ -99,7 +113,16 @@ public class MainService extends Service {
 		}).start();
 	}
 
-	@Override
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        int task = intent.getIntExtra(TASK, 0);
+        if (TASK_POST_WEATHER_NOTIFICATION == task) {
+            postWeatherNotification();
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
 	public void onDestroy() {
 		super.onDestroy();
 		unregisterContentObservers();
@@ -146,4 +169,31 @@ public class MainService extends Service {
 			}
 		}
 	}
+
+    /**
+     * 显示天气的常驻通知栏
+     */
+    private void postWeatherNotification() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (NetWorkUtil.isNetworkAvailable(mContext)) {
+                    String weather = NetWorkUtil.getInstance().searchWeather();
+                    if (!StringUtil.isEmpty(weather)) {
+                        Intent notificationIntent = new Intent(
+                                mContext,
+                                MainActivity.class);
+                        String[] str = weather.split("\\|");
+                        Util.showResidentNotification(
+                                mContext,
+                                NotifycationHelper.WEATHER_ID,
+                                str[0],
+                                "明天" + str[1],
+                                notificationIntent);
+                    }
+                }
+            }
+        }).start();
+    }
 }

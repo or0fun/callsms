@@ -1,14 +1,5 @@
 package com.fang.util;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,6 +7,15 @@ import android.net.wifi.WifiManager;
 
 import com.fang.common.CustomConstant;
 import com.fang.security.AESUtil;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class NetWorkUtil {
 	private static final String TAG = "NetWorkUtil";
@@ -171,6 +171,19 @@ public class NetWorkUtil {
 		}
 		return infoString.trim();
 	}
+
+    /**
+     * 查询天气
+     */
+    public String searchWeather() {
+
+        String url = CustomConstant.API_URL + "?t=weather&w=&u=&e=1";
+        String infoString = getHttpRequest(url);
+        if (StringUtil.isEmpty(infoString)) {
+            return "";
+        }
+        return infoString.trim();
+    }
 
 	/**
 	 * 发起请求

@@ -444,6 +444,39 @@ public class Util {
 
 		notificationManager.notify(id, notification);
 	}
+    /**
+     * 显示通知栏
+     *
+     * @param context
+     * @param id
+     * @param title
+     * @param content
+     * @param notificationIntent
+     */
+    public static void showResidentNotification(Context context, int id, String title,
+                                        String content, Intent notificationIntent) {
+
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(ns);
+
+        // 定义Notification的各种属性
+        int icon = R.drawable.icon;
+        long when = System.currentTimeMillis();
+        Notification notification = new Notification(icon, content, when);
+
+        notification.sound = Uri.parse("android.resource://"
+                + context.getPackageName() + "/" + R.raw.notify);
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+
+        notification.flags |= Notification.FLAG_ONGOING_EVENT;
+
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                notificationIntent, 0);
+        notification.setLatestEventInfo(context, title, content, contentIntent);
+
+        notificationManager.notify(id, notification);
+    }
 
 	/**
 	 * 建立快捷方式
