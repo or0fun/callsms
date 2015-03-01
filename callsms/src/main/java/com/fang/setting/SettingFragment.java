@@ -12,6 +12,8 @@ import android.widget.Button;
 import com.fang.base.BaseFragment;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.logs.LogCode;
+import com.fang.logs.LogOperate;
 
 /**
  * 设置页面
@@ -45,6 +47,8 @@ public class SettingFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).checkUpdateVersion(true);
+                //记录日志
+                LogOperate.updateLog(mContext, LogCode.MANUAL_CHECK_UPDATE);
             }
         });
 

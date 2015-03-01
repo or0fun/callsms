@@ -46,6 +46,9 @@ public class SharedPreferencesHelper {
 
     /** 7天天气预报更新时间 */
     public static final String WEATHER_UPDATE_TIME = "WEATHER_UPDATE_TIME";
+
+    /** 查询的号码 */
+    public static final String NUMBER_SEARCH = "NUMBER_SEARCH";
 	
 	public static String getString(Context ctx, String key) {
 		

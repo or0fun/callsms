@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.logs.LogCode;
 import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.NotifycationHelper;
@@ -55,6 +56,7 @@ public class WeatherHelper {
                         Intent notificationIntent = new Intent(
                                 context,
                                 MainActivity.class);
+                        notificationIntent.putExtra(MainActivity.ENTRY_FROM, LogCode.WEATHER_NOTIFICATION_CLICK);
                         String[] str = weather.split("\\|");
                         Util.showResidentNotification(
                                 context,

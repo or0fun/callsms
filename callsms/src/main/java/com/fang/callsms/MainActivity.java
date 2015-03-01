@@ -44,6 +44,9 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private final String TAG = "MainActivity";
+
+    /** 来源 */
+    public static final String ENTRY_FROM = "ENTRY_FROM";
 	
 	private ViewPager mViewPager;
 	/** 电话按钮 */
@@ -224,6 +227,15 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		
 		//移除弹窗
 		sendBroadcast(new Intent(PhoneReceiver.ACTION_REMOVE));
+
+        //记录日志
+        Intent intent = getIntent();
+        if (null != intent) {
+            String from = intent.getStringExtra(ENTRY_FROM);
+            if ( LogCode.WEATHER_NOTIFICATION_CLICK.equals(from)) {
+                LogOperate.updateLog(mContext, LogCode.WEATHER_NOTIFICATION_CLICK);
+            }
+        }
 	}
 
 	@Override

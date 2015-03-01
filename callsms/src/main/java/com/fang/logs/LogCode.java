@@ -36,4 +36,8 @@ public class LogCode {
 	public final static String ACTIVE_APP = "10016";
 	/** 提交吐槽 */
 	public final static String COMMENT_SUBMIT = "10017";
+    /** 天气通知栏点击 */
+    public final static String WEATHER_NOTIFICATION_CLICK = "10018";
+    /** 手动检查更新 */
+    public final static String MANUAL_CHECK_UPDATE = "10019";
 }

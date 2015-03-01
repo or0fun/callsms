@@ -141,7 +141,11 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mSearchEditView.setText(str);
 			mPasteNumberString = str;
 			searchBtnClick();
-		}
+		} else {
+            str = SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NUMBER_SEARCH);
+            mSearchEditView.setText(str);
+            searchBtnClick();
+        }
 
         searchWeather();
 	}
@@ -193,6 +197,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mNumberString = String.format("%s", str);
 			BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
 		}
+        SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.NUMBER_SEARCH, str);
 		//日志
 		LogOperate.updateLog(mContext, LogCode.SEARCH_NUMBER);
 	}
