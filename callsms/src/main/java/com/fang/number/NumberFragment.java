@@ -144,7 +144,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		} else {
             str = SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NUMBER_SEARCH);
             mSearchEditView.setText(str);
-            searchBtnClick();
         }
 
         searchWeather();

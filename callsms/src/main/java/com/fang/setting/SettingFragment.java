@@ -2,18 +2,22 @@ package com.fang.setting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.util.DebugLog;
 
 /**
  * 设置页面
@@ -23,6 +27,7 @@ import com.fang.logs.LogOperate;
 public class SettingFragment extends BaseFragment {
 
 	protected Context mContext;
+    private final String TAG = "SettingFragment";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,13 @@ public class SettingFragment extends BaseFragment {
 			}
 		});
 
+        TextView version = (TextView) rootView.findViewById(R.id.version);
+        try {
+            PackageInfo info = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
+            version.setText(mContext.getString(R.string.app_name) + " "+ info.versionName + " | ");
+        } catch (PackageManager.NameNotFoundException e) {
+            DebugLog.e(TAG, e.toString());
+        }
         // 立即更新
         rootView.findViewById(R.id.check_update).setOnClickListener(new OnClickListener() {
             @Override

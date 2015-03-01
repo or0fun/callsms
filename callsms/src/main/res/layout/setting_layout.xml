@@ -92,6 +92,14 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/version"
+            style="@style/subText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/hint"/>
+
+        <TextView
             style="@style/subText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
