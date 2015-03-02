@@ -465,10 +465,6 @@ public class Util {
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, content, when);
 
-        notification.sound = Uri.parse("android.resource://"
-                + context.getPackageName() + "/" + R.raw.notify);
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
-
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
