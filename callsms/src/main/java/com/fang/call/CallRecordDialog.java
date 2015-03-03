@@ -29,6 +29,7 @@ import com.fang.callsms.R;
 import com.fang.controls.CustomDialog;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
@@ -38,6 +39,7 @@ import java.util.Map;
 
 public class CallRecordDialog implements OnClickListener {
 
+    private final String TAG = "CallRecordDialog";
 	public static final int MSG_REMOVE = 100;
 	protected View mView;
 	protected Context mContext;
@@ -318,6 +320,14 @@ public class CallRecordDialog implements OnClickListener {
 	 * @param number
 	 */
 	protected void addContact(String number) {
+        if (null == number) {
+            DebugLog.d(TAG, "addContact: number is null ");
+            return;
+        }
+
+        number = number.replace(" ", "");
+        number = number.replace("-", "");
+
 		Uri insertUri = android.provider.ContactsContract.Contacts.CONTENT_URI;
 		Intent intent = new Intent(Intent.ACTION_INSERT, insertUri);
 		intent.putExtra(android.provider.ContactsContract.Intents.Insert.PHONE,
