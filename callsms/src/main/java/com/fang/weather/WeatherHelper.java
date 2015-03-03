@@ -14,10 +14,9 @@ import com.fang.callsms.R;
 import com.fang.logs.LogCode;
 import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
-import com.fang.util.NotifycationHelper;
+import com.fang.util.NotificationHelper;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -58,9 +57,9 @@ public class WeatherHelper {
                                 MainActivity.class);
                         notificationIntent.putExtra(MainActivity.ENTRY_FROM, LogCode.WEATHER_NOTIFICATION_CLICK);
                         String[] str = weather.split("\\|");
-                        Util.showResidentNotification(
+                        NotificationHelper.showResidentNotification(
                                 context,
-                                NotifycationHelper.WEATHER_ID,
+                                NotificationHelper.TYPE.WEATHER_ID.ordinal(),
                                 str[0],
                                 "明天" + str[1],
                                 notificationIntent);

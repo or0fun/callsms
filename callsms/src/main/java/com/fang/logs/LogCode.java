@@ -40,4 +40,8 @@ public class LogCode {
     public final static String WEATHER_NOTIFICATION_CLICK = "10018";
     /** 手动检查更新 */
     public final static String MANUAL_CHECK_UPDATE = "10019";
+    /** 消息推送通知栏点击 */
+    public final static String PUSH_REQUEST_NOTIFICATION_CLICK = "10020";
+    /** 消息推送通知栏显示 */
+    public final static String PUSH_REQUEST_RECEIVED = "10021";
 }

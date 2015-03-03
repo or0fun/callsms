@@ -13,6 +13,7 @@ import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressHelper;
 import com.fang.net.ServerUtil;
+import com.fang.push.PushHelper;
 import com.fang.sms.SendSMSInfo;
 import com.fang.speach.SpeachHelper;
 import com.fang.util.DebugLog;
@@ -34,7 +35,6 @@ public class MainService extends Service {
 	private static Context mContext;
     public static String TASK = "task";
 
-    public static int TASK_POST_WEATHER_NOTIFICATION = 1;
 	protected SMSContentObserver mSMSContentObserver;
 	protected ContactContentObserver mContactContentObserver;
 	/** 定时发送的短信 */
@@ -112,9 +112,12 @@ public class MainService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (null != intent) {
-            int task = intent.getIntExtra(TASK, 0);
-            if (TASK_POST_WEATHER_NOTIFICATION == task) {
+            int task = intent.getIntExtra(TASK, -1);
+            DebugLog.d(TAG, "task = " + task);
+            if (TASK_TYPE.POST_WEATHER_NOTIFICATION.ordinal() == task) {
                 WeatherHelper.postWeatherNotification(mContext);
+            } else if (TASK_TYPE.PUSH_REQUEST.ordinal() == task) {
+                PushHelper.getInstance().checkPushRequest(mContext);
             }
         }
         return super.onStartCommand(intent, flags, startId);
@@ -167,5 +170,12 @@ public class MainService extends Service {
 			}
 		}
 	}
+
+    /** 任务类型 */
+    public enum TASK_TYPE {
+
+        POST_WEATHER_NOTIFICATION,//天气通知栏
+        PUSH_REQUEST//消息推送
+    }
 
 }

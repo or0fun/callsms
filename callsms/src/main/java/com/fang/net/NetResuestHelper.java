@@ -27,6 +27,8 @@ public class NetResuestHelper {
 	public static String COMMENT = "comment";
 	/** 获取吐槽 */
 	public static String GETCOMMENTS = "getcomments";
+    /** 消息推送 */
+    public static String PUSH = "push";
 	
 	private static int code = 0;
 	public static synchronized int getRequestCode() {

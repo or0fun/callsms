@@ -29,9 +29,11 @@ import com.fang.listener.IDownloadListener;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.number.NumberFragment;
+import com.fang.push.ActionType;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.setting.SettingFragment;
+import com.fang.util.DebugLog;
 import com.fang.util.MIUIHelper;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
@@ -47,6 +49,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
     /** 来源 */
     public static final String ENTRY_FROM = "ENTRY_FROM";
+    /** task行为 */
+    public static final String TASK_ACTION = "TASK_ACTION";
 	
 	private ViewPager mViewPager;
 	/** 电话按钮 */
@@ -126,7 +130,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		mTitleBar = (View) findViewById(R.id.titleBar);
+		mTitleBar = findViewById(R.id.titleBar);
 
 		mCallFragment = new CallFragment();
 		mSettingFragment = new SettingFragment();
@@ -209,7 +213,15 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		return true;
 	}
 
-	@Override
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //  处理消息
+        handleIntent(getIntent());
+    }
+
+    @Override
 	protected void onPause() {
 		super.onPause();
 	}
@@ -228,14 +240,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		//移除弹窗
 		sendBroadcast(new Intent(PhoneReceiver.ACTION_REMOVE));
 
-        //记录日志
-        Intent intent = getIntent();
-        if (null != intent) {
-            String from = intent.getStringExtra(ENTRY_FROM);
-            if ( LogCode.WEATHER_NOTIFICATION_CLICK.equals(from)) {
-                LogOperate.updateLog(mContext, LogCode.WEATHER_NOTIFICATION_CLICK);
-            }
-        }
 	}
 
 	@Override
@@ -360,14 +364,41 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		long now = new Date().getTime();
 		long last = SharedPreferencesHelper.getLong(mContext,
 				SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
-		SharedPreferencesHelper.setLong(mContext,
-				SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
 		if (manual || now - last > CustomConstant.ONE_DAY) {
 			UpdateVersion.checkVersion(mContext, manual, mDownloadListener);
-			//日志
-			LogOperate.updateLog(mContext, LogCode.ACTIVE_APP);
+
+            //保持时间
+            SharedPreferencesHelper.setLong(mContext,
+                    SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
+
+            //日志
+            LogOperate.updateLog(mContext, LogCode.ACTIVE_APP);
 		}
 	}
+
+    /**
+     * 处理传进来的Intent
+     * @param intent
+     */
+    private void handleIntent(Intent intent) {
+
+        if (null != intent) {
+            String from = intent.getStringExtra(ENTRY_FROM);
+            if (LogCode.WEATHER_NOTIFICATION_CLICK.equals(from)) {
+                LogOperate.updateLog(mContext, LogCode.WEATHER_NOTIFICATION_CLICK);
+            }
+
+            int task = intent.getIntExtra(TASK_ACTION, 0);
+            DebugLog.d(TAG, "handleIntent: task" + task);
+            if (task > 0) {
+                // 消息推送 通知栏点击
+                LogOperate.updateLog(mContext, LogCode.PUSH_REQUEST_NOTIFICATION_CLICK);
+                if (ActionType.NO_ACTION == task) {
+
+                }
+            }
+        }
+    }
 
 	/**
 	 * 下载监听

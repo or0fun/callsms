@@ -1,8 +1,5 @@
 package com.fang.express;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,6 +25,9 @@ import com.fang.logs.LogOperate;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.SharedPreferencesHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExpressListActivity extends BaseActivity {
 
@@ -206,7 +206,7 @@ public class ExpressListActivity extends BaseActivity {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			ExpressInfo info = (ExpressInfo) mExpressList.get(position);
+			ExpressInfo info = mExpressList.get(position);
 			holder.name.setText(info.getCompany());
 			holder.number.setText(info.getNumber());
 			holder.info.setText(info.getInfo());

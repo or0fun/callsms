@@ -82,7 +82,7 @@ public class BusinessHelper {
 					if (StringUtil.isEmpty(infoString) && NetWorkUtil.isNetworkAvailable(context)) {
 						infoString = NetWorkUtil.getInstance().searchPhone(context, number, ServerUtil.getInstance(context).getUserID());
 						NumberDatabaseManager.getInstance(context).update(number, infoString);
-                        DebugLog.d(TAG, number + ": " + infoString);
+                        DebugLog.d(TAG, "getNumberInfo:" + number + "= " + infoString);
 					}
                     len++;
 

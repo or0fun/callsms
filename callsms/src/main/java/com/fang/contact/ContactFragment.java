@@ -85,6 +85,8 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	private Button mSortByTimesbButton;
 	private TextView mTitleTextView;
 
+    private boolean mIsShowDalay = false;
+
 	Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -117,6 +119,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		mWindowManager = (WindowManager) mContext
 				.getSystemService(Context.WINDOW_SERVICE);
 		mContactPositionMapArray = new SparseIntArray();
+
 	}
 
 	@Override
@@ -150,7 +153,9 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			mSortByNameButton.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.sub_pressed));
 			mSortByTimesbButton.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.sub_normal));
 		}
-		
+
+        initOverlay();
+
 		mListView = (ListView) rootView.findViewById(R.id.list_view);
 		mLetterListView = (MyLetterListView) rootView
 				.findViewById(R.id.my_list_view);
@@ -183,8 +188,6 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				LogOperate.updateLog(mContext, LogCode.CONTACT_ITEM_CLICK);
 			}
 		});
-
-		initOverlay();
 
 		mListView.setOnScrollListener(new OnScrollListener() {
 
@@ -430,6 +433,10 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	 * 初始化选中的字母
 	 */
 	private void initOverlay() {
+        if (mIsShowDalay) {
+            DebugLog.e(TAG, "initOverlay: mIsShowDalay is true");
+            return;
+        }
 		LayoutInflater inflater = LayoutInflater.from(mContext);
 		mOverlay = (TextView) inflater.inflate(R.layout.contact_overlay, null);
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams(120,
@@ -439,6 +446,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				PixelFormat.TRANSLUCENT);
         try {
             mWindowManager.addView(mOverlay, lp);
+            mIsShowDalay = true;
         }catch (Exception e) {
             DebugLog.e(TAG, "initOverlay: " + e.toString());
         }
@@ -490,9 +498,6 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 
 	@Override
 	public void onDestroy() {
-		if (mWindowManager != null) {
-			mWindowManager.removeView(mOverlay);
-		}
 		super.onDestroy();
 	}
 
@@ -550,6 +555,10 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	public void onDestroyView() {
 		super.onDestroyView();
 		ContactHelper.unregisterListener(this);
+        if (mWindowManager != null && mIsShowDalay) {
+            mWindowManager.removeView(mOverlay);
+            mIsShowDalay = false;
+        }
 	}
 
 

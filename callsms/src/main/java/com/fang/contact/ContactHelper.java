@@ -1,12 +1,5 @@
 package com.fang.contact;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -23,6 +16,13 @@ import android.text.TextUtils;
 
 import com.fang.call.CallHelper;
 import com.fang.callsms.R;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 通讯录帮助类
@@ -51,6 +51,8 @@ public class ContactHelper {
 	public static final String PARAM_TIMES_CONTACTED = "total_contacted";
 	
 	private static boolean mHasReaded = false;
+
+    private static Bitmap mDefaultBitmap;
 
 	/** 按名字排序通讯录数据 */
 	private static List<HashMap<String, Object>> mByNameList = new ArrayList<HashMap<String, Object>>();
@@ -225,8 +227,11 @@ public class ContactHelper {
 							.openContactPhotoInputStream(resolver, uri);
 					contactPhoto = BitmapFactory.decodeStream(input);
 				} else {
-					contactPhoto = BitmapFactory.decodeResource(
-							context.getResources(), R.drawable.contact_photo);
+                    if (null == mDefaultBitmap) {
+                        mDefaultBitmap = BitmapFactory.decodeResource(
+                                context.getResources(), R.drawable.contact_photo);
+                    }
+					contactPhoto = mDefaultBitmap;
 				}
 				map.put(ContactHelper.PARAM_PHOTO_ID, contactPhoto);
 				map.put(ContactHelper.PARAM_LAST_RECORD_DATE,

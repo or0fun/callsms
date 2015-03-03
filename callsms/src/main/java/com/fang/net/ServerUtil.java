@@ -1,9 +1,15 @@
 package com.fang.net;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.util.Log;
+
+import com.fang.common.CustomConstant;
+import com.fang.security.AESUtil;
+import com.fang.security.SecurityHelper;
+import com.fang.util.JsonUtil;
+import com.fang.util.NetWorkUtil;
+import com.fang.util.SharedPreferencesHelper;
+import com.fang.util.Util;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -18,16 +24,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.fang.common.CustomConstant;
-import com.fang.security.AESUtil;
-import com.fang.security.SecurityHelper;
-import com.fang.util.JsonUtil;
-import com.fang.util.NetWorkUtil;
-import com.fang.util.SharedPreferencesHelper;
-import com.fang.util.Util;
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerUtil implements Runnable {
 
@@ -90,7 +90,7 @@ public class ServerUtil implements Runnable {
 					}
 				}
 				//正常的上传地址，不是获取用户ID的情况下，当用户ID不存在时先存进离线数据
-				else if (mUserID == null && request.getUrl().equals(CustomConstant.DEFAULT_POST_URL)
+				else if (mUserID == null && request.getUrl().equals(getPostUrl())
 						&& request.getValue() != null && !request.getValue().getName().equals(NetResuestHelper.USER_ID)) {
 					result.setResultCode(NetRequestResultCode.NO_USER_ID);
 					if (request.getRequestType() == NetRequestConstant.TYPE_POST) {
@@ -151,7 +151,7 @@ public class ServerUtil implements Runnable {
 	public void request(String key, String value, NetRequestListener listener) {
 		if (null != key) {
 			NetRequest request = new NetRequest();
-			request.setUrl(CustomConstant.DEFAULT_POST_URL);
+			request.setUrl(getPostUrl());
 			request.setRequestType(NetRequestConstant.TYPE_POST);
 			request.setRequestCode(NetResuestHelper.getRequestCode());
 			final NameValuePair nl = new BasicNameValuePair(key, value);
@@ -168,7 +168,7 @@ public class ServerUtil implements Runnable {
 	public void request(String key, NetRequestListener listener) {
 		if (null != key) {
 			NetRequest request = new NetRequest();
-			request.setUrl(CustomConstant.DEFAULT_POST_URL);
+			request.setUrl(getPostUrl());
 			request.setRequestType(NetRequestConstant.TYPE_POST);
 			request.setRequestCode(NetResuestHelper.getRequestCode());
 			final NameValuePair nl = new BasicNameValuePair(key, "");
@@ -179,13 +179,13 @@ public class ServerUtil implements Runnable {
 	/**
 	 * 请求数据
 	 * 
-	 * @param key
+	 * @param nameValuePair
 	 * @param listener
 	 */
 	public void request(NameValuePair nameValuePair, NetRequestListener listener) {
 		if (null == nameValuePair) {
 			NetRequest request = new NetRequest();
-			request.setUrl(CustomConstant.DEFAULT_POST_URL);
+			request.setUrl(getPostUrl());
 			request.setRequestType(NetRequestConstant.TYPE_POST);
 			request.setRequestCode(NetResuestHelper.getRequestCode());
 			request.setValue(nameValuePair);
@@ -208,7 +208,6 @@ public class ServerUtil implements Runnable {
 	 * 
 	 * @param url
 	 * @param params
-	 * @param h
 	 * @return
 	 */
 	private NetRequestResult postHttpRequest(String url,
@@ -351,4 +350,15 @@ public class ServerUtil implements Runnable {
 	public String getUserID() {
 		return mUserID;
 	}
+
+    /**
+     * 获取api地址
+     * @return
+     */
+    private String getPostUrl() {
+        if (CustomConstant.DEBUG) {
+            return  CustomConstant.DEFAULT_POST_URL_TEST;
+        }
+        return CustomConstant.DEFAULT_POST_URL;
+    }
 }

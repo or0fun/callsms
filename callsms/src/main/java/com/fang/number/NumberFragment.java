@@ -223,15 +223,19 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
      * @param weather
      */
     private void handlerWeather(String weather) {
-        int index = weather.indexOf(" ");
-        String city = weather.substring(0, index);
-        weather = weather.substring(index + 1);
-        mWeatherCity.setText( city + " " +  mContext.getString(R.string.number_weather));
-        String[] str = weather.split("\\|");
+        if(null != weather) {
+            int index = weather.indexOf(" ");
+            if (index > 0) {
+                String city = weather.substring(0, index);
+                weather = weather.substring(index + 1);
+                mWeatherCity.setText( city + " " +  mContext.getString(R.string.number_weather));
+                String[] str = weather.split("\\|");
 
-        mWeatherList.removeAllViews();
-        for (int i = 0; i < str.length; i++) {
-            mWeatherList.addView(WeatherHelper.createWeatherItem(mContext, str[i], i));
+                mWeatherList.removeAllViews();
+                for (int i = 0; i < str.length; i++) {
+                    mWeatherList.addView(WeatherHelper.createWeatherItem(mContext, str[i], i));
+                }
+            }
         }
     }
 

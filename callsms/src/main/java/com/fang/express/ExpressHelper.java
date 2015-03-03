@@ -1,7 +1,5 @@
 package com.fang.express;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 
@@ -12,9 +10,10 @@ import com.fang.net.IResponseListener;
 import com.fang.net.ResponseInfo;
 import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
-import com.fang.util.NotifycationHelper;
+import com.fang.util.NotificationHelper;
 import com.fang.util.SharedPreferencesHelper;
-import com.fang.util.Util;
+
+import java.util.List;
 
 /**
  * 快递帮助类
@@ -103,15 +102,16 @@ public class ExpressHelper {
 												Intent notificationIntent = new Intent(
 														context,
 														ExpressListActivity.class);
-												Util.showNotification(
-														context,
-														NotifycationHelper.EXPRESS_ID,
-														NOTIFY_TITLE
-																+ "-"
-																+ expressInfo
-																		.getCompany(),
-														content,
-														notificationIntent);
+												NotificationHelper.showNotification(
+                                                        context,
+                                                        NotificationHelper.TYPE.EXPRESS_ID.ordinal(),
+                                                        NOTIFY_TITLE
+                                                                + "-"
+                                                                + expressInfo
+                                                                .getCompany(),
+                                                        content,
+                                                        notificationIntent,
+                                                        true);
 												// 日志上传
 												LogOperate.updateLog(context, LogCode.NOTIFY_EXPRESS_CHANGED);
 											}
