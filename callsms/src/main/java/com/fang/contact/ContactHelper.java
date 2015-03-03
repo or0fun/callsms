@@ -16,6 +16,8 @@ import android.text.TextUtils;
 
 import com.fang.call.CallHelper;
 import com.fang.callsms.R;
+import com.fang.util.DebugLog;
+import com.fang.util.StringUtil;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ import java.util.List;
  * 
  */
 public class ContactHelper {
+
+    private static final String TAG = "ContactHelper";
 
 	public static final int ID = 0;
 	public static final int NAME = 1;
@@ -133,23 +137,62 @@ public class ContactHelper {
 	 * @return
 	 */
 	public static String getPerson(Context context, String num) {
-		Cursor cursorOriginal = context
-				.getContentResolver()
-				.query(getContactURI(),
-						new String[] { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME },
-						ContactsContract.CommonDataKinds.Phone.NUMBER
-								+ " like '%" + num + "'", null, null);
-		String name = "";
-		if (null != cursorOriginal) {
-			if (cursorOriginal.moveToFirst()) {
-				name = cursorOriginal
-						.getString(cursorOriginal
-								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-			}
-			cursorOriginal.close();
-		}
+        String name = "";
+
+        if (StringUtil.isEmpty(num)) {
+            return name;
+        }
+
+		name = getPersonOnce(context, num);
+
+        if (StringUtil.isEmpty(name)) {
+            if (num.contains(" ")) {
+                num = num.replace(" ", "");
+            } else if (num.contains("-")) {
+                num = num.replace("-", "");
+            } else {
+                if (num.length() == 11) {
+                    num = num.substring(0, 3) + " " + num.substring(3, 7) + " "
+                                    + num.substring(7, 11);
+                } else if (num.length() == 12) {
+                    num = num.substring(0, 4) + " " + num.substring(4, 8) + " "
+                                    + num.substring(8, 12);
+                }
+            }
+            name = getPersonOnce(context, num);
+        }
 		return name;
 	}
+
+    /**
+     * 获取姓名
+     * @param context
+     * @param num
+     * @return
+     */
+    private static String getPersonOnce(Context context, String num) {
+        String name = "";
+
+        if (StringUtil.isEmpty(num)) {
+            return name;
+        }
+        Cursor cursorOriginal = context
+                .getContentResolver()
+                .query(getContactURI(),
+                        new String[] { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME },
+                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                                + " like '%" + num + "'", null, null);
+
+        if (null != cursorOriginal) {
+            if (cursorOriginal.moveToFirst()) {
+                name = cursorOriginal
+                        .getString(cursorOriginal
+                                .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            }
+            cursorOriginal.close();
+        }
+        return name;
+    }
 
 	/**
 	 * 获取通讯录URI
@@ -178,6 +221,14 @@ public class ContactHelper {
 	 * @param number
 	 */
 	public static void addContact(Context context, String number) {
+        if (null == number) {
+            DebugLog.d(TAG, "addContact: number is null ");
+            return;
+        }
+
+        number = number.replace(" ", "");
+        number = number.replace("-", "");
+
 		Uri insertUri = android.provider.ContactsContract.Contacts.CONTENT_URI;
 		Intent intent = new Intent(Intent.ACTION_INSERT, insertUri);
 		intent.putExtra(android.provider.ContactsContract.Intents.Insert.PHONE,

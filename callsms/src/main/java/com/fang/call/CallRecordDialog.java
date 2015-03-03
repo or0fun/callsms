@@ -26,10 +26,10 @@ import android.widget.Toast;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.contact.ContactHelper;
 import com.fang.controls.CustomDialog;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
@@ -315,29 +315,6 @@ public class CallRecordDialog implements OnClickListener {
 	}
 
 	/**
-	 * 跳转到添加联系人
-	 * 
-	 * @param number
-	 */
-	protected void addContact(String number) {
-        if (null == number) {
-            DebugLog.d(TAG, "addContact: number is null ");
-            return;
-        }
-
-        number = number.replace(" ", "");
-        number = number.replace("-", "");
-
-		Uri insertUri = android.provider.ContactsContract.Contacts.CONTENT_URI;
-		Intent intent = new Intent(Intent.ACTION_INSERT, insertUri);
-		intent.putExtra(android.provider.ContactsContract.Intents.Insert.PHONE,
-				number);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-				| Intent.FLAG_ACTIVITY_NEW_TASK);
-		mContext.startActivity(intent);
-	}
-
-	/**
 	 * 跳转到回复
 	 * 
 	 * @param number
@@ -364,7 +341,7 @@ public class CallRecordDialog implements OnClickListener {
 			// 复制姓名或者添加为联系人
 			if (null == mNameString || mNameString == "") {
 				remove();
-				addContact(mNumberString);
+                ContactHelper.addContact(mContext, mNumberString);
 			} else {
 				copyName();
 			}
