@@ -181,13 +181,13 @@ public class CallHelper {
 			public void run() {
 				StringBuffer result = new StringBuffer();
 				int t = getCallTimes(context, number,
-						CallLog.Calls.INCOMING_TYPE);
+                        CallLogType.INCOMING_TYPE);
 				result.append(String.format("来电%d次", t));
 
-				t = getCallTimes(context, number, CallLog.Calls.OUTGOING_TYPE);
+				t = getCallTimes(context, number, CallLogType.OUTGOING_TYPE);
 				result.append(String.format(" 拨出%d次", t));
 
-				t = getCallTimes(context, number, CallLog.Calls.MISSED_TYPE);
+				t = getCallTimes(context, number, CallLogType.MISSED_TYPE);
 				result.append(String.format(" 未接来电%d次", t));
 				if (null != handler) {
 					handler.sendMessage(handler.obtainMessage(
@@ -233,25 +233,12 @@ public class CallHelper {
 							callRecord.put(PARAM_ID, id);
 
 							// 类型
-							switch (Integer.parseInt(cursor.getString(cursor
-									.getColumnIndex(Calls.TYPE)))) {
-							case Calls.INCOMING_TYPE:
-								callRecord.put(PARAM_ICON, R.drawable.incoming_type);
-								break;
-							case Calls.OUTGOING_TYPE:
-								callRecord.put(PARAM_ICON, R.drawable.outgoing_type);
-								break;
-							case Calls.MISSED_TYPE:
-								callRecord.put(PARAM_ICON, R.drawable.missed_type);
-								break;
-							default:
-								callRecord.put(PARAM_ICON, R.drawable.incoming_type);
-								break;
-							}
-							
-							callRecord.put(PARAM_TYPE, 
-									Integer.parseInt(cursor.getString(cursor
-											.getColumnIndex(Calls.TYPE))));
+                            int callType = Integer.parseInt(cursor.getString(cursor
+                                    .getColumnIndex(Calls.TYPE)));
+                            callRecord.put(PARAM_TYPE, callType);
+                            //icon
+                            callRecord.put(PARAM_ICON, getIcon(callType));
+
 							callRecord.put(
 									PARAM_DATE,
 									Util.longDateToStringDate(Long.parseLong(cursor.getString(cursor
@@ -292,7 +279,7 @@ public class CallHelper {
 			if (cursor.moveToFirst()) {
 				switch (Integer.parseInt(cursor.getString(cursor
 						.getColumnIndex(Calls.TYPE)))) {
-				case Calls.MISSED_TYPE:
+				case CallLogType.MISSED_TYPE:
 					isMissCall = true;
 					break;
 				}
@@ -386,9 +373,10 @@ public class CallHelper {
 					}
 
 					callRecord.put(PARAM_ID, id);
+                    //号码
 					callRecord.put(PARAM_NUMBER, numberString);
 
-					// 联系人
+					// 联系人姓名
 					String nameString = cursor.getString(cursor
 							.getColumnIndexOrThrow(Calls.CACHED_NAME));
 					if (StringUtil.isEmpty(nameString)) {
@@ -401,30 +389,21 @@ public class CallHelper {
 						callRecord.put(PARAM_NAME, nameString);
 					}
 					// 类型
-					switch (Integer.parseInt(cursor.getString(cursor
-							.getColumnIndex(Calls.TYPE)))) {
-					case Calls.INCOMING_TYPE:
-						callRecord.put(PARAM_ICON, R.drawable.incoming_type);
-						break;
-					case Calls.OUTGOING_TYPE:
-						callRecord.put(PARAM_ICON, R.drawable.outgoing_type);
-						break;
-					case Calls.MISSED_TYPE:
-						callRecord.put(PARAM_ICON, R.drawable.missed_type);
-						break;
-					default:
-						callRecord.put(PARAM_ICON, R.drawable.incoming_type);
-						break;
-					}
-					callRecord.put(PARAM_TYPE, Integer.parseInt(cursor
-							.getString(cursor.getColumnIndex(Calls.TYPE))));
+                    int callType = Integer.parseInt(cursor.getString(cursor
+                            .getColumnIndex(Calls.TYPE)));
+                    callRecord.put(PARAM_TYPE, callType);
+                    //icon
+                    callRecord.put(PARAM_ICON, getIcon(callType));
+                    //日期
 					callRecord.put(PARAM_DATE, cursor.getString(cursor
 									.getColumnIndexOrThrow(Calls.DATE)));
 					long duration = Long.parseLong(cursor.getString(cursor
 							.getColumnIndexOrThrow(Calls.DURATION)));
 
+                    //时长
 					callRecord.put(PARAM_DURATION,
 							Util.secondsToString(duration));
+                    //信息
 					callRecord.put(
 							PARAM_INFO,
 							NumberDatabaseManager.getInstance(context).query(
@@ -432,6 +411,7 @@ public class CallHelper {
 
 				} while (cursor.moveToNext());
 				if (null != callRecord) {
+                    //次数
 					callRecord.put(PARAM_COUNT, count);
 					callRecords.add(callRecord);
 					number++;
@@ -460,15 +440,18 @@ public class CallHelper {
 
 		String tip = "";
 		switch (callType) {
-		case Calls.INCOMING_TYPE:
+		case CallLogType.INCOMING_TYPE:
 			tip = context.getString(R.string.record_incoming);
 			break;
-		case Calls.OUTGOING_TYPE:
+		case CallLogType.OUTGOING_TYPE:
 			tip = context.getString(R.string.record_outgoing);
 			break;
-		case Calls.MISSED_TYPE:
+		case CallLogType.MISSED_TYPE:
 			tip = context.getString(R.string.record_missed);
 			break;
+        case CallLogType.ADD_TYPE:
+            tip = context.getString(R.string.record_add);
+            break;
 		default:
 			tip = context.getString(R.string.record_idle);// 应该是挂断.根据我手机类型判断出的
 			break;
@@ -487,13 +470,13 @@ public class CallHelper {
 
 		int color = context.getResources().getColor(R.color.black);
 		switch (callType) {
-		case Calls.INCOMING_TYPE:
+		case CallLogType.INCOMING_TYPE:
 			color = context.getResources().getColor(R.color.incoming);
 			break;
-		case Calls.OUTGOING_TYPE:
+		case CallLogType.OUTGOING_TYPE:
 			color = context.getResources().getColor(R.color.outgoing);
 			break;
-		case Calls.MISSED_TYPE:
+		case CallLogType.MISSED_TYPE:
 			color = context.getResources().getColor(R.color.missed);
 			break;
 		}
@@ -506,6 +489,24 @@ public class CallHelper {
 
 	public static void setHasRead(boolean isHasRead) {
 		CallHelper.isHasRead = isHasRead;
-	}	
-	
+	}
+
+    /**
+     * 根据类型获取icon
+     * @param callType
+     */
+    private static int getIcon(int callType) {
+        switch (callType) {
+            case CallLogType.INCOMING_TYPE:
+                return R.drawable.incoming_type;
+            case CallLogType.OUTGOING_TYPE:
+                return R.drawable.outgoing_type;
+            case CallLogType.MISSED_TYPE:
+                return R.drawable.missed_type;
+            case CallLogType.ADD_TYPE:
+                return R.drawable.add_type;
+            default:
+                return R.drawable.incoming_type;
+        }
+    }
 }

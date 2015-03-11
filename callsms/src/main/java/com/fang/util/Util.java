@@ -7,8 +7,6 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.ContentResolver;
@@ -41,9 +39,7 @@ import java.util.Locale;
 
 public class Util {
 
-	public static String INCOMING_TYPE = "INCOMING_TYPE";
-	public static String OUTGOING_TYPE = "OUTGOING_TYPE";
-	public static String MISSED_TYPE = "MISSED_TYPE";
+    private static final String TAG = "Util";
 
 	/**
 	 * 复制
@@ -290,7 +286,7 @@ public class Util {
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
 				requestCode, intent, 0);
 		am.set(AlarmManager.RTC_WAKEUP, l, pendingIntent);
-		DebugLog.d("haha", "register" + requestCode + "  " + l / 1000);
+		DebugLog.d(TAG, "register" + requestCode + "  " + l / 1000);
 	}
 
 	/**
@@ -306,7 +302,7 @@ public class Util {
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
 				requestCode, intent, 0);
 		am.cancel(pendingIntent);
-		DebugLog.d("haha", "cancel" + requestCode);
+		DebugLog.d(TAG, "cancel" + requestCode);
 	}
 
 	/**

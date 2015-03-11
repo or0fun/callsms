@@ -1,8 +1,5 @@
 package com.fang.call;
 
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,9 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.util.StringUtil;
+
+import java.util.List;
+import java.util.Map;
 
 public class SingleNumberRecordAdapter extends BaseAdapter {
 	
@@ -71,12 +71,16 @@ public class SingleNumberRecordAdapter extends BaseAdapter {
 		holder.duration.setTextColor(color);
 		
 		holder.icon.setImageResource((Integer)record.get(CallHelper.PARAM_ICON));
-		if (null == record.get(CallHelper.PARAM_DURATION)
-				|| StringUtil.isEmpty(record.get(CallHelper.PARAM_DURATION).toString())) {
-			holder.duration.setText("未接通");
-		}else {
-			holder.duration.setText(record.get(CallHelper.PARAM_DURATION).toString());
-		}
+
+        if (StringUtil.isEmpty(record.get(CallHelper.PARAM_DURATION).toString())) {
+            if (callType == CallLogType.ADD_TYPE) {
+                holder.duration.setText("新建");
+            }else {
+                holder.duration.setText("未接通");
+            }
+        } else {
+            holder.duration.setText(record.get(CallHelper.PARAM_DURATION).toString());
+        }
 		
 		return convertView;
 	}
