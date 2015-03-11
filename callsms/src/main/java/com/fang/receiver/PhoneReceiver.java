@@ -185,7 +185,10 @@ public class PhoneReceiver extends BroadcastReceiver {
 				phoneStateListener.onResult(callType, mPhoneNumber);
 			}
 		}
-		
+		//更新通话记录内存
 		CallHelper.setHasRead(false);
+        Intent serviceIntent = new Intent(mContext, MainService.class);
+        serviceIntent.putExtra(MainService.TASK, MainService.TASK_TYPE.REFRESH_CALL_RECORDS);
+        mContext.startService(serviceIntent);
 	}
 }

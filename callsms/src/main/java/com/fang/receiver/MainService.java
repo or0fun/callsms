@@ -118,6 +118,22 @@ public class MainService extends Service {
                 WeatherHelper.postWeatherNotification(mContext);
             } else if (TASK_TYPE.PUSH_REQUEST.ordinal() == task) {
                 PushHelper.getInstance().checkPushRequest(mContext);
+            } else if (TASK_TYPE.REFRESH_CALL_RECORDS.ordinal() == task) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //获取通话记录
+                        CallHelper.getCallRecordsList(mContext);
+                    }
+                }).start();
+            } else if (TASK_TYPE.REFRESH_CONTACTS.ordinal() == task) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //获取通讯录
+                        ContactHelper.readContact(mContext);
+                    }
+                }).start();
             }
         }
         return super.onStartCommand(intent, flags, startId);
@@ -175,7 +191,9 @@ public class MainService extends Service {
     public enum TASK_TYPE {
 
         POST_WEATHER_NOTIFICATION,//天气通知栏
-        PUSH_REQUEST//消息推送
+        PUSH_REQUEST,//消息推送
+        REFRESH_CALL_RECORDS,//更新通话记录
+        REFRESH_CONTACTS,//更新通讯录
     }
 
 }
