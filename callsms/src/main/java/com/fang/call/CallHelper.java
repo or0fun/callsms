@@ -11,6 +11,7 @@ import android.provider.CallLog.Calls;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.database.NumberDatabaseManager;
+import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
@@ -29,9 +30,7 @@ import java.util.Map;
  */
 public class CallHelper {
 
-	public static String INCOMING_TYPE = "INCOMING_TYPE";
-	public static String OUTGOING_TYPE = "OUTGOING_TYPE";
-	public static String MISSED_TYPE = "MISSED_TYPE";
+    private static final String TAG = "CallHelper";
 
 	public static final String PARAM_ID = "id";
 	public static final String PARAM_NAME = "name";
@@ -44,6 +43,8 @@ public class CallHelper {
 	public static final String PARAM_COUNT = "count";
 	
 	private static boolean isHasRead = false;
+
+    private static boolean isReading = false;
 	
 	protected static List<Map<String, Object>> mAllCallRecords = new ArrayList<Map<String,Object>>();
 	
@@ -334,6 +335,11 @@ public class CallHelper {
 	 * @return
 	 */
 	public static void getCallRecordsList(Context context) {
+        DebugLog.d(TAG, "getCallRecordsList");
+        if (isReading) {
+            DebugLog.d(TAG, "getCallRecordsList: isReading is true");
+            return;
+        }
 		if (null == context || isHasRead) {
 			for (ICallRecordListener listener : mCallRecordListeners) {
 				listener.onResult(true);
@@ -341,6 +347,7 @@ public class CallHelper {
 			return;
 		}
 
+        isReading = true;
 		String sortOrder = String.format("%s desc", CallLog.Calls.DATE);
 		Cursor cursor = context.getContentResolver().query(
 				CallLog.Calls.CONTENT_URI, CALL_RECORD_PARAMETERS, null, null,
@@ -426,6 +433,7 @@ public class CallHelper {
 			}
 			
 			CallHelper.setHasRead(true);
+            isReading = false;
 		}
 	}
 
@@ -488,6 +496,7 @@ public class CallHelper {
 	}
 
 	public static void setHasRead(boolean isHasRead) {
+        DebugLog.d(TAG, "setHasRead: isHasRead = " + isHasRead);
 		CallHelper.isHasRead = isHasRead;
 	}
 

@@ -83,6 +83,21 @@ public class MainService extends Service {
                 WeatherHelper.postWeatherNotification(mContext);
             }
         }, 1000 * 10);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //获取通讯录
+                ContactHelper.readContact(mContext);
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //获取通话记录
+                CallHelper.getCallRecordsList(mContext);
+            }
+        }).start();
 	}
 
 	@Override
@@ -93,20 +108,6 @@ public class MainService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				//获取通讯录
-				ContactHelper.readContact(mContext);
-			}
-		}).start();
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				//获取通话记录
-				CallHelper.getCallRecordsList(mContext);
-			}
-		}).start();
 	}
 
     @Override

@@ -511,6 +511,9 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		if (null == mAdapter) {
 			return;
 		}
+        if (null == text || text.length() == 0) {
+            return;
+        }
 		mContactPositionMapArray.clear();
 		int len = mList.size();
 		int positon = 0;

@@ -163,7 +163,12 @@ public class PhoneReceiver extends BroadcastReceiver {
 					//}
 				}
 				callType = CALL_STATE_IDLE;
-				
+
+                //更新通话记录内存
+                CallHelper.setHasRead(false);
+                Intent serviceIntent = new Intent(mContext, MainService.class);
+                serviceIntent.putExtra(MainService.TASK, MainService.TASK_TYPE.REFRESH_CALL_RECORDS);
+                mContext.startService(serviceIntent);
 				break;
 			case TelephonyManager.CALL_STATE_RINGING: // 来电
 				DebugLog.d(TAG, "CALL_STATE_RINGING");
@@ -185,10 +190,5 @@ public class PhoneReceiver extends BroadcastReceiver {
 				phoneStateListener.onResult(callType, mPhoneNumber);
 			}
 		}
-		//更新通话记录内存
-		CallHelper.setHasRead(false);
-        Intent serviceIntent = new Intent(mContext, MainService.class);
-        serviceIntent.putExtra(MainService.TASK, MainService.TASK_TYPE.REFRESH_CALL_RECORDS);
-        mContext.startService(serviceIntent);
 	}
 }

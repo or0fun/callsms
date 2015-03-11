@@ -56,6 +56,8 @@ public class ContactHelper {
 	
 	private static boolean mHasReaded = false;
 
+    private static boolean isReading = false;
+
     private static Bitmap mDefaultBitmap;
 
 	/** 按名字排序通讯录数据 */
@@ -242,12 +244,18 @@ public class ContactHelper {
 	 * 读取通讯录
 	 */
 	public static void readContact(Context context) {
-		if (mHasReaded) {
+        if (isReading) {
+            DebugLog.d(TAG, "readContact: isReading is true");
+            return;
+        }
+		if (null == context || mHasReaded) {
 			for (IContactListener listener : mconContactListeners) {
 				listener.onResult(true);
 			}
 			return;
 		}
+
+        isReading = true;
 		Uri contactURI = ContactHelper.getContactURI();
 		String[] projection = ContactHelper.getProjection();
 
@@ -303,6 +311,7 @@ public class ContactHelper {
 			listener.onResult(true);
 		}
 		ContactHelper.setReaded(true);
+        isReading = false;
 	}
 
 	/**
