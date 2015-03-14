@@ -35,7 +35,9 @@
     <EditText
         android:id="@+id/search"
         style="@style/singleLineEdit"
-        android:hint="@string/sms_search" >
+        android:hint="@string/sms_search"
+        android:focusable="true"
+        android:enabled="true">
     </EditText>
 
     <RelativeLayout

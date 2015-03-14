@@ -10,12 +10,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -218,15 +216,6 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			}
 		});
 
-        mSearchEditText.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager inputManager =
-                        (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.showSoftInput(mSearchEditText, InputMethodManager.SHOW_FORCED);
-                return true;
-            }
-        });
 		DebugLog.d(TAG, "onCreateView");
 		return rootView;
 	}

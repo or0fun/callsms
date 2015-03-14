@@ -69,8 +69,8 @@
     <dimen name="dialog_icon_width">40dp</dimen>
     <dimen name="dialog_icon_height">40dp</dimen>
     <!-- switch -->
-    <dimen name="switch_width">116dp</dimen>
-    <dimen name="switch_height">36dp</dimen>
+    <dimen name="switch_width">58dp</dimen>
+    <dimen name="switch_height">30dp</dimen>
     <!-- item 高度 -->
     <dimen name="record_list_item_height">30dp</dimen>
     <!-- 弹窗通话记录高度 -->

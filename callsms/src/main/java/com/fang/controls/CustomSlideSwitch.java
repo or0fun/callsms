@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -72,16 +73,12 @@ public class CustomSlideSwitch extends View {
 				R.drawable.bg_switch_off);
 		mSwitch_on = BitmapFactory.decodeResource(res, R.drawable.bg_switch_on);
 		mSwitch_thumb = BitmapFactory.decodeResource(res,
-				R.drawable.switch_thumb);
-		mBmpWidth = mSwitch_on.getWidth();
-		mBmpHeight = mSwitch_on.getHeight();
+                R.drawable.switch_thumb);
 		mThumbWidth = mSwitch_thumb.getWidth();
 	}
 
 	@Override
 	public void setLayoutParams(LayoutParams params) {
-		params.width = mBmpWidth;
-		params.height = mBmpHeight;
 		super.setLayoutParams(params);
 	}
 
@@ -145,10 +142,20 @@ public class CustomSlideSwitch extends View {
 		// 绘图的时候 内部用到了一些数值的硬编码，其实不太好，
 		// 主要是考虑到图片的原因，图片周围有透明边界，所以要有一定的偏移
 		// 硬编码的数值只要看懂了代码，其实可以理解其含义，可以做相应改进。
+        mBmpWidth = getWidth();
+        mBmpHeight = getHeight();
+
 		mPaint.setTextSize(14);
 		mPaint.setTypeface(Typeface.DEFAULT_BOLD);
 
-		if (mSwitchStatus == SWITCH_OFF) {
+        Matrix matrix = new Matrix();
+        matrix.postScale(mBmpWidth * 1.0f / mSwitch_off.getWidth(), mBmpHeight * 1.0f / mSwitch_off.getHeight());
+        mSwitch_off = Bitmap.createBitmap(mSwitch_off, 0, 0, mSwitch_off.getWidth(), mSwitch_off.getHeight(),
+                matrix, true);
+        mSwitch_on = Bitmap.createBitmap(mSwitch_on, 0, 0, mSwitch_on.getWidth(), mSwitch_on.getHeight(),
+                matrix, true);
+
+        if (mSwitchStatus == SWITCH_OFF) {
 			drawBitmap(canvas, null, null, mSwitch_off);
 			drawBitmap(canvas, null, null, mSwitch_thumb);
 			mPaint.setColor(Color.rgb(105, 105, 105));
