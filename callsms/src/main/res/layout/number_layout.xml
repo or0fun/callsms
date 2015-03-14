@@ -70,6 +70,20 @@
             android:layout_weight="1" >
         </TextView>
 
+        <!-- 历史上的今天 -->
+        <TextView
+            android:id="@+id/today"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green" >
+        </TextView>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/yt_line" >
+        </ImageView>
+
         <!-- 天气预报 -->
         <TextView
             android:id="@+id/weather_city"

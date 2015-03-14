@@ -23,4 +23,7 @@ public class MessageWhat {
 	
 	/* 最近一次通话时间*/
 	public static final int MSG_LAST_RECORD_DATE = 1009;
+
+    /* 查农历 */
+    public static final int NET_REQUEST_NONGLI = 1010;
 }

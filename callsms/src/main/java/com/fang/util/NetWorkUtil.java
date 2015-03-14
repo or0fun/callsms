@@ -185,6 +185,19 @@ public class NetWorkUtil {
         return infoString.trim();
     }
 
+    /**
+     * 查询农历
+     */
+    public String searchNongli() {
+
+        String url = CustomConstant.API_URL + "?t=nongli&w=&u=&e=1";
+        String infoString = getHttpRequest(url);
+        if (StringUtil.isEmpty(infoString)) {
+            return "";
+        }
+        return infoString.trim();
+    }
+
 	/**
 	 * 发起请求
 	 * 

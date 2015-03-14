@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,8 @@ import com.fang.util.StringUtil;
 import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
 
+import java.text.SimpleDateFormat;
+
 public class NumberFragment extends BaseFragment implements OnClickListener {
 
 	private final String TAG = "NumberFragment";
@@ -55,6 +59,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
     LinearLayout mWeatherList;
     // 城市
     TextView mWeatherCity;
+    //今天日期
+    TextView mToday;
 	//缓存号码
 	String mNumberString = "";
 	//缓存信息
@@ -81,6 +87,19 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
                     handlerWeather(weather);
                 }
                 break;
+                case MessageWhat.NET_REQUEST_NONGLI:
+                    if (null != msg.obj) {
+                        StringBuffer today = new StringBuffer();
+                        SimpleDateFormat format = new SimpleDateFormat("M月d日");
+                        today.append("今天是");
+                        String nl = (String) msg.obj;
+                        if (nl.trim().length() > 0) {
+                            nl = nl.replace("\n", "<br/>");
+                            today.append(nl);
+                            mToday.setText(Html.fromHtml(today.toString() + "  <a href=\"http://zh.wikipedia.org/wiki/" + format.format(new java.util.Date()) + "\">历史上的今天</a> "));
+                        }
+                    }
+                    break;
 			default:
 				break;
 			}
@@ -128,8 +147,16 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 
         mWeatherList = (LinearLayout) rootView.findViewById(R.id.weatherList);
         mWeatherCity = (TextView) rootView.findViewById(R.id.weather_city);
-		
-		return rootView;
+
+        mToday = (TextView) rootView.findViewById(R.id.today);
+        StringBuffer today = new StringBuffer();
+        SimpleDateFormat format = new SimpleDateFormat("M月d日");
+        today.append("今天是");
+        today.append(format.format(new java.util.Date()));
+        mToday.setText(Html.fromHtml(today.toString() + "  <a href=\"http://zh.wikipedia.org/wiki/" + format.format(new java.util.Date()) + "\">历史上的今天</a> "));
+        mToday.setMovementMethod(LinkMovementMethod.getInstance());
+
+        return rootView;
 	}
 	
 	@Override
@@ -147,6 +174,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         }
 
         searchWeather();
+
+        searchNongli();
 	}
 
 	@Override
@@ -214,6 +243,26 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
                 // 最多7天
                 String weather = NetWorkUtil.getInstance().searchWeather(7);
                 myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_WEATHER, weather));
+            }
+        }).start();
+    }
+
+
+    /**
+     * 查农历
+     */
+    private void searchNongli() {
+        if (System.currentTimeMillis() - SharedPreferencesHelper.getLong(mContext, SharedPreferencesHelper.NONGLI_UPDATE_TIME, 0)
+                < 600000) {
+            DebugLog.d(TAG, "searchNongli: the time is too short");
+            return;
+        }
+        SharedPreferencesHelper.setLong(mContext, SharedPreferencesHelper.NONGLI_UPDATE_TIME, System.currentTimeMillis());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String nongli = NetWorkUtil.getInstance().searchNongli();
+                myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_NONGLI, nongli));
             }
         }).start();
     }
