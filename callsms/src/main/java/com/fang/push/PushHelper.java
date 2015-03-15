@@ -9,6 +9,7 @@ import com.fang.net.NetRequestResultCode;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 import com.fang.util.NotificationHelper;
+import com.fang.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,11 +77,16 @@ public class PushHelper {
                 if (verjson != null) {
                     try {
                         JSONObject object = (JSONObject) verjson.get(0);
-                        String title = object.getString(ParamType.TITLE);
-                        String content = object.getString(ParamType.CONTENT);
-                        int task = object.getInt(ParamType.TASK);
+                        String user = object.getString(ParamType.USER);
+                        if (StringUtil.isEmpty(user) || user.equals(ServerUtil.getInstance(mContext).getUserID())) {
+                            String title = object.getString(ParamType.TITLE);
+                            String content = object.getString(ParamType.CONTENT);
+                            int task = object.getInt(ParamType.TASK);
 
-                        NotificationHelper.showPushNotification(mContext, title, content, task);
+                            NotificationHelper.showPushNotification(mContext, title, content, task);
+                        }else {
+                            Log.d(TAG, "user is " + user);
+                        }
                     } catch (JSONException e) {
                         Log.e(TAG, "Error parsing data " + e.toString());
                     }
