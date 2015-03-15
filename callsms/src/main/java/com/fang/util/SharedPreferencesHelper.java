@@ -41,18 +41,14 @@ public class SharedPreferencesHelper {
 	/** 最后开启点页面 */
 	public static final String SELECTED_PAGE = "SELECTED_PAGE";
 
-    /** 天气通知时间 */
-    public static final String WEATHER_NOTIFICATION_TIME = "WEATHER_NOTIFICATION_TIME";
-
-    /** 7天天气预报更新时间 */
-    public static final String WEATHER_UPDATE_TIME = "WEATHER_UPDATE_TIME";
-
-    /** 农历更新 */
-    public static final String NONGLI_UPDATE_TIME = "NONGLI_UPDATE_TIME";
-
     /** 查询的号码 */
     public static final String NUMBER_SEARCH = "NUMBER_SEARCH";
-	
+
+    /** 农历 */
+    public static final String NONGLI = "NONGLI";
+    /** 天气 */
+    public static final String WEATHER = "WEATHER";
+
 	public static String getString(Context ctx, String key) {
 		
 		SharedPreferences sharedata = ctx.getSharedPreferences(key, Context.MODE_PRIVATE );

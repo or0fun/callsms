@@ -21,6 +21,7 @@ import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
+import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
@@ -67,6 +68,10 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	String mNumberInfoString = "";
 	//粘贴板里的数据
 	String mPasteNumberString;
+    //农历更新时间
+    long mLastNongliUpdateTime = 0;
+    //天气更新时间
+    long mLastWeatherUpdateTime = 0;
 
     // 号码信息对话框
     CallRecordDialog mCallRecordDialog;
@@ -83,21 +88,12 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 				break;
             case MessageWhat.NET_REQUEST_WEATHER:
                 if (null != msg.obj) {
-                    String weather = (String) msg.obj;
-                    handlerWeather(weather);
+                    handlerWeather((String) msg.obj);
                 }
                 break;
                 case MessageWhat.NET_REQUEST_NONGLI:
                     if (null != msg.obj) {
-                        StringBuffer today = new StringBuffer();
-                        SimpleDateFormat format = new SimpleDateFormat("M月d日");
-                        today.append("今天是");
-                        String nl = (String) msg.obj;
-                        if (nl.trim().length() > 0) {
-                            nl = nl.replace("\n", "<br/>");
-                            today.append(nl);
-                            mToday.setText(Html.fromHtml(today.toString() + "  <a href=\"http://zh.wikipedia.org/wiki/" + format.format(new java.util.Date()) + "\">历史上的今天</a> "));
-                        }
+                        handlerNongli((String) msg.obj);
                     }
                     break;
 			default:
@@ -149,12 +145,10 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         mWeatherCity = (TextView) rootView.findViewById(R.id.weather_city);
 
         mToday = (TextView) rootView.findViewById(R.id.today);
-        StringBuffer today = new StringBuffer();
-        SimpleDateFormat format = new SimpleDateFormat("M月d日");
-        today.append("今天是");
-        today.append(format.format(new java.util.Date()));
-        mToday.setText(Html.fromHtml(today.toString() + "  <a href=\"http://zh.wikipedia.org/wiki/" + format.format(new java.util.Date()) + "\">历史上的今天</a> "));
-        mToday.setMovementMethod(LinkMovementMethod.getInstance());
+
+        // 显示农历和天气
+        handlerNongli(SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NONGLI));
+        handlerWeather(SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.WEATHER));
 
         return rootView;
 	}
@@ -231,18 +225,19 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	}
 
     private void searchWeather() {
-        if (System.currentTimeMillis() - SharedPreferencesHelper.getLong(mContext, SharedPreferencesHelper.WEATHER_UPDATE_TIME, 0)
-                 < 600000) {
+        if (System.currentTimeMillis() - mLastWeatherUpdateTime  < CustomConstant.QUARTER_HOUR) {
             DebugLog.d(TAG, "searchWeather: the time is too short");
-//            return;
+            return;
         }
-        SharedPreferencesHelper.setLong(mContext, SharedPreferencesHelper.WEATHER_UPDATE_TIME, System.currentTimeMillis());
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // 最多7天
                 String weather = NetWorkUtil.getInstance().searchWeather(7);
-                myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_WEATHER, weather));
+                if (!StringUtil.isEmpty(weather)) {
+                    mLastWeatherUpdateTime = System.currentTimeMillis();
+                    myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_WEATHER, weather));
+                }
             }
         }).start();
     }
@@ -252,17 +247,18 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
      * 查农历
      */
     private void searchNongli() {
-        if (System.currentTimeMillis() - SharedPreferencesHelper.getLong(mContext, SharedPreferencesHelper.NONGLI_UPDATE_TIME, 0)
-                < 600000) {
+        if (System.currentTimeMillis() - mLastNongliUpdateTime < CustomConstant.QUARTER_HOUR) {
             DebugLog.d(TAG, "searchNongli: the time is too short");
             return;
         }
-        SharedPreferencesHelper.setLong(mContext, SharedPreferencesHelper.NONGLI_UPDATE_TIME, System.currentTimeMillis());
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String nongli = NetWorkUtil.getInstance().searchNongli();
-                myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_NONGLI, nongli));
+                if (!StringUtil.isEmpty(nongli)) {
+                    mLastNongliUpdateTime = System.currentTimeMillis();
+                    myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_NONGLI, nongli));
+                }
             }
         }).start();
     }
@@ -272,7 +268,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
      * @param weather
      */
     private void handlerWeather(String weather) {
-        if(null != weather) {
+        if(!StringUtil.isEmpty(weather)) {
+            SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.WEATHER, weather);
             int index = weather.indexOf(" ");
             if (index > 0) {
                 String city = weather.substring(0, index);
@@ -288,4 +285,22 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         }
     }
 
+    /**
+     * 处理获取到的农历信息
+     * @param nongli
+     */
+    private void handlerNongli(final String nongli) {
+        if (!StringUtil.isEmpty(nongli)) {
+            StringBuffer today = new StringBuffer();
+            SimpleDateFormat format = new SimpleDateFormat("M月d日");
+            today.append("今天是");
+            if (nongli.trim().length() > 0) {
+                today.append(nongli.replace("\n", "<br/>"));
+                mToday.setText(Html.fromHtml(today.toString() + "  <a href=\"http://zh.wikipedia.org/wiki/" + format.format(new java.util.Date()) + "\">历史上的今天</a> "));
+                mToday.setMovementMethod(LinkMovementMethod.getInstance());
+
+                SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.NONGLI, nongli);
+            }
+        }
+    }
 }

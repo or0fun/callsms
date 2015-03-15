@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.common.CustomConstant;
 import com.fang.logs.LogCode;
 import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
@@ -31,6 +32,8 @@ public class WeatherHelper {
     private static final String TAG = "WeatherHelper";
     /** 天气常驻通知栏 */
     protected static boolean mIsShowWeatherNotification = false;
+
+    private static long mWeatherNotificationTime = 0;
     /**
      * 显示天气的常驻通知栏
      */
@@ -40,11 +43,10 @@ public class WeatherHelper {
             DebugLog.d(TAG, "postWeatherNotification: SETTING_WEATHER_NOTIFICATION is false");
             return;
         }
-        if (mIsShowWeatherNotification && System.currentTimeMillis() - SharedPreferencesHelper.getLong(context, SharedPreferencesHelper.WEATHER_NOTIFICATION_TIME) < 600000) {
+        if (mIsShowWeatherNotification && System.currentTimeMillis() - mWeatherNotificationTime < CustomConstant.QUARTER_HOUR) {
             DebugLog.d(TAG, "postWeatherNotification: time is so short");
             return;
         }
-        SharedPreferencesHelper.setLong(context, SharedPreferencesHelper.WEATHER_NOTIFICATION_TIME, System.currentTimeMillis());
 
         new Thread(new Runnable() {
             @Override
@@ -64,6 +66,7 @@ public class WeatherHelper {
                                 "明天" + str[1],
                                 notificationIntent);
                         mIsShowWeatherNotification = true;
+                        mWeatherNotificationTime = System.currentTimeMillis();
                     }
                 }
             }
