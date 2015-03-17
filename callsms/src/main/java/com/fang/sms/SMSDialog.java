@@ -206,8 +206,6 @@ public class SMSDialog implements OnClickListener {
 	}
 	/**
 	 * 构造播报内容
-	 * @param name
-	 * @param body
 	 * @return
 	 */
 	private String createSMSBroadcastContent() {
@@ -318,7 +316,6 @@ public class SMSDialog implements OnClickListener {
 	 * 删除短信
 	 * 
 	 * @param id
-	 * @param thread_id
 	 * @return
 	 */
 	protected void deleteSMS(int id) {

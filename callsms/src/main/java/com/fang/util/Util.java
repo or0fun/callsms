@@ -313,12 +313,10 @@ public class Util {
 			final int position, final IDeleteConfirmListener deleteConfirm) {
 		final View confirmView = LayoutInflater.from(context).inflate(
 				R.layout.delete_confirm, null);
-        final Dialog dialog = new CustomDialog.Builder(context).setContentView(confirmView)
-                .create();
         confirmView.findViewById(R.id.todelete).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                dialog.dismiss();
+                windowManager.removeView(confirmView);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -333,10 +331,10 @@ public class Util {
 				new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
-                        dialog.dismiss();
+                        windowManager.removeView(confirmView);
 					}
 				});
-        dialog.show();
+        addView(windowManager, confirmView);
 	}
 
 	/**
