@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,8 +21,6 @@ import com.fang.callsms.R;
 import com.fang.controls.CustomProgressDialog;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
-import com.fang.logs.LogCode;
-import com.fang.logs.LogOperate;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.util.MessageWhat;
@@ -53,8 +50,6 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	protected final int REFRESH_LIST = 1;
 	/** 删除通知 */
 	protected final int REMOVE_AND_REFRESH_LIST = 2;
-	/** 信息弹出框 */
-	protected CallRecordDialog mCallRecordDialog;
 	/** 每次通话记录条数 */
 	protected final int READ_RECORD_COUNT_PER_TIME = 15;
 	/** 填充列表的适配器 */
@@ -186,40 +181,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	protected void initListView() {
 		mCallRecordListView = (ListView) mView.findViewById(R.id.callRecord);
 		mCallRecordListView.setAdapter(mAdapter);
-		mCallRecordListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				if (null == mCallRecordDialog) {
-					mCallRecordDialog = new CallRecordDialog(mContext,
-							(String) mCallRecords.get(position).get(
-									CallHelper.PARAM_NUMBER),
-							(String) mCallRecords.get(position).get(
-									CallHelper.PARAM_NAME),
-							CallHelper.getCallTypeString(
-									mContext,
-									(Integer) mCallRecords.get(position).get(
-											CallHelper.PARAM_TYPE)),
-							(Integer) mCallRecords.get(position).get(
-									CallHelper.PARAM_ICON));
-				} else {
-					mCallRecordDialog.setContent(
-							(String) mCallRecords.get(position).get(
-									CallHelper.PARAM_NUMBER),
-							(String) mCallRecords.get(position).get(
-									CallHelper.PARAM_NAME),
-							CallHelper.getCallTypeString(
-									mContext,
-									(Integer) mCallRecords.get(position).get(
-											CallHelper.PARAM_TYPE)),
-							(Integer) mCallRecords.get(position).get(
-									CallHelper.PARAM_ICON));
-				}
-				mCallRecordDialog.show();
-				// 日志
-				LogOperate.updateLog(mContext, LogCode.CALL_ITEM_CLICK);
-			}
-		});
+
 		mCallRecordListView
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 					@Override
@@ -238,8 +200,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 
 	@Override
 	public boolean onBackPressed() {
-		if (null != mCallRecordDialog && mCallRecordDialog.isShowing()) {
-			mCallRecordDialog.remove();
+		if (null != mAdapter && mAdapter.removeDialog()) {
 			return true;
 		}
 

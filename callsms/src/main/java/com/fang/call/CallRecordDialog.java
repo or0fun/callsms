@@ -85,13 +85,18 @@ public class CallRecordDialog implements OnClickListener {
 	
 	boolean mIsMissed = false;
 
+    private ICallRecordDialogListener mCallDialogListener;
+
+    private String mInfo;
+
 	protected Handler myHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case MessageWhat.NET_REQUEST_NUMBER:
 				if (null != msg.obj) {
-					mInfoTextView.setText((String) msg.obj);
+                    mInfo = (String) msg.obj;
+					mInfoTextView.setText(mInfo);
 				}
 				break;
 			case MessageWhat.CALL_RECORDS:
@@ -128,14 +133,14 @@ public class CallRecordDialog implements OnClickListener {
 	public CallRecordDialog(Context context, String number, String name,
 			String type, int icon, boolean isMissed) {
 		this(context, number, name);
-		setContent(number, name, type, icon);
+		setContent(number, name, type, icon, null);
 		mIsMissed = isMissed;
 	}
 	
 	public CallRecordDialog(Context context, String number, String name,
-			String type, int icon) {
+			String type, int icon, ICallRecordDialogListener callDialogListener) {
 		this(context, number, name);
-		setContent(number, name, type, icon);
+		setContent(number, name, type, icon, callDialogListener);
 	}
 
 	public CallRecordDialog(Context context, String number, String name,
@@ -214,8 +219,10 @@ public class CallRecordDialog implements OnClickListener {
 	}
 
 	// 填充内容
-	public void setContent(String number, String name, String type, int icon) {
-		
+	public void setContent(String number, String name, String type, int icon, ICallRecordDialogListener callDialogListener) {
+
+        mCallDialogListener = callDialogListener;
+
 		mNumberString = number;
 		mInfoTextView.setText(mContext.getString(R.string.getting_info));
 
@@ -294,6 +301,9 @@ public class CallRecordDialog implements OnClickListener {
 				mDialog.cancel();
 			}
 		}
+        if (null != mCallDialogListener) {
+            mCallDialogListener.remove(mInfo);
+        }
 	}
 
 	/**

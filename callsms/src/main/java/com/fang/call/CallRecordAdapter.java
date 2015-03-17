@@ -2,6 +2,7 @@ package com.fang.call;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import com.fang.callsms.R;
 import com.fang.comment.CommentActivity;
 import com.fang.database.NumberDatabaseManager;
+import com.fang.logs.LogCode;
+import com.fang.logs.LogOperate;
+import com.fang.util.DebugLog;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
 
@@ -21,10 +25,13 @@ import java.util.List;
 import java.util.Map;
 
 public class CallRecordAdapter extends BaseAdapter {
-	
+
+    private String TAG = "CallRecordAdapter";
 	protected List<Map<String, Object>> mCallRecords;
 	private LayoutInflater mInflater;
 	private Context mContext;
+    /** 信息弹出框 */
+    private CallRecordDialog mCallRecordDialog;
 
 	public CallRecordAdapter(Context context, List<Map<String, Object>> list) {
 		this.mInflater = LayoutInflater.from(context);
@@ -53,9 +60,9 @@ public class CallRecordAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int index, View convertView, ViewGroup arg2) {
+	public View getView(final int index, View convertView, ViewGroup arg2) {
 		
-		ViewHolder holder;
+		final ViewHolder holder;
 		if (convertView == null) {
 			convertView = mInflater
 					.inflate(R.layout.call_list_item, null);
@@ -68,7 +75,7 @@ public class CallRecordAdapter extends BaseAdapter {
 			holder.duration = (TextView) convertView.findViewById(R.id.duration);
 			holder.comment = (Button) convertView.findViewById(R.id.commentBtn);
 			convertView.setTag(holder);
-			
+
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
@@ -76,23 +83,24 @@ public class CallRecordAdapter extends BaseAdapter {
 		final Map<String, Object> record = mCallRecords.get(index);
 		int callType = Integer.parseInt(record.get(CallHelper.PARAM_TYPE).toString());
         // 如果名字为空，就显示号码
-		if (StringUtil.isEmpty(record.get(CallHelper.PARAM_NAME).toString())) {
-            String number = record.get(CallHelper.PARAM_NUMBER).toString();
+        String number = record.get(CallHelper.PARAM_NUMBER).toString();
+        String info = NumberDatabaseManager.getInstance(mContext).query(number);
+        String name = record.get(CallHelper.PARAM_NAME).toString();
+		if (StringUtil.isEmpty(name)) {
 			holder.name.setText(number);
-
-            String info = NumberDatabaseManager.getInstance(mContext).query(number);
-            if (null == info) {
+            if (StringUtil.isEmpty(info)) {
                 holder.number.setText("");
             } else {
-                if (StringUtil.isEmpty(info)) {
-                    holder.number.setText("");
-                }else {
-                    holder.number.setText(info);
-                }
+                holder.number.setText(info);
             }
 		}else {
-			holder.name.setText(record.get(CallHelper.PARAM_NAME).toString());
-            holder.number.setText(record.get(CallHelper.PARAM_NUMBER).toString());
+            if (StringUtil.isEmpty(info)) {
+                holder.name.setText(name);
+            } else {
+                info = info.replace("中国", "");
+                holder.name.setText(Html.fromHtml(name + "<font color='#7f7f7f'>" + "|" + info + "</font>"));
+            }
+            holder.number.setText(number);
 		}
         // 根据类型显示名字的颜色
 		holder.name.setTextColor(CallHelper.getCallTypeColor(mContext, callType));
@@ -135,6 +143,56 @@ public class CallRecordAdapter extends BaseAdapter {
 				mContext.startActivity(intent);
 			}
 		});
+
+        convertView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DebugLog.d(TAG, "click index :" + index);
+                if (null == mCallRecordDialog) {
+                    mCallRecordDialog = new CallRecordDialog(mContext,
+                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NUMBER),
+                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NAME),
+                            CallHelper.getCallTypeString(
+                                    mContext,
+                                    (Integer) mCallRecords.get(index).get(CallHelper.PARAM_TYPE)),
+                            (Integer) mCallRecords.get(index).get(CallHelper.PARAM_ICON),
+                            new ICallRecordDialogListener() {
+                                @Override
+                                public void remove(String info) {
+                                    if (!StringUtil.isEmpty(info)) {
+                                        String num = holder.number.getText().toString();
+                                        if (StringUtil.isEmpty(num)) {
+                                            holder.number.setText(info);
+                                        }
+                                    }
+                                }
+                            }
+                    );
+                } else {
+                    mCallRecordDialog.setContent(
+                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NUMBER),
+                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NAME),
+                            CallHelper.getCallTypeString(
+                                    mContext,
+                                    (Integer) mCallRecords.get(index).get(CallHelper.PARAM_TYPE)),
+                            (Integer) mCallRecords.get(index).get(CallHelper.PARAM_ICON),
+                            new ICallRecordDialogListener() {
+                                @Override
+                                public void remove(String info) {
+                                    if (!StringUtil.isEmpty(info)) {
+                                        String num = holder.number.getText().toString();
+                                        if (StringUtil.isEmpty(num)) {
+                                            holder.number.setText(info);
+                                        }
+                                    }
+                                }
+                            });
+                }
+                mCallRecordDialog.show();
+                // 日志
+                LogOperate.updateLog(mContext, LogCode.CALL_ITEM_CLICK);
+            }
+        });
 		return convertView;
 	}
 
@@ -142,7 +200,14 @@ public class CallRecordAdapter extends BaseAdapter {
 	public void setData(List<Map<String, Object>> list) {
 		this.mCallRecords = list;
 	}
-	
+
+    public boolean removeDialog() {
+        if (null != mCallRecordDialog && mCallRecordDialog.isShowing()) {
+            mCallRecordDialog.remove();
+            return true;
+        }
+        return false;
+    }
 	private class ViewHolder {
 		ImageView icon;
 		TextView name;

@@ -38,7 +38,7 @@
                 <com.fang.controls.AlwaysMarqueeTextView
                     android:id="@+id/name"
                     style="@style/tipText"
-                    android:textSize="@dimen/titleTextSize" />
+                    android:textSize="@dimen/nameTextSize" />
 
                 <com.fang.controls.AlwaysMarqueeTextView
                     android:id="@+id/count"

@@ -82,5 +82,6 @@
     <!-- 吐槽按钮 -->
     <dimen name="comment_button_width">40dp</dimen>
     <dimen name="comment_button_height">35dp</dimen>
-    
+
+    <dimen name="nameTextSize">16.0sp</dimen>
 </resources>
