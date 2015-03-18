@@ -271,7 +271,7 @@ public class CallRecordDialog implements OnClickListener {
 			setLayoutParams();
 			if (null != mView) {
 				if (mIsShowing) {
-					mWindowManager.removeView(mView);
+					Util.removeView(mWindowManager, mView);
 				}
 				mIsShowing = true;
 				mWindowManager.addView(mView, mLayoutParams);
@@ -293,7 +293,7 @@ public class CallRecordDialog implements OnClickListener {
 		if (mIsMissed) {
 			if (null != mView) {
 				mIsShowing = false;
-				mWindowManager.removeView(mView);
+                Util.removeView(mWindowManager, mView);
 			}
 		}else {
 			if (null != mDialog) {

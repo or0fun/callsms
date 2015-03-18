@@ -373,7 +373,7 @@ public class CallDialog implements OnClickListener {
 	public void remove() {
 		if (mIsShowing) {
 			mIsShowing = false;
-			mWindowManager.removeView(mView);
+            Util.removeView(mWindowManager, mView);
 		}
 	}
 

@@ -35,6 +35,7 @@ import com.fang.logs.LogOperate;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
+import com.fang.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -548,7 +549,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		super.onDestroyView();
 		ContactHelper.unregisterListener(this);
         if (mWindowManager != null && mIsShowDalay) {
-            mWindowManager.removeView(mOverlay);
+            Util.removeView(mWindowManager, mOverlay);
             mIsShowDalay = false;
         }
 	}

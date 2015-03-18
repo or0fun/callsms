@@ -31,21 +31,21 @@ public class MyPhoneSpan extends MySpan {
 		view.findViewById(R.id.call).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mWindowManager.removeView(view);
+                Util.removeView(mWindowManager, view);
 				Util.gotoCall(mContext, mText);
 			}
 		});
 		view.findViewById(R.id.add).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mWindowManager.removeView(view);
+                Util.removeView(mWindowManager, view);
 				ContactHelper.addContact(context, str);
 			}
 		});
 		view.findViewById(R.id.copy).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mWindowManager.removeView(view);
+                Util.removeView(mWindowManager, view);
 				Util.copy(context, str);
 			}
 		});
@@ -60,7 +60,7 @@ public class MyPhoneSpan extends MySpan {
 			public boolean onTouch(View arg0, MotionEvent event) {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_OUTSIDE:
-					mWindowManager.removeView(view);
+                    Util.removeView(mWindowManager, view);
 					break;
 				}
 				return false;

@@ -1,10 +1,5 @@
 package com.fang.sms;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +28,11 @@ import com.fang.receiver.AlarmReceiver;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 public class SMSFragment extends BaseFragment implements Runnable,
 	 OnClickListener {
@@ -180,7 +180,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 		cancelButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mWindowManager.removeView(dateTimeView);
+                Util.removeView(mWindowManager, dateTimeView);
 			}
 		});
 		confirmButton.setOnClickListener(new OnClickListener() {

@@ -225,7 +225,7 @@ public class SMSDialog implements OnClickListener {
 	public void remove() {
 		if (isShowing) {
 			isShowing = false;
-			mWindowManager.removeView(mView);
+            Util.removeView(mWindowManager, mView);
 		}
 		SpeachHelper.getInstance(mContext).getmTts().stopSpeaking();
 	}

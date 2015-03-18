@@ -191,8 +191,25 @@ public class Util {
 		layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
 		layoutParams.flags |= LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
 				| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-		windowManager.addView(view, layoutParams);
+		try {
+            windowManager.addView(view, layoutParams);
+        } catch (Exception e) {
+            DebugLog.e(TAG, e.toString());
+        }
 	}
+
+    /**
+     * 移除悬浮窗
+     * @param windowManager
+     * @param view
+     */
+    public static void removeView(WindowManager windowManager, View view) {
+        try {
+            windowManager.removeView(view);
+        } catch (Exception e) {
+            DebugLog.e(TAG, e.toString());
+        }
+    }
 
 	/**
 	 * 安装应用
@@ -316,7 +333,7 @@ public class Util {
         confirmView.findViewById(R.id.todelete).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                windowManager.removeView(confirmView);
+                Util.removeView(windowManager, confirmView);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
