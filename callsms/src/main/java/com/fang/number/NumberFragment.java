@@ -161,7 +161,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		if (str != null && str.matches(Patterns.NUMBER_PATTERN) && !str.equals(mPasteNumberString)) {
 			mSearchEditView.setText(str);
 			mPasteNumberString = str;
-			searchBtnClick();
 		} else {
             str = SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NUMBER_SEARCH);
             mSearchEditView.setText(str);
