@@ -59,14 +59,16 @@ public class WeatherHelper {
                                 MainActivity.class);
                         notificationIntent.putExtra(MainActivity.ENTRY_FROM, LogCode.WEATHER_NOTIFICATION_CLICK);
                         String[] str = weather.split("\\|");
-                        NotificationHelper.showResidentNotification(
-                                context,
-                                NotificationHelper.TYPE.WEATHER_ID.ordinal(),
-                                str[0],
-                                "明天" + str[1],
-                                notificationIntent);
-                        mIsShowWeatherNotification = true;
-                        mWeatherNotificationTime = System.currentTimeMillis();
+                        if (null != str && str.length >= 2) {
+                            NotificationHelper.showResidentNotification(
+                                    context,
+                                    NotificationHelper.TYPE.WEATHER_ID.ordinal(),
+                                    str[0],
+                                    "明天" + str[1],
+                                    notificationIntent);
+                            mIsShowWeatherNotification = true;
+                            mWeatherNotificationTime = System.currentTimeMillis();
+                        }
                     }
                 }
             }
