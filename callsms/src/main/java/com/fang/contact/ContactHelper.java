@@ -240,6 +240,16 @@ public class ContactHelper {
 		context.startActivity(intent);
 	}
 
+    /**
+     * 跳转到系统通讯录
+     * @param context
+     */
+    public static void gotoContact(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(android.provider.ContactsContract.Contacts.CONTENT_URI);
+        context.startActivity(intent);
+    }
 	/**
 	 * 读取通讯录
 	 */

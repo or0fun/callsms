@@ -89,7 +89,6 @@
             android:id="@+id/weather_city"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/number_weather"
             android:textColor="@color/green" >
         </TextView>
 

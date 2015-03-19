@@ -41,7 +41,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
-                android:textAppearance="?android:textAppearanceMedium"
+                android:textSize="@dimen/nameTextSize"
                 android:textColor="@color/black" />
 
             <com.fang.controls.AlwaysMarqueeTextView
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:textAppearance="?android:textAppearanceSmall"
+                android:textSize="@dimen/subTextSize"
                 android:textColor="@color/hint" />
 
             <com.fang.controls.AlwaysMarqueeTextView
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:textAppearance="?android:textAppearanceSmall"
+                android:textSize="@dimen/subTextSize"
                 android:textColor="@color/hint" />
             
             <com.fang.controls.AlwaysMarqueeTextView
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:textAppearance="?android:textAppearanceSmall"
+                android:textSize="@dimen/subTextSize"
                 android:textColor="@color/hint" />
         </LinearLayout>
     </LinearLayout>

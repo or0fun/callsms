@@ -501,6 +501,15 @@ public class CallHelper {
 	}
 
     /**
+     * 跳转到拨号界面
+     * @param context
+     */
+    public static void gotoCall(Context context) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+    /**
      * 根据类型获取icon
      * @param callType
      */

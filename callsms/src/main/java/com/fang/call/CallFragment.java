@@ -139,6 +139,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		mOrderByOutgoingButton.setOnClickListener(this);
 		mOrderByIncomingButton.setOnClickListener(this);
 		mOrderByMissedButton.setOnClickListener(this);
+        view.findViewById(R.id.system_call).setOnClickListener(this);
 
 		return view;
 	}
@@ -278,7 +279,9 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 			mOrderByMissedButton.setBackgroundDrawable(mContext.getResources()
 					.getDrawable(R.drawable.sub_pressed));
 			mSortBy = SORT_BY_MISSED;
-		}
+		} else if (view.getId() == R.id.system_call) {
+            CallHelper.gotoCall(mContext);
+        }
 		UpdateList();
 	}
 

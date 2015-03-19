@@ -28,6 +28,15 @@
             android:text="@string/title_bar_call"
             android:textColor="@color/white"
             android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/system_call"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="3dp"
+            android:background="#dd333333"
+            android:textColor="@color/white"
+            android:text="@string/system_call"/>
     </LinearLayout>
     <!-- 电话记录 -->
 

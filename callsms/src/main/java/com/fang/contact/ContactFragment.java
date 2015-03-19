@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
 import com.fang.contact.MyLetterListView.OnTouchingLetterChangedListener;
 import com.fang.controls.CustomProgressDialog;
+import com.fang.database.NumberDatabaseManager;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.util.DebugLog;
@@ -78,7 +80,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 
 	private boolean mIsViewCreated = false;
 	
-	private int mSortBy = SORT_BY_NAME;
+	private int mSortBy = SORT_BY_TIMES;
 	
 	private Button mSortByNameButton;
 	private Button mSortByTimesbButton;
@@ -104,7 +106,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				}
 				setAdapter(mList);
 				
-				mTitleTextView.setText(mContext.getString(R.string.title_bar_contact) + "(共有" + len + "个联系人)");
+				mTitleTextView.setText("共有" + len + "个联系人");
 				CustomProgressDialog.cancel(mContext);
 				break;
 				default:
@@ -216,6 +218,13 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			public void afterTextChanged(Editable arg0) {
 			}
 		});
+
+        rootView.findViewById(R.id.system_contact).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContactHelper.gotoContact(mContext);
+            }
+        });
 
 		DebugLog.d(TAG, "onCreateView");
 		return rootView;
@@ -370,8 +379,16 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			}
 
 			HashMap<String, Object> cv = list.get(index);
-			holder.name.setText(cv.get(ContactHelper.PARAM_NAME).toString());
-			holder.number.setText(cv.get(ContactHelper.PARAM_NUMBER).toString());
+            String number = cv.get(ContactHelper.PARAM_NUMBER).toString();
+            String info = NumberDatabaseManager.getInstance(mContext).query(number);
+            String name = cv.get(ContactHelper.PARAM_NAME).toString();
+            if (StringUtil.isEmpty(info)) {
+                holder.name.setText(name);
+            } else {
+                info = info.replace("中国", "");
+                holder.name.setText(Html.fromHtml(name + "<font color='#7f7f7f'>" + "|" + info + "</font>"));
+            }
+			holder.number.setText(number);
 			String currentStr = getAlpha(list.get(index)
 					.get(ContactHelper.PARAM_SORT_KEY).toString());
 			String previewStr = (position - 1) >= 0 ? getAlpha(list
@@ -395,11 +412,11 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 						.getString(R.string.contact_no_record));
 				holder.totalRecord.setVisibility(View.GONE);
 			} else {
-				holder.lastRecord.setText(mContext
-						.getString(R.string.contact_last_record) + lastString);
+                holder.lastRecord.setText(Html.fromHtml(mContext
+                        .getString(R.string.contact_last_record) + "<font color='#0BA541'>"+ lastString + "</font>"));
 				holder.totalRecord.setVisibility(View.VISIBLE);
-				holder.totalRecord.setText(mContext
-						.getString(R.string.contact_times) + totalString);
+                holder.totalRecord.setText(Html.fromHtml(mContext
+                        .getString(R.string.contact_times) + "<font color='#4C79F9'>"+ totalString + "</font>"));
 
 			}
 			return convertView;
