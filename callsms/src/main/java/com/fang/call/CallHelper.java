@@ -98,6 +98,33 @@ public class CallHelper {
 		return lastDateString;
 	}
 
+    private static int getCallTimes(Context context, String number, String selection) {
+        int t = 0;
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = resolver.query(CallLog.Calls.CONTENT_URI,
+                new String[] { CallLog.Calls.TYPE }, selection,
+                new String[] { number }, null);
+
+        t += getCallTimes(cursor);
+
+        if (number.contains(" ")) {
+            cursor = resolver.query(CallLog.Calls.CONTENT_URI,
+                    new String[]{CallLog.Calls.TYPE}, selection,
+                    new String[]{number.replace(" ", "")}, null);
+
+            t += getCallTimes(cursor);
+        }
+
+        if (number.contains("+86")) {
+            cursor = resolver.query(CallLog.Calls.CONTENT_URI,
+                    new String[]{CallLog.Calls.TYPE}, selection,
+                    new String[]{number.replace("+86", "")}, null);
+
+            t += getCallTimes(cursor);
+        }
+
+        return t;
+    }
 	/**
 	 * 获取通话次数
 	 * 
@@ -107,16 +134,7 @@ public class CallHelper {
 	public static int getCallTimes(Context context, String number, int callType) {
 		String tmpString = String.format(Locale.US, "number=? and type=%d",
 				callType);
-		ContentResolver resolver = context.getContentResolver();
-		Cursor cursor = resolver.query(CallLog.Calls.CONTENT_URI,
-				new String[] { CallLog.Calls.DURATION }, tmpString,
-				new String[] { number }, null);
-		if (null != cursor) {
-			int t = cursor.getCount();
-			cursor.close();
-			return t;
-		}
-		return 0;
+        return getCallTimes(context, number, tmpString);
 	}
 
 	/**
@@ -126,17 +144,27 @@ public class CallHelper {
      * @param number
 	 */
 	public static int getCallTimes(Context context, String number) {
-		ContentResolver resolver = context.getContentResolver();
-		Cursor cursor = resolver.query(CallLog.Calls.CONTENT_URI,
-				new String[] { CallLog.Calls.DURATION }, "number=? ",
-				new String[] { number }, null);
-		if (null != cursor) {
-			int t = cursor.getCount();
-			cursor.close();
-			return t;
-		}
-		return 0;
+        return getCallTimes(context, number, "number=? ");
 	}
+
+    private static int getCallTimes(Cursor cursor) {
+        int t = 0;
+        if (null != cursor) {
+            if (cursor.moveToFirst()) {
+                do {
+                    // 类型
+                    int callType = Integer.parseInt(cursor.getString(cursor
+                            .getColumnIndex(Calls.TYPE)));
+                    if (callType == CallLogType.INCOMING_TYPE || callType == CallLogType.OUTGOING_TYPE
+                            || callType == CallLogType.MISSED_TYPE) {
+                        t++;
+                    }
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return t;
+    }
 	
 	/**
 	 * 获取上次通话信息
@@ -198,6 +226,80 @@ public class CallHelper {
 		}).start();
 	}
 
+    private static  List<Map<String, Object>> getCallRecordsList(Cursor cursor) {
+        List<Map<String, Object>> callRecords = new ArrayList<Map<String, Object>>();
+        if (null != cursor) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Map<String, Object> callRecord = new HashMap<String, Object>();
+                    // id
+                    int id = cursor.getInt(cursor
+                            .getColumnIndex(Calls._ID));
+                    // 号码
+                    String numberString = cursor.getString(cursor
+                            .getColumnIndex(Calls.NUMBER));
+
+                    callRecord.put(PARAM_ID, id);
+
+                    // 类型
+                    int callType = Integer.parseInt(cursor.getString(cursor
+                            .getColumnIndex(Calls.TYPE)));
+                    callRecord.put(PARAM_TYPE, callType);
+                    //icon
+                    callRecord.put(PARAM_ICON, getIcon(callType));
+
+                    callRecord.put(
+                            PARAM_DATE,
+                            Util.longDateToStringDate(Long.parseLong(cursor.getString(cursor
+                                    .getColumnIndexOrThrow(Calls.DATE)))));
+                    long duration = Long.parseLong(cursor.getString(cursor
+                            .getColumnIndexOrThrow(Calls.DURATION)));
+
+                    callRecord.put(PARAM_DURATION,
+                            Util.secondsToString(duration));
+
+
+                    callRecords.add(callRecord);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return callRecords;
+    }
+
+    /**
+     * 获取通话记录
+     * @param context
+     * @param number
+     * @param selection
+     * @return
+     */
+    private static List<Map<String, Object>> getCallRecordsList(final Context context,
+                                          final String number, String selection, String sortOrder) {
+
+        List<Map<String, Object>> callRecords = new ArrayList<Map<String, Object>>();
+
+        callRecords.addAll(getCallRecordsList(context.getContentResolver().query(
+                CallLog.Calls.CONTENT_URI,
+                CALL_RECORD_PARAMETERS, selection,
+                new String[] { number }, sortOrder)));
+
+        if (number.contains(" ")) {
+            callRecords.addAll(getCallRecordsList(context.getContentResolver().query(
+                    CallLog.Calls.CONTENT_URI,
+                    CALL_RECORD_PARAMETERS, selection,
+                    new String[] { number.replace(" ", "") }, sortOrder)));
+        }
+
+        if (number.contains("+86")) {
+            callRecords.addAll(getCallRecordsList(context.getContentResolver().query(
+                    CallLog.Calls.CONTENT_URI,
+                    CALL_RECORD_PARAMETERS, selection,
+                    new String[] { number.replace("+86", "") }, sortOrder)));
+        }
+        return callRecords;
+    }
 	/**
 	 * 统计某个号码的通话记录
 	 * 
@@ -215,48 +317,8 @@ public class CallHelper {
 			@Override
 			public void run() {
 				String sortOrder = String.format("%s desc", CallLog.Calls.DATE);
-                Cursor cursor = context.getContentResolver().query(
-                        CallLog.Calls.CONTENT_URI,
-                        CALL_RECORD_PARAMETERS, "number=?",
-                        new String[] { number }, sortOrder);
-				List<Map<String, Object>> callRecords = new ArrayList<Map<String, Object>>();
-				if (null != cursor) {
-					if (cursor.moveToFirst()) {
-						do {
-							Map<String, Object> callRecord = new HashMap<String, Object>();
-							// id
-							int id = cursor.getInt(cursor
-									.getColumnIndex(Calls._ID));
-							// 号码
-							String numberString = cursor.getString(cursor
-									.getColumnIndex(Calls.NUMBER));
+				List<Map<String, Object>> callRecords = getCallRecordsList(context, number, "number=?", sortOrder);
 
-							callRecord.put(PARAM_ID, id);
-
-							// 类型
-                            int callType = Integer.parseInt(cursor.getString(cursor
-                                    .getColumnIndex(Calls.TYPE)));
-                            callRecord.put(PARAM_TYPE, callType);
-                            //icon
-                            callRecord.put(PARAM_ICON, getIcon(callType));
-
-							callRecord.put(
-									PARAM_DATE,
-									Util.longDateToStringDate(Long.parseLong(cursor.getString(cursor
-											.getColumnIndexOrThrow(Calls.DATE)))));
-							long duration = Long.parseLong(cursor.getString(cursor
-									.getColumnIndexOrThrow(Calls.DURATION)));
-
-							callRecord.put(PARAM_DURATION,
-									Util.secondsToString(duration));
-							
-
-							callRecords.add(callRecord);
-
-						} while (cursor.moveToNext());
-					}
-					cursor.close();
-				}
 				handler.sendMessage(handler.obtainMessage(
 						MessageWhat.FRESH_CALL_RECORD, callRecords));
 			}
