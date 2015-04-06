@@ -38,6 +38,15 @@
             android:textColor="@color/white"
             android:text="@string/system_call"/>
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/search"
+        style="@style/singleLineEdit"
+        android:hint="@string/sms_search"
+        android:focusable="true"
+        android:enabled="true">
+    </EditText>
+
     <!-- 电话记录 -->
 
     <ListView

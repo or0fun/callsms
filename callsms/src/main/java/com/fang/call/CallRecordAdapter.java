@@ -3,6 +3,7 @@ package com.fang.call;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +33,8 @@ public class CallRecordAdapter extends BaseAdapter {
 	private Context mContext;
     /** 信息弹出框 */
     private CallRecordDialog mCallRecordDialog;
+    /** 映射联系人列表 */
+    private SparseIntArray mContactPositionMapArray;
 
 	public CallRecordAdapter(Context context, List<Map<String, Object>> list) {
 		this.mInflater = LayoutInflater.from(context);
@@ -43,15 +46,19 @@ public class CallRecordAdapter extends BaseAdapter {
 		if (null == mCallRecords) {
 			return 0;
 		}
-		return mCallRecords.size();
+        if (null == mContactPositionMapArray) {
+            return mCallRecords.size();
+        } else  {
+            return mContactPositionMapArray.size();
+        }
 	}
 
 	@Override
-	public Object getItem(int arg0) {
+	public Object getItem(int index) {
 		if (null == mCallRecords) {
 			return null;
 		}
-		return mCallRecords.get(arg0);
+        return getRecordMap(index);
 	}
 
 	@Override
@@ -79,8 +86,7 @@ public class CallRecordAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		final Map<String, Object> record = mCallRecords.get(index);
+        final Map<String, Object> record = getRecordMap(index);
 		int callType = Integer.parseInt(record.get(CallHelper.PARAM_TYPE).toString());
         // 如果名字为空，就显示号码
         String number = record.get(CallHelper.PARAM_NUMBER).toString();
@@ -150,12 +156,12 @@ public class CallRecordAdapter extends BaseAdapter {
                 DebugLog.d(TAG, "click index :" + index);
                 if (null == mCallRecordDialog) {
                     mCallRecordDialog = new CallRecordDialog(mContext,
-                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NUMBER),
-                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NAME),
+                            (String) getRecordMap(index).get(CallHelper.PARAM_NUMBER),
+                            (String) getRecordMap(index).get(CallHelper.PARAM_NAME),
                             CallHelper.getCallTypeString(
                                     mContext,
-                                    (Integer) mCallRecords.get(index).get(CallHelper.PARAM_TYPE)),
-                            (Integer) mCallRecords.get(index).get(CallHelper.PARAM_ICON),
+                                    (Integer) getRecordMap(index).get(CallHelper.PARAM_TYPE)),
+                            (Integer) getRecordMap(index).get(CallHelper.PARAM_ICON),
                             new ICallRecordDialogListener() {
                                 @Override
                                 public void remove(String info) {
@@ -170,12 +176,12 @@ public class CallRecordAdapter extends BaseAdapter {
                     );
                 } else {
                     mCallRecordDialog.setContent(
-                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NUMBER),
-                            (String) mCallRecords.get(index).get(CallHelper.PARAM_NAME),
+                            (String) getRecordMap(index).get(CallHelper.PARAM_NUMBER),
+                            (String) getRecordMap(index).get(CallHelper.PARAM_NAME),
                             CallHelper.getCallTypeString(
                                     mContext,
-                                    (Integer) mCallRecords.get(index).get(CallHelper.PARAM_TYPE)),
-                            (Integer) mCallRecords.get(index).get(CallHelper.PARAM_ICON),
+                                    (Integer) getRecordMap(index).get(CallHelper.PARAM_TYPE)),
+                            (Integer) getRecordMap(index).get(CallHelper.PARAM_ICON),
                             new ICallRecordDialogListener() {
                                 @Override
                                 public void remove(String info) {
@@ -208,6 +214,22 @@ public class CallRecordAdapter extends BaseAdapter {
         }
         return false;
     }
+
+    public void setPositionMapArray(SparseIntArray contactPositionMapArray) {
+        mContactPositionMapArray = contactPositionMapArray;
+    }
+
+    private Map<String, Object> getRecordMap(int index) {
+        final Map<String, Object> record;
+        if (null == mContactPositionMapArray) {
+            record = mCallRecords.get(index);
+        } else {
+            record = mCallRecords.get(mContactPositionMapArray.get(index));
+        }
+        return record;
+    }
+
+
 	private class ViewHolder {
 		ImageView icon;
 		TextView name;

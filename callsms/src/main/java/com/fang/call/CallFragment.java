@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.CallLog.Calls;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,12 +15,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
+import com.fang.contact.ContactHelper;
 import com.fang.controls.CustomProgressDialog;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
@@ -27,6 +32,7 @@ import com.fang.util.MessageWhat;
 import com.fang.util.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +65,10 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	private ImageButton mOrderByOutgoingButton;
 	private ImageButton mOrderByIncomingButton;
 	private ImageButton mOrderByMissedButton;
+    /** 查找联系人 */
+    private EditText mSearchEditText;
+    /** 映射联系人列表 */
+    private SparseIntArray mContactPositionMapArray;
 
 	Handler mHandler = new Handler() {
 		@Override
@@ -122,7 +132,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		mMissedCallRecords = new ArrayList<Map<String, Object>>();
 
 		mCallRecords = mAllCallRecords;
-
+        mContactPositionMapArray = new SparseIntArray();
 	}
 
 	@Override
@@ -140,6 +150,24 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		mOrderByIncomingButton.setOnClickListener(this);
 		mOrderByMissedButton.setOnClickListener(this);
         view.findViewById(R.id.system_call).setOnClickListener(this);
+
+        mSearchEditText = (EditText) view.findViewById(R.id.search);
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence text, int arg1, int arg2,
+                                      int arg3) {
+                searchContacts(text);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
 
 		return view;
 	}
@@ -221,6 +249,11 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		}else if (mSortBy == SORT_BY_MISSED) {
 			mCallRecords = mMissedCallRecords;
 		}
+        mContactPositionMapArray.clear();
+        for (int i = 0; i < mCallRecords.size(); i++) {
+            mContactPositionMapArray.put(i, i);
+        }
+        mAdapter.setPositionMapArray(mContactPositionMapArray);
 		mAdapter.setData(mCallRecords);
 		mAdapter.notifyDataSetChanged();
 	}
@@ -316,4 +349,53 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 			}
 		}.start();
 	}
+
+
+    /**
+     * 查找联系人
+     *
+     * @param text
+     */
+    private void searchContacts(CharSequence text) {
+
+        if (null == mAdapter || null == mCallRecords) {
+            return;
+        }
+        if (null == text || text.length() == 0) {
+            mContactPositionMapArray.clear();
+            for (int i = 0; i < mCallRecords.size(); i++) {
+                mContactPositionMapArray.put(i, i);
+            }
+        } else {
+
+            mContactPositionMapArray.clear();
+            int len = mCallRecords.size();
+            int positon = 0;
+            boolean isSearched = false;
+            for (int i = 0; i < len; i++) {
+                Map<String, Object> data = mCallRecords.get(i);
+                if (null != data.get(ContactHelper.PARAM_NAME)) {
+                    String name = (String) data.get(ContactHelper.PARAM_NAME);
+                    if (name.contains(text)) {
+                        mContactPositionMapArray.put(positon, i);
+                        positon++;
+                        isSearched = true;
+                    }
+                }
+                if (false == isSearched) {
+                    if (null != data.get(ContactHelper.PARAM_NUMBER)) {
+                        String number = (String) data
+                                .get(ContactHelper.PARAM_NUMBER);
+                        if (number.contains(text)) {
+                            mContactPositionMapArray.put(positon, i);
+                            positon++;
+                        }
+                    }
+                }
+                isSearched = false;
+            }
+        }
+        mAdapter.setPositionMapArray(mContactPositionMapArray);
+        mAdapter.notifyDataSetChanged();
+    }
 }

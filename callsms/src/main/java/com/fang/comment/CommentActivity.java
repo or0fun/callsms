@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -48,8 +49,18 @@ public class CommentActivity extends BaseActivity {
 			switch (msg.what) {
 			case MessageWhat.MSG_SHOW_COMMENTS:
 				if (null != msg.obj) {
-					mComments.setText(CommentHelper.parseAllComments((String)msg.obj));
-				}
+                    if (msg.obj instanceof String) {
+                        String comment = CommentHelper.parseAllComments((String)msg.obj);
+                        if (!TextUtils.isEmpty(comment)) {
+                            findViewById(R.id.comment_title).setVisibility(View.VISIBLE);
+                            mComments.setText(comment);
+                        } else {
+                            findViewById(R.id.comment_title).setVisibility(View.GONE);
+                        }
+                    }
+				} else {
+                    findViewById(R.id.comment_title).setVisibility(View.GONE);
+                }
 				break;
 
 			default:
