@@ -9,6 +9,7 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,7 +202,7 @@ public class CallRecordDialog implements OnClickListener {
 		}
 
 		mNameString = name;
-		if (mNameString.length() > 0) {
+		if (!TextUtils.isEmpty(mNameString)) {
 			mAddOrCopyButton.setText(mContext.getString(R.string.copyName));
 		}
 		String senderString = "";
@@ -349,7 +350,7 @@ public class CallRecordDialog implements OnClickListener {
 			break;
 		case R.id.add:
 			// 复制姓名或者添加为联系人
-			if (null == mNameString || mNameString == "") {
+			if (TextUtils.isEmpty(mNameString)) {
 				remove();
                 ContactHelper.addContact(mContext, mNumberString);
 			} else {

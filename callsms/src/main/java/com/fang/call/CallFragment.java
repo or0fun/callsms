@@ -91,12 +91,12 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 						}
 					}
 				}
-				UpdateList();
+				updateList();
 				CustomProgressDialog.cancel(mContext);
 				break;
 			case MessageWhat.UPDATE_NUMBER_DATABASE:
 				if (null != mAllCallRecords) {
-					UpdateList();
+					updateList();
 				}
 				break;
 			case REMOVE_AND_REFRESH_LIST:
@@ -211,7 +211,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	/**
 	 * 更新列表
 	 */
-	protected void UpdateList() {
+	protected void updateList() {
 		if (mSortBy == SORT_BY_ALL) {
 			mCallRecords = mAllCallRecords;
 		}else if (mSortBy == SORT_BY_OUTGOING) {
@@ -282,7 +282,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		} else if (view.getId() == R.id.system_call) {
             CallHelper.gotoCall(mContext);
         }
-		UpdateList();
+		updateList();
 	}
 
 	@Override

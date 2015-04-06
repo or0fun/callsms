@@ -7,28 +7,28 @@ package com.fang.net;
  */
 public class NetResuestHelper {
 
-	public static String KEY = "key";
-	public static String DATA = "data";
+	public static final String KEY = "key";
+	public static final String DATA = "data";
 	/** 日志类型 */
-	public static String CODE = "code";
+	public static final String CODE = "code";
 	/** 获取用户ID 的参数 */
-	public static String USER_ID = "user_id";
+	public static final String USER_ID = "user_id";
 	/** 携带用户ID 的参数 */
-	public static String VERSION = "version";
+	public static final String VERSION = "version";
 	/** 版本 的参数 */
-	public static String CHANNEL = "channel";
+	public static final String CHANNEL = "channel";
 	/** 渠道 的参数 */
-	public static String USER = "user";
+	public static final String USER = "user";
 	/** 手机型号 */
-	public static String MODEL = "model";
+	public static final String MODEL = "model";
 	/** 反馈意见 */
-	public static String FEEDBACK = "feedback";
+	public static final String FEEDBACK = "feedback";
 	/** 吐槽 */
-	public static String COMMENT = "comment";
+	public static final String COMMENT = "comment";
 	/** 获取吐槽 */
-	public static String GETCOMMENTS = "getcomments";
+	public static final String GETCOMMENTS = "getcomments";
     /** 消息推送 */
-    public static String PUSH = "push";
+    public static final String PUSH = "push";
 	
 	private static int code = 0;
 	public static synchronized int getRequestCode() {

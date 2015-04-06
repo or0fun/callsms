@@ -35,12 +35,14 @@ public class ServerUtil implements Runnable {
 
 	private Context mContext = null;
 	private Thread mThread;
-	private static ServerUtil instance = null;
+	private static volatile ServerUtil mInstance = null;
 	private AESUtil defaultAesutil;
 	/** 用户标识 */
 	private String mUserID;
 	/** 未上传成功的数据 */
 	private List<NameValuePair> mParamsBuffer = new ArrayList<NameValuePair>();
+
+    private Object mLock;
 
 	private ServerUtil(Context cxt) {
 		mContext = cxt;
@@ -55,11 +57,13 @@ public class ServerUtil implements Runnable {
 	}
 
 	public static ServerUtil getInstance(Context cxt) {
+        ServerUtil instance = mInstance;
 		if (instance == null) {
 			synchronized (ServerUtil.class) {
+                instance = mInstance;
 				if (instance == null) {
 					if (cxt != null) {
-						instance = new ServerUtil(cxt);
+                        mInstance = instance = new ServerUtil(cxt);
 					}
 				}
 			}
@@ -307,7 +311,7 @@ public class ServerUtil implements Runnable {
 	 * @param param
 	 */
 	private void addOfflineData(NameValuePair param) {
-		synchronized (mParamsBuffer) {
+		synchronized (mLock) {
 			mParamsBuffer.add(param);
 			SharedPreferencesHelper.setString(mContext,
 					SharedPreferencesHelper.OFFLINE_DATA,
@@ -334,7 +338,7 @@ public class ServerUtil implements Runnable {
 	 */
 	public void checkOffLineData(final Context context) {
 		if (null == mParamsBuffer) {
-			synchronized (mParamsBuffer) {
+			synchronized (mLock) {
 				if (mParamsBuffer.size() > 0) {
 					if (NetWorkUtil.isNetworkAvailable(context)) {
 						request((NameValuePair)mParamsBuffer.remove(0), null);

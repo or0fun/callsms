@@ -520,7 +520,7 @@ public class Util {
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								MIUIHelper.getInstance().OpenFloatWindowSetting(context);
+								MIUIHelper.getInstance().openFloatWindowSetting(context);
 								dialog.dismiss();
 							}
 						})

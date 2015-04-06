@@ -151,9 +151,8 @@ public class MIUIHelper {
 	 * 打开设置悬浮窗的设置
 	 * 
 	 * @param context
-	 * @param version
 	 */
-	public void OpenFloatWindowSetting(Context context) {
+	public void openFloatWindowSetting(Context context) {
 		Intent intent = new Intent();
 		if (mIsMIUI_V5) {
 			intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -174,7 +173,7 @@ public class MIUIHelper {
 	 * 跳转到设置自启动
 	 * @param context
 	 */
-	public void OpenAutoRebootSetting(Context context) {
+	public void openAutoRebootSetting(Context context) {
 		Intent intent = new Intent();
 		if (mIsMIUI_V5) {
 			intent.setAction(ACTION_APP_PERM_EDITOR);
@@ -326,10 +325,7 @@ public class MIUIHelper {
 
 	/**
 	 * 反射获得ApplicationInfo类所有成员
-	 * 
-	 * @param info
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
+	 *
 	 */
 	private void getApplicationInfoFileds() {
 		Class<ApplicationInfo> clazz = ApplicationInfo.class;
@@ -374,7 +370,7 @@ public class MIUIHelper {
 	/**
      * 判断是否有可以接受的Activity
      * @param context
-     * @param action
+     * @param intent
      * @return
      */
     public static boolean isIntentAvailable(Context context, Intent intent) {

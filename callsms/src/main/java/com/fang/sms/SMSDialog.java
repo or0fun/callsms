@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -167,7 +168,7 @@ public class SMSDialog implements OnClickListener {
 
 		BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
 		mNameString = ContactHelper.getPerson(mContext, mNumberString);
-		if (mNameString.length() > 0) {
+		if (!TextUtils.isEmpty(mNameString)) {
 			mAddOrCopyButton.setText(mContext.getString(R.string.copyName));
 		}
 		String senderString = "";
@@ -272,7 +273,7 @@ public class SMSDialog implements OnClickListener {
 			copyNumber();
 			break;
 		case R.id.add:
-			if (null == mNameString || mNameString == "") {
+			if (TextUtils.isEmpty(mNameString)) {
 				remove();
 				ContactHelper.addContact(mContext, mNumberString);
 			} else {

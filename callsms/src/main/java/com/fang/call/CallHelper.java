@@ -50,7 +50,7 @@ public class CallHelper {
 	
 	protected static List<ICallRecordListener> mCallRecordListeners = new ArrayList<ICallRecordListener>();
 
-	public static String[] CALL_RECORD_PARAMETERS = new String[] {
+	public static final String[] CALL_RECORD_PARAMETERS = new String[] {
 			CallLog.Calls._ID, CallLog.Calls.TYPE, CallLog.Calls.CACHED_NAME,
 			CallLog.Calls.NUMBER, CallLog.Calls.DATE, CallLog.Calls.DURATION };
 

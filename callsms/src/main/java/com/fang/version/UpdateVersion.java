@@ -71,11 +71,7 @@ public class UpdateVersion {
 	private final int MSG_DOWNLOAD_STATUS = 2;
 	/** 安装消息 */
 	private final int MSG_EVENT_INSTALL = 3;
-	/** 取消下载 */
-	private boolean mStopDownload = false;
 
-	/** 进度条 */
-	private ProgressDialog mProgressBar;
 	private MyHandlerThread mHandlerThread;
 	private Handler mHandler;
 	/** 下载标志 */
@@ -188,82 +184,6 @@ public class UpdateVersion {
 	}
 
 	/**
-	 * 下载文件
-	 * 
-	 * @param url
-	 */
-	private void downFile(final Context context, final String url) {
-		new Thread() {
-			public void run() {
-				String state = Environment.getExternalStorageState();
-				if (state.equals(Environment.MEDIA_MOUNTED)) {
-					HttpClient client = CustomHttpClient.getHttpClient();
-					HttpGet get = new HttpGet(url);
-					HttpResponse response;
-					try {
-						response = client.execute(get);
-						HttpEntity entity = response.getEntity();
-						long fileLength = entity.getContentLength();
-						InputStream is = entity.getContent();
-						FileOutputStream fileOutputStream = null;
-						int length = (int) (fileLength / 1024);
-						if (is != null) {
-							File file = new File(
-									Environment.getExternalStorageDirectory(),
-									context.getString(R.string.apk_name));
-							fileOutputStream = new FileOutputStream(file);
-							byte[] buf = new byte[1024];
-							int ch = -1;
-							int downloadedLen = 0;
-							mHandler.sendMessage(mHandler.obtainMessage(
-									MSG_DOWNLOAD_STATUS, downloadedLen, length));
-							while ((ch = is.read(buf)) != -1 && !mStopDownload) {
-								downloadedLen += 1;
-								fileOutputStream.write(buf, 0, ch);
-								mHandler.sendMessage(mHandler.obtainMessage(
-										MSG_DOWNLOAD_STATUS, downloadedLen,
-										length));
-							}
-						}
-						fileOutputStream.flush();
-						if (fileOutputStream != null) {
-							fileOutputStream.close();
-						}
-						if (mProgressBar != null && mProgressBar.isShowing()) {
-							mProgressBar.cancel();
-						}
-						if (!mStopDownload) {
-							mHandler.sendMessage(mHandler.obtainMessage(
-									MSG_DOWNLOAD_STATUS, length, length));
-							// 直接安装
-							Util.installAPK(context, Uri.fromFile(new File(
-									Environment.getExternalStorageDirectory(),
-									context.getString(R.string.apk_name))));
-						}
-					} catch (Exception e) {
-						if (null != e) {
-							DebugLog.d(TAG, e.toString());
-						}
-						if (null != mDownloadListener) {
-							mDownloadListener
-									.onResult(IDownloadListener.HTTP_EXCEPTION);
-						}
-					}
-				} else {
-					if (null != mDownloadListener) {
-						mDownloadListener
-								.onResult(IDownloadListener.SDCARD_NOT_AVAILABLE);
-					}
-				}
-				// 进度条消失
-				if (mProgressBar != null && mProgressBar.isShowing()) {
-					mProgressBar.cancel();
-				}
-			}
-		}.start();
-	}
-
-	/**
 	 * 网络监听
 	 */
 	protected NetRequestListener mNetRequestListener = new NetRequestListener() {
@@ -321,27 +241,6 @@ public class UpdateVersion {
                 } catch (JSONException e) {
                     DebugLog.d(TAG, e.toString());
                 }
-				break;
-			case MSG_DOWNLOAD_STATUS:
-				if (null != mProgressBar && mProgressBar.isShowing()) {
-					mProgressBar.setProgress(msg.arg1 * 100 / msg.arg2);
-					mProgressBar.setMessage(mContext
-							.getString(R.string.waiting));
-					if (msg.arg2 >= 1024) {
-						if (msg.arg1 >= 1024) {
-							mProgressBar.setProgressNumberFormat(String.format(
-									"%.2fM/%.2fM", msg.arg1 * 1.0 / 1024,
-									msg.arg2 * 1.0 / 1024));
-						} else {
-							mProgressBar.setProgressNumberFormat(String.format(
-									"%dK/%.2fM", msg.arg1,
-									msg.arg2 * 1.0 / 1024));
-						}
-					} else {
-						mProgressBar.setProgressNumberFormat(String.format(
-								"%dK/%dK", msg.arg1, msg.arg2));
-					}
-				}
 				break;
 			case MSG_EVENT_INSTALL:
 				// 直接安装

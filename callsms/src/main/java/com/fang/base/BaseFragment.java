@@ -54,7 +54,7 @@ public class BaseFragment extends Fragment {
 		return false;
 	}
 
-	public boolean IsSelected() {
+	public boolean isSelected() {
 		return mIsSelected;
 	}
 
