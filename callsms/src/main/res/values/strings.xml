@@ -62,6 +62,7 @@
     <string name="answer">接听</string>
     <string name="incoming">新来电</string>
     <string name="outgoing">去电</string>
+    <string name="calling">通话中</string>
     <string name="missed">未接来电</string>
     <string name="replyMsg">回复短信</string>
     <string name="recall">回拨</string>

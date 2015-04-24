@@ -60,7 +60,7 @@ public class CallDialog implements OnClickListener {
 	protected WindowManager mWindowManager = null;
 	protected WindowManager.LayoutParams mLayoutParams = null;
 	protected boolean mIsShowing = false;
-	protected int mType = PhoneReceiver.INCOMING_CALL;
+	protected int mType = PhoneReceiver.INCOMING_CALL_MSG;
 
 	private Vibrator mVibrator;
 	// 提示语
@@ -114,7 +114,7 @@ public class CallDialog implements OnClickListener {
 				}
 				mInfoString = (String) msg.obj;
 				mInfoTextView.setText(mInfoString);
-				if (mType == PhoneReceiver.INCOMING_CALL) {
+				if (mType == PhoneReceiver.INCOMING_CALL_MSG) {
 					// 来电播报
 					if (Util.isWiredHeadsetOn(mContext)) {
 						if (SharedPreferencesHelper
@@ -268,10 +268,12 @@ public class CallDialog implements OnClickListener {
 	 */
 	public void setType(int type) {
 		mType = type;
-		if (type == PhoneReceiver.INCOMING_CALL) {
+		if (type == PhoneReceiver.INCOMING_CALL_MSG) {
 			mTipTextView.setText(mContext.getString(R.string.incoming));
-		} else {
-			mTipTextView.setText(mContext.getString(R.string.outgoing));
+		} else if (type == PhoneReceiver.OUTGOING_CALL_MSG) {
+            mTipTextView.setText(mContext.getString(R.string.outgoing));
+        } else {
+			mTipTextView.setText(mContext.getString(R.string.calling));
 		}
 
 	}
@@ -325,7 +327,7 @@ public class CallDialog implements OnClickListener {
 	public void show() {
 		if (false == mIsShowing) {
 			mIsShowing = true;
-			if (mType == PhoneReceiver.INCOMING_CALL) {
+			if (mType == PhoneReceiver.INCOMING_CALL_MSG) {
 				long[] pattern = { 100, 500 }; // 停止 开启
 				mVibrator.vibrate(pattern, -1); // 重复两次上面的pattern
 												// 如果只想震动一次，index设为-1

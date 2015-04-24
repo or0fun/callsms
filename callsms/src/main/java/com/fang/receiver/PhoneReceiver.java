@@ -36,8 +36,12 @@ public class PhoneReceiver extends BroadcastReceiver {
 	
 	public static final String ACTION_REMOVE = "com.fang.action.remove";
 
-	public static final int INCOMING_CALL = 0;
-	public static final int OUTGOING_CALL = 1;
+	public static final int INCOMING_CALL_MSG = 0;
+	public static final int OUTGOING_CALL_MSG = 1;
+    public static final int ON_CALLING_MSG = 2;
+    protected final int REMOVE_MSG = 3;
+    protected final int MISSED_CALL_SHOW_MSG = 4;
+    protected final int OUTGOING_SHOW_MSG = 5;
 
 	//电话状态
 	public static final int CALL_STATE_RINGING = 0;
@@ -45,9 +49,6 @@ public class PhoneReceiver extends BroadcastReceiver {
 	public static final int CALL_STATE_IDLE = 2;
 	public static final int CALL_STATE_OUTGOING = 3;
 
-	protected final int REMOVE_MSG = 2;
-	protected final int MISSED_CALL_SHOW_MSG = 3;
-	protected final int OUTGOING_SHOW_MSG = 4;
 
 	protected static int callType = -1;
 	protected static CallDialog mCallDialog;
@@ -61,7 +62,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case INCOMING_CALL:
+			case INCOMING_CALL_MSG:
 				if (SharedPreferencesHelper.getBoolean(mContext,
 						SharedPreferencesHelper.SETTING_NEW_CALL_POPUP, true)) {
 					if (null != mCallDialog) {
@@ -69,13 +70,13 @@ public class PhoneReceiver extends BroadcastReceiver {
 						mCallDialog = null;
 					}
 					mCallDialog = new CallDialog(mContext, (String) msg.obj,
-							INCOMING_CALL);
+                            INCOMING_CALL_MSG);
 					mCallDialog.show();
 					//日志
 					LogOperate.updateLog(mContext, LogCode.CALL_INCOMING_DIALOG_SHOW);
 				}
 				break;
-			case OUTGOING_CALL:
+			case OUTGOING_CALL_MSG:
 				if (SharedPreferencesHelper.getBoolean(mContext,
 						SharedPreferencesHelper.SETTING_OUTGOING_CALL_POPUP,
 						true)) {
@@ -84,12 +85,17 @@ public class PhoneReceiver extends BroadcastReceiver {
 						mCallDialog = null;
 					}
 					mCallDialog = new CallDialog(mContext, (String) msg.obj,
-							OUTGOING_CALL);
+                            OUTGOING_CALL_MSG);
 					mCallDialog.show();
 					//日志
 					LogOperate.updateLog(mContext, LogCode.CALL_OUTGOING_DIALOG_SHOW);
 				}
 				break;
+            case ON_CALLING_MSG:
+                if (null != mCallDialog) {
+                    mCallDialog.setType(ON_CALLING_MSG);
+                }
+                break;
 			case REMOVE_MSG:
 				if (null != mCallDialog) {
 					mCallDialog.remove();
@@ -140,7 +146,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 			DebugLog.d(TAG, mPhoneNumber);
 			DebugLog.d(TAG, "CALL_STATE_OUTGOING");
 			callType = CALL_STATE_OUTGOING;
-			myHandler.sendMessage(myHandler.obtainMessage(OUTGOING_CALL,
+			myHandler.sendMessage(myHandler.obtainMessage(OUTGOING_CALL_MSG,
 					mPhoneNumber));
 
 		} else if (intent.getAction().equals(ACTION_REMOVE)) {
@@ -174,13 +180,14 @@ public class PhoneReceiver extends BroadcastReceiver {
 				DebugLog.d(TAG, "CALL_STATE_RINGING");
 				callType = CALL_STATE_RINGING;
 				mPhoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-				myHandler.sendMessage(myHandler.obtainMessage(INCOMING_CALL,
+				myHandler.sendMessage(myHandler.obtainMessage(INCOMING_CALL_MSG,
 						mPhoneNumber));
 				
 				break;
 			case TelephonyManager.CALL_STATE_OFFHOOK: // 摘机（正在通话中）
 				DebugLog.d(TAG, "CALL_STATE_OFFHOOK");
 				callType = CALL_STATE_OFFHOOK;
+                myHandler.sendMessage(myHandler.obtainMessage(ON_CALLING_MSG));
 				
 				break;
 			}
