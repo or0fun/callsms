@@ -15,7 +15,7 @@ public class CustomConstant {
 
     /** 应用渠道 */
     //wandoujia  hiapk  blog baidu  qq 360 appchina lenovo mi anzhi
-    public static final String PACKAGE_CHANNEL = "blog";
+    public static String sPACKAGE_CHANNEL = "blog";
     /** 信息获取的API */
     public static final String API_URL = "http://115.29.17.79/icoding/api.php";
     /** 接收post请求的服务器地址 */

@@ -16,6 +16,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
     }
+    productFlavors {
+        wandoujia {}
+        baidu {}
+        c360 {}
+        blog {}
+        hiapk {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [channel: name]
+        }
+    }
 }
 
 dependencies {

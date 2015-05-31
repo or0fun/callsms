@@ -129,7 +129,7 @@ public class ServerUtil implements Runnable {
 									.encrypt(Util.getVersionName(mContext))));
 							params.add(new BasicNameValuePair(SecurityHelper
 									.getMD5(NetResuestHelper.CHANNEL), defaultAesutil
-									.encrypt(CustomConstant.PACKAGE_CHANNEL)));
+									.encrypt(CustomConstant.sPACKAGE_CHANNEL)));
 							r = postHttpRequest(request.getUrl(), params);
 						}
 					}
