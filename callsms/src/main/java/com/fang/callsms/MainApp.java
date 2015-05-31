@@ -20,11 +20,5 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        System.out.println("uncaughtException");
-        System.exit(0);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }

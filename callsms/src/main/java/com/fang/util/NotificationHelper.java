@@ -102,6 +102,7 @@ public class NotificationHelper {
         Notification notification = new Notification(icon, content, when);
 
         notification.flags |= Notification.FLAG_ONGOING_EVENT;
+        notification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
