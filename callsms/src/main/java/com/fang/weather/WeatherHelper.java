@@ -131,7 +131,7 @@ public class WeatherHelper {
             date.setText("今天");
         } else if (index == 1) {
             date.setText("明天");
-        } else if (index == 1) {
+        } else if (index == 2) {
             date.setText("后天");
         } else {
             Calendar calendar = Calendar.getInstance();

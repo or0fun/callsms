@@ -69,7 +69,7 @@ public class CommentHelper {
 		String commentsString = "";
 		try {
 			JSONArray jsonArray = new JSONArray(jsonsString);
-			if (null != jsonArray && jsonArray.length() > 0) {
+			if (jsonArray.length() > 0) {
 				int len = jsonArray.length();
 				for (int i = 0; i < len; i++) {
 					JSONObject json = (JSONObject) jsonArray.get(i);

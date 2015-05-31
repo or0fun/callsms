@@ -164,7 +164,7 @@ public class CallDialog implements OnClickListener {
 					mCommentsArray = null;
 					try {
 						mCommentsArray = new JSONArray((String) msg.obj);
-						if (null != mCommentsArray && mCommentsArray.length() > 0) {
+						if (mCommentsArray.length() > 0) {
 							mFlashingIndex = -1;
 							mCommentLayout.setVisibility(View.VISIBLE);
 							showFlashComment();

@@ -270,7 +270,7 @@ public class Util {
 	 * @return
 	 */
 	public static String secondsToString(long d) {
-		StringBuffer ptime = new StringBuffer();
+        StringBuilder ptime = new StringBuilder();
 		if (d >= 3600) {
 			ptime.append(d / 3600);
 			ptime.append("小时");

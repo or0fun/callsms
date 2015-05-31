@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Query;
 import android.app.DownloadManager.Request;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.HandlerThread;
@@ -24,7 +22,6 @@ import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
 import com.fang.controls.CustomDialog;
 import com.fang.listener.IDownloadListener;
-import com.fang.net.CustomHttpClient;
 import com.fang.net.NetRequest;
 import com.fang.net.NetRequestConstant;
 import com.fang.net.NetRequestListener;
@@ -35,16 +32,10 @@ import com.fang.net.ServerUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.Util;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 /**
  * 版本更新类

@@ -242,7 +242,7 @@ public class MIUIHelper {
 				// 自己写就是24 为什么是24?看AppOpsManager：OP_SYSTEM_ALERT_WINDOW
 				return checkOp(context, OP_SYSTEM_ALERT_WINDOW); 
 			} else {
-				if ((context.getApplicationInfo().flags & 1 << 27) == 1) {
+				if ((context.getApplicationInfo().flags & 1<<27) == 1) {
 					return true;
 				} else {
 					return false;

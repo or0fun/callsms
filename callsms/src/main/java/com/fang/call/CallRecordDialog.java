@@ -399,7 +399,7 @@ public class CallRecordDialog implements OnClickListener {
 			mLayoutParams.x = 0;
 			mLayoutParams.y = 0;
 			mLayoutParams.format = PixelFormat.RGBA_8888;
-			mLayoutParams.width = WindowManager.LayoutParams.FILL_PARENT;
+			mLayoutParams.width = LayoutParams.MATCH_PARENT;
 			mLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 			mLayoutParams.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
 					| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;

@@ -42,7 +42,7 @@ public class ServerUtil implements Runnable {
 	/** 未上传成功的数据 */
 	private List<NameValuePair> mParamsBuffer = new ArrayList<NameValuePair>();
 
-    private Object mLock;
+    private final Object mLock = new Object();
 
 	private ServerUtil(Context cxt) {
 		mContext = cxt;
@@ -187,7 +187,7 @@ public class ServerUtil implements Runnable {
 	 * @param listener
 	 */
 	public void request(NameValuePair nameValuePair, NetRequestListener listener) {
-		if (null == nameValuePair) {
+		if (null != nameValuePair) {
 			NetRequest request = new NetRequest();
 			request.setUrl(getPostUrl());
 			request.setRequestType(NetRequestConstant.TYPE_POST);
@@ -341,7 +341,7 @@ public class ServerUtil implements Runnable {
 			synchronized (mLock) {
 				if (mParamsBuffer.size() > 0) {
 					if (NetWorkUtil.isNetworkAvailable(context)) {
-						request((NameValuePair)mParamsBuffer.remove(0), null);
+						request(mParamsBuffer.remove(0), null);
 					}
 				}
 			}

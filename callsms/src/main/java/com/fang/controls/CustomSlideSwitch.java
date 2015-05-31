@@ -172,7 +172,7 @@ public class CustomSlideSwitch extends View {
 		{
 			mSwitchStatus = mDstX > 35 ? SWITCH_ON : SWITCH_OFF;
 			drawBitmap(canvas, new Rect(0, 0, mDstX, mBmpHeight), new Rect(0,
-					0, (int) mDstX, mBmpHeight), mSwitch_on);
+					0, mDstX, mBmpHeight), mSwitch_on);
 			mPaint.setColor(Color.WHITE);
 
 			int count = canvas.save();

@@ -1,21 +1,21 @@
 package com.fang.util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 public class JsonUtil {
 	 /**
      * List<Map<String, Object>> To JsonString
-     * @param list
+     * @param params
      * @return
      */
 	static public String getJsonString(List<?> params) {
@@ -85,7 +85,7 @@ public class JsonUtil {
 	}
 	 /**
      * List<Map<String, Object>> To JsonString
-     * @param list
+     * @param map
      * @return
      */
 	static public String getJsonString(Map<String, Object> map) { 
@@ -165,6 +165,7 @@ public class JsonUtil {
 			}
 			return valueMap;
 		} catch (JSONException e) {
+            e.printStackTrace();
 		}
 		return null;
 	}

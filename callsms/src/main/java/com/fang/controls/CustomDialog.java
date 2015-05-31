@@ -50,7 +50,7 @@ public class CustomDialog extends Dialog {
 		/**
 		 * Set the Dialog message from resource
 		 * 
-		 * @param title
+		 * @param message
 		 * @return
 		 */
 		public Builder setMessage(int message) {
@@ -114,7 +114,8 @@ public class CustomDialog extends Dialog {
 		/**
 		 * Set the negative button resource and it's listener
 		 * 
-		 * @param confirm_btnText
+		 * @param cancel_btnText
+		 * @param listener
 		 * @return
 		 */
 		public Builder setNegativeButton(int cancel_btnText,
@@ -127,7 +128,8 @@ public class CustomDialog extends Dialog {
 		/**
 		 * Set the negative button and it's listener
 		 * 
-		 * @param confirm_btnText
+		 * @param cancel_btnText
+		 * @param listener
 		 * @return
 		 */
 		public Builder setNegativeButton(String cancel_btnText,
@@ -162,7 +164,7 @@ public class CustomDialog extends Dialog {
 				((Button) layout.findViewById(R.id.confirm_btn))
 						.setText(confirm_btnText);
 				if (confirm_btnClickListener != null) {
-					((Button) layout.findViewById(R.id.confirm_btn))
+					layout.findViewById(R.id.confirm_btn)
 							.setOnClickListener(new View.OnClickListener() {
 								public void onClick(View v) {
 									confirm_btnClickListener.onClick(dialog,
@@ -179,7 +181,7 @@ public class CustomDialog extends Dialog {
 				((Button) layout.findViewById(R.id.cancel_btn))
 						.setText(cancel_btnText);
 				if (cancel_btnClickListener != null) {
-					((Button) layout.findViewById(R.id.cancel_btn))
+					layout.findViewById(R.id.cancel_btn)
 							.setOnClickListener(new View.OnClickListener() {
 								public void onClick(View v) {
 									cancel_btnClickListener.onClick(dialog,

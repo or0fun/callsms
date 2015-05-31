@@ -108,7 +108,7 @@ public class BusinessHelper {
 	 */
 	public static void getExpressInfo(final Context context, final ExpressInfo info,
 			final Handler handler) {
-		if (false == NetWorkUtil.isNetworkAvailable(context)) {
+		if (!NetWorkUtil.isNetworkAvailable(context)) {
 			return;
 		}
 		if (null == info) {
@@ -128,14 +128,13 @@ public class BusinessHelper {
 				
 				if (StringUtil.isEmpty(infoString)) {
 					infoString = context.getString(R.string.open_network_to_recognise_express);
-				}else {
-					if (null != handler) {
-						info.setInfo(infoString);
-						handler.sendMessage(handler.obtainMessage(
-								MessageWhat.NET_REQUEST_EXPRESS, info));
-					}
 				}
-			}
+                if (null != handler) {
+                    info.setInfo(infoString);
+                    handler.sendMessage(handler.obtainMessage(
+                            MessageWhat.NET_REQUEST_EXPRESS, info));
+                }
+            }
 		}).start();
 	}
 
@@ -147,7 +146,7 @@ public class BusinessHelper {
 	 */
 	public static void getExpressInfo(final Context context, final ExpressInfo info,
 			final IResponseListener expressListener) {
-		if (false == NetWorkUtil.isNetworkAvailable(context)) {
+		if (!NetWorkUtil.isNetworkAvailable(context)) {
 			return;
 		}
 		if (null == info) {
@@ -168,17 +167,16 @@ public class BusinessHelper {
 				
 				if (StringUtil.isEmpty(infoString)) {
 					infoString = context.getString(R.string.open_network_to_recognise_express);
-				}else {
-					if (null != expressListener) {
-						if (!infoString.equals(info.getInfo())) {
-							info.setChanged(true);
-							info.setInfo(infoString);
-						}
-						expressListener.onResult(info);
-					}
 				}
-				
-			}
+                if (null != expressListener) {
+                    if (!infoString.equals(info.getInfo())) {
+                        info.setChanged(true);
+                        info.setInfo(infoString);
+                    }
+                    expressListener.onResult(info);
+                }
+
+            }
 		}).start();
 	}
 
@@ -191,7 +189,7 @@ public class BusinessHelper {
 	 */
 	public static void getWeatherInfo(final Context context, final String city,
 			final Handler handler) {
-		if (false == NetWorkUtil.isNetworkAvailable(context)) {
+		if (!NetWorkUtil.isNetworkAvailable(context)) {
 			return;
 		}
 		if (StringUtil.isEmpty(city)) {
@@ -207,13 +205,12 @@ public class BusinessHelper {
 				
 				if (StringUtil.isEmpty(infoString)) {
 					infoString = context.getString(R.string.open_network_to_recognise_express);
-				}else {
-					if (null != handler) {
-						handler.sendMessage(handler.obtainMessage(
-								MessageWhat.NET_REQUEST_WEATHER, infoString));
-					}
 				}
-			}
+                if (null != handler) {
+                    handler.sendMessage(handler.obtainMessage(
+                            MessageWhat.NET_REQUEST_WEATHER, infoString));
+                }
+            }
 		}).start();
 	}
 }

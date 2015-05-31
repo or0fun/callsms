@@ -10,7 +10,7 @@ import com.fang.util.SharedPreferencesHelper;
 
 import java.util.Date;
 
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 	
 	protected Context mContext;
 	private static Toast mToast;

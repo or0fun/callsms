@@ -290,7 +290,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
      */
     private void handlerNongli(final String nongli) {
         if (!StringUtil.isEmpty(nongli)) {
-            StringBuffer today = new StringBuffer();
+            StringBuilder today = new StringBuilder();
             SimpleDateFormat format = new SimpleDateFormat("M月d日");
             today.append("今天是");
             if (nongli.trim().length() > 0) {

@@ -53,7 +53,7 @@ public class AESUtil {
 		String re = decrypt(key, iv, str);
 		if(re != null)
 			return re.trim();
-		return re;
+		return null;
 	}
 	
 	private byte[] padRight(byte[] data, int n) {

@@ -145,7 +145,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 				mListDataSelected = (ArrayList<HashMap<String, Object>>) data
 						.getSerializableExtra(CustomConstant.SELECT_CONTACT_PARAMETER);
 				if (mListDataSelected != null) {
-					StringBuffer contactsBuffer = new StringBuffer();
+                    StringBuilder contactsBuffer = new StringBuilder();
 					for (HashMap<String, Object> map : mListDataSelected) {
 						contactsBuffer.append(map.get(ContactHelper.PARAM_NAME));
 						contactsBuffer.append(";");
@@ -186,7 +186,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 		confirmButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				StringBuffer sb = new StringBuffer();
+                StringBuilder sb = new StringBuilder();
 				if (null == mSendCalendar) {
 					mSendCalendar = Calendar.getInstance();
 				}

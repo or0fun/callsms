@@ -7,7 +7,7 @@ import org.json.JSONTokener;
 public class JsonParser {
 
 	public static String parseIatResult(String json) {
-		StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
 		try {
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject joResult = new JSONObject(tokener);
@@ -32,7 +32,7 @@ public class JsonParser {
 	}
 	
 	public static String parseGrammarResult(String json) {
-		StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
 		try {
 			JSONTokener tokener = new JSONTokener(json);
 			JSONObject joResult = new JSONObject(tokener);
@@ -48,8 +48,10 @@ public class JsonParser {
 						ret.append("没有匹配结果.");
 						return ret.toString();
 					}
-					ret.append("【结果】" + obj.getString("w"));
-					ret.append("【置信度】" + obj.getInt("sc"));
+					ret.append("【结果】");
+                    ret.append(obj.getString("w"));
+					ret.append("【置信度】");
+                    ret.append(obj.getInt("sc"));
 					ret.append("\n");
 				}
 			}

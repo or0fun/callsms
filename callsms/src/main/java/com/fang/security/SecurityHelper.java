@@ -35,9 +35,10 @@ public class SecurityHelper {
 	        MessageDigest md = MessageDigest.getInstance("MD5"); 
 	        md.update(value.getBytes());     
 	        byte[] buf = md.digest();
-	        String tmp = ""; 
-	        for (int i = 0; i < buf.length; i++) 
-	        	tmp = tmp + byteToHex(buf[i], 2); 
+	        String tmp = "";
+            for (byte b : buf) {
+                tmp = tmp + byteToHex(b, 2);
+            }
 	        return tmp.toLowerCase();
 	    } catch (NoSuchAlgorithmException e) { 
 	        e.printStackTrace(); 

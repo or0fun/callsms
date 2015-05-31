@@ -1,7 +1,5 @@
 package com.fang.sms;
 
-import java.util.List;
-
 import android.app.PendingIntent;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +7,8 @@ import android.telephony.SmsManager;
 
 import com.fang.common.CustomConstant;
 import com.fang.util.SharedPreferencesHelper;
+
+import java.util.List;
 
 /**
  * 短信帮助类
@@ -28,9 +28,8 @@ public class SMSHelper {
 				CustomConstant.SMS_INBOX_URI, null, null, null, "date desc");
 		long lastTime = 0;
 		if (c != null) {
-			while (c.moveToNext()) {
+			if (c.moveToNext()) {
 				lastTime = c.getLong(c.getColumnIndex("date"));
-				break;
 			}
 			c.close();
 		}
@@ -41,7 +40,6 @@ public class SMSHelper {
 	 * 发送短信
 	 * 
 	 * @param destinationAddress
-	 * @param scAddress
 	 * @param text
 	 * @param sentIntent
 	 * @param deliveryIntent

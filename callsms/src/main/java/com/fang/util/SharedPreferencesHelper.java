@@ -152,6 +152,7 @@ public class SharedPreferencesHelper {
 			ObjectInputStream ois = new ObjectInputStream(bais);
 			return ois.readObject();
 		} catch (IOException e) {
+            e.printStackTrace();
 		}catch (ClassNotFoundException e) {
 			DebugLog.d("SharedPreferencesHelper", e.toString());
 		}

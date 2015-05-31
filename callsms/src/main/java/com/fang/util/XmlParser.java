@@ -1,19 +1,19 @@
 package com.fang.util;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 public class XmlParser {
 
 	public static String parseNluResult(String xml) 
 	{
-		StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 		try
 		{
 			// DOM builder
@@ -28,7 +28,7 @@ public class XmlParser {
 			domDoc = domBuilder.parse(is);
 
 			// 获取根节点
-			Element root = (Element) domDoc.getDocumentElement();
+			Element root = domDoc.getDocumentElement();
 			
 			Element raw = (Element)root.getElementsByTagName("rawtext").item(0);
 			buffer.append("【识别结果】" + raw.getFirstChild().getNodeValue());

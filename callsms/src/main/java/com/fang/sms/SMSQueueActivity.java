@@ -1,7 +1,5 @@
 package com.fang.sms;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,8 @@ import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.controls.CustomProgressDialog;
 import com.fang.util.Util;
+
+import java.util.List;
 
 public class SMSQueueActivity extends BaseActivity {
 
@@ -87,7 +87,7 @@ public class SMSQueueActivity extends BaseActivity {
 			contentTextView.setText(info.getContent());
 			dateTextView.setText(Util.longDateToStringDate(info
 					.getTimeInMillis()));
-			StringBuffer nameStringBuffer = new StringBuffer();
+            StringBuilder nameStringBuffer = new StringBuilder();
 			for (String number : info.getmReceiverList()) {
 				nameStringBuffer.append(ContactHelper.getPerson(mContext,
 						number));
