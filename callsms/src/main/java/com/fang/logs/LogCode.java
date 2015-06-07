@@ -44,4 +44,14 @@ public class LogCode {
     public final static String PUSH_REQUEST_NOTIFICATION_CLICK = "10020";
     /** 消息推送通知栏显示 */
     public final static String PUSH_REQUEST_RECEIVED = "10021";
+    /** 扫一扫 **/
+    public final static String SCAN = "10022";
+    /** 清除查找号码的编辑区 */
+    public final static String CLEAR_NUMBER = "10023";
+    /** 进入拨号 **/
+    public final static String ENTER_SYSTEM_CALL_LIST = "10024";
+    /** 进入通讯录 */
+    public final static String ENTER_SYSTEM_CONTACT_LIST = "10025";
+    /** 历史上的今天 */
+    public final static String HISTORY_OF_TODAY = "10026";
 }

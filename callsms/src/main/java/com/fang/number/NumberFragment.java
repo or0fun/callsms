@@ -200,10 +200,12 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mContext.startActivity(new Intent(mContext, ExpressListActivity.class));
 		} else if (id == R.id.clearBtn) {
             mSearchEditView.setText("");
+            LogOperate.updateLog(mContext, LogCode.CLEAR_NUMBER);
         } else if (id == R.id.scan) {//扫一扫
             Intent openCameraIntent = new Intent(mContext,
                     CaptureActivity.class);
             startActivityForResult(openCameraIntent, 0);
+            LogOperate.updateLog(mContext, LogCode.SCAN);
         }
 	}
 	

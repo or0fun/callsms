@@ -225,6 +225,8 @@ public class ContactFragment extends BaseFragment implements IContactListener {
             @Override
             public void onClick(View v) {
                 ContactHelper.gotoContact(mContext);
+
+                LogOperate.updateLog(mContext, LogCode.ENTER_SYSTEM_CONTACT_LIST);
             }
         });
 

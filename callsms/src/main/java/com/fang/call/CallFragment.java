@@ -25,6 +25,8 @@ import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
+import com.fang.logs.LogCode;
+import com.fang.logs.LogOperate;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.util.MessageWhat;
@@ -315,6 +317,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 			mSortBy = SORT_BY_MISSED;
 		} else if (view.getId() == R.id.system_call) {
             CallHelper.gotoCall(mContext);
+            LogOperate.updateLog(mContext, LogCode.ENTER_SYSTEM_CALL_LIST);
         }
 		updateList();
 	}
