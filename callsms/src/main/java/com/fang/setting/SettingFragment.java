@@ -28,8 +28,8 @@ public class SettingFragment extends BaseFragment {
 
 	protected Context mContext;
     private final String TAG = "SettingFragment";
-	
-	@Override
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = getActivity();

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">zxing</string>
+
+    <string name="scan_result">扫描结果</string>
+    <string name="open_camera">开始扫描</string>
+    <string name="generate">生成二维码</string>
+    <string name="input_text">输入内容</string>
+    <string name="cancel">取消</string>
+    <string name="light_on">打开闪光灯</string>
+    <string name="light_off">关闭闪光灯</string>
+    <string name="scan_barcode">将二维码/条码放入框内</string>
+    <string name="title_bar">电话短信助手</string>
+</resources>

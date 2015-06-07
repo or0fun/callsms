@@ -312,8 +312,6 @@ public class CallRecordDialog implements OnClickListener {
 	 */
 	protected void copyNumber() {
 		Util.copy(mContext, mNumberString);
-		Toast.makeText(mContext, "号码" + mNumberString + "已复制。",
-				Toast.LENGTH_SHORT).show();
 	}
 
 	/**

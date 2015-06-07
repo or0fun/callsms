@@ -12,6 +12,11 @@ public class BaseFragment extends Fragment {
 	public static WindowManager mWindowManager;
 	public View mView;
 	protected boolean mIsSelected = false;
+	protected Model mModel;
+
+    public void setModel(Model model) {
+        mModel = model;
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,4 +70,7 @@ public class BaseFragment extends Fragment {
 	public boolean isNeedLoading() {
 		return false;
 	}
+
+    public void showLoading() { }
+    public void hideLoading() { }
 }

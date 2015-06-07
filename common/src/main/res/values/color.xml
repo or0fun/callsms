@@ -29,8 +29,7 @@
     <color name="button">#ff1874CD</color>
     <!-- 主色调 -->
     <color name="background">#FF29A3CB</color>
-    
-    <color name="title">#FF00BFFF</color>
+
     <color name="body">#ff1d1d1d</color>
     <color name="separate">#ffc0c3c4</color>
     <color name="number">#ff0000ff</color>
@@ -45,4 +44,7 @@
     
     <!--dialog中按钮字体颜色 -->
     <color name="btntextcolor">#ff1E90FF</color>
+
+    <!-- 半透明背景色 -->
+    <color name="light_black">#99000000</color>
 </resources>

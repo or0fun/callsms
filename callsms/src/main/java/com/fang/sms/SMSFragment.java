@@ -74,7 +74,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 
 	};
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = getActivity();

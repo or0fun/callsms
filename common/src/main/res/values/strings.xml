@@ -1,0 +1,10 @@
+<resources>
+    <!-- 主按钮 -->
+    <drawable name="main_normal">@color/background</drawable>
+    <drawable name="main_pressed">#ff1884DF</drawable>
+    <!-- 子按钮 -->
+    <drawable name="sub_normal">#ff463265</drawable>
+    <drawable name="sub_pressed">#aa463265</drawable>
+
+    <string name="app_name">common</string>
+</resources>

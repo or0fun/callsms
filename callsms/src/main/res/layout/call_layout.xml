@@ -49,16 +49,33 @@
 
     <!-- 电话记录 -->
 
-    <ListView
-        android:id="@+id/callRecord"
-        android:layout_width="fill_parent"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@color/divider"
-        android:dividerHeight="1px"
-        android:listSelector="@drawable/list_selector" >
-    </ListView>
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/callRecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/divider"
+            android:dividerHeight="1px"
+            android:listSelector="@drawable/list_selector"></ListView>
+
+        <LinearLayout
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/light_black"
+            android:gravity="center"
+            android:visibility="gone">
+            <ProgressBar
+                android:layout_width="40dip"
+                android:layout_height="40dip"/>
+        </LinearLayout>
+    </FrameLayout>
 
     <!-- 分类 -->
     <LinearLayout

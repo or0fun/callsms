@@ -18,14 +18,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
+import com.fang.base.Model;
 import com.fang.business.BusinessHelper;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
+import com.fang.datatype.ExtraName;
 import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.span.MySpan;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
@@ -34,6 +37,7 @@ import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
+import com.fang.zxing.activity.CaptureActivity;
 
 import java.text.SimpleDateFormat;
 
@@ -102,8 +106,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			super.handleMessage(msg);
 		}
 	};
-	
-	@Override
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
@@ -115,7 +119,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		View rootView = inflater.inflate(R.layout.number_layout, container,
 				false);
 		mResultTextView = (TextView) rootView.findViewById(R.id.result);
-		mResultTextView.setText(mNumberInfoString);
+        MySpan.formatTextView(mContext, mResultTextView, mNumberInfoString, false);
+
 		mSearchBtn = (Button) rootView.findViewById(R.id.searchBtn);
 		mSearchBtn.setOnClickListener(this);
 		mSearchEditView = (EditText) rootView.findViewById(R.id.search);
@@ -145,6 +150,9 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         mWeatherCity = (TextView) rootView.findViewById(R.id.weather_city);
 
         mToday = (TextView) rootView.findViewById(R.id.today);
+
+        rootView.findViewById(R.id.clearBtn).setOnClickListener(this);
+        rootView.findViewById(R.id.scan).setOnClickListener(this);
 
         // 显示农历和天气
         handlerNongli(SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NONGLI));
@@ -180,6 +188,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 
 	@Override
 	public void onClick(View view) {
+        int id = view.getId();
 		if (view == mFoodListLayout) {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_FOOD));
 		}else if (view == mHouseListLayout) {
@@ -192,7 +201,13 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			searchBtnClick();
 		}else if (view == mSearchExpressBtn) {
 			mContext.startActivity(new Intent(mContext, ExpressListActivity.class));
-		}
+		} else if (id == R.id.clearBtn) {
+            mSearchEditView.setText("");
+        } else if (id == R.id.scan) {//扫一扫
+            Intent openCameraIntent = new Intent(mContext,
+                    CaptureActivity.class);
+            startActivityForResult(openCameraIntent, 0);
+        }
 	}
 	
 	/**
@@ -300,6 +315,27 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 
                 SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.NONGLI, nongli);
             }
+        }
+    }
+
+    /**
+     * 外界调用
+     * @param scanResult
+     */
+    public void setResultText(String scanResult) {
+        mNumberInfoString = scanResult;
+        MySpan.formatTextView(mContext, mResultTextView, scanResult, false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == getActivity().RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString(ExtraName.RESULT);
+            setResultText(scanResult);
+
         }
     }
 }

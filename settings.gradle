@@ -1,1 +1,1 @@
-include ':callsms'
+include ':callsms', ':qrcode', ':common'

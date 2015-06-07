@@ -1,5 +1,6 @@
 package com.fang.span;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
@@ -9,10 +10,14 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.fang.callsms.R;
+import com.fang.controls.CustomDialog;
 import com.fang.util.DebugLog;
 import com.fang.util.Patterns;
+import com.fang.util.Util;
 
 public class MySpan extends ClickableSpan {
 
@@ -20,11 +25,15 @@ public class MySpan extends ClickableSpan {
 	protected String mText;
 	protected Context mContext;
 	protected Handler mHandler;
+    protected boolean mFloatView;
+    protected WindowManager mWindowManager;
+    protected Dialog mDialog;
 
-	public MySpan(Context context, String text, Handler handler) {
+	public MySpan(Context context, String text, Handler handler, boolean floatView) {
 		mContext = context;
 		mText = text;
 		mHandler = handler;
+        mFloatView = floatView;
 	}
 
 	@Override
@@ -40,8 +49,42 @@ public class MySpan extends ClickableSpan {
 	}
 
 	public void handle(final Context context, final String str) {
-
+        if (mFloatView) {
+            if (null == mWindowManager) {
+                mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            }
+        }
 	}
+
+    public void cancel(View view) {
+        if (mFloatView) {
+            Util.removeView(mWindowManager, view);
+        } else  {
+            mDialog.cancel();
+        }
+    }
+
+    public void show(final View view) {
+
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                cancel(view);
+            }
+        });
+
+        if (mFloatView) {
+		    Util.addView(mWindowManager, view);
+        } else  {
+            if (null == mDialog) {
+                mDialog = new CustomDialog.Builder(mContext).setContentView(view)
+                        .setHeight(WindowManager.LayoutParams.MATCH_PARENT)
+                        .create();
+                mDialog.setCanceledOnTouchOutside(true);
+            }
+            mDialog.show();
+        }
+    }
 
 	/**
 	 * 格式化文本框里的内容，为号码 网址 验证码 添加链接
@@ -49,13 +92,13 @@ public class MySpan extends ClickableSpan {
 	 * @param textView
 	 * @param value
 	 */
-	public static void formatTextView(Context context, TextView textView, String value) {
+	public static void formatTextView(Context context, TextView textView, String value, boolean floatView) {
 		if (null == textView || null == value) {
 			return;
 		}
 		textView.setMovementMethod(LinkMovementMethod.getInstance());
 		textView.setText(value);
-		textView.setText(MySpan.formatText(context, textView.getText(), null));
+		textView.setText(MySpan.formatText(context, textView.getText(), null, floatView));
 	}
 	/**
 	 * 格式化文字
@@ -65,10 +108,10 @@ public class MySpan extends ClickableSpan {
 	 * @param myHandler
 	 * @return
 	 */
-	public static SpannableStringBuilder formatText(final Context context,
-			CharSequence text, Handler myHandler) {
+	private static SpannableStringBuilder formatText(final Context context,
+			CharSequence text, Handler myHandler, boolean floatView) {
 		if (text instanceof Spannable) {
-			String specialCharStr = "/.?&%$#\"'()=-+:@_*";
+			String specialCharStr = "!/.?&%$#\"'()=-+:@_*";
 			SpannableStringBuilder style = new SpannableStringBuilder(text);
 			style.clearSpans();
 
@@ -98,30 +141,27 @@ public class MySpan extends ClickableSpan {
 						tmpSubString = text.subSequence(codeStart, i)
 								.toString();
 						DebugLog.d(TAG, tmpSubString);
-						if (tmpSubString.contains(".") ||tmpSubString.contains("http")) {
-								if( specialCharStr.indexOf(text.charAt(i)) >= 0) {
-									continue;
-								}
-						}
-						
-						// 链接
+                        if (tmpSubString.contains(".") || tmpSubString.contains("http")) {
+                            if (specialCharStr.indexOf(text.charAt(i)) >= 0) {
+                                continue;
+                            }
+                        }
+
+                        // 链接
 						if (tmpSubString.matches(Patterns.URL_PATTERN)) {
-							MyURLSpan span = new MyURLSpan(context,
-									tmpSubString, myHandler);
+							MyURLSpan span = new MyURLSpan(context, tmpSubString, myHandler, floatView);
 							style.setSpan(span, codeStart, i,
 									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
 						// 邮箱
 						else if (tmpSubString.matches(Patterns.MAIL_PATTERN)) {
-							MyEmailSpan span = new MyEmailSpan(context,
-									tmpSubString, myHandler);
+							MyEmailSpan span = new MyEmailSpan(context,tmpSubString, myHandler, floatView);
 							style.setSpan(span, codeStart, i,
 									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
 						// 电话号码
 						else if (tmpSubString.matches(Patterns.PHONE_NUMBER_PATTERN)) {
-							MyPhoneSpan span = new MyPhoneSpan(context,
-									tmpSubString, myHandler);
+							MyPhoneSpan span = new MyPhoneSpan(context, tmpSubString, myHandler, floatView);
 							style.setSpan(span, codeStart, i,
 									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
@@ -129,7 +169,7 @@ public class MySpan extends ClickableSpan {
 						else if (tmpSubString.matches(Patterns.CODE_PATTERN)) {
 							MyCodeSpan span = new MyCodeSpan(context, text
 									.subSequence(codeStart, i).toString(),
-									myHandler);
+									myHandler, floatView);
 							style.setSpan(span, codeStart, i,
 									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
@@ -145,29 +185,27 @@ public class MySpan extends ClickableSpan {
 				// 链接
 				if (tmpSubString.matches(Patterns.URL_PATTERN)) {
 					MyURLSpan span = new MyURLSpan(context, tmpSubString,
-							myHandler);
+							myHandler, floatView);
 					style.setSpan(span, codeStart, i,
 							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}
 				// 邮箱
 				else if (tmpSubString.matches(Patterns.MAIL_PATTERN)) {
 					MyEmailSpan span = new MyEmailSpan(context,
-							tmpSubString, myHandler);
+							tmpSubString, myHandler, floatView);
 					style.setSpan(span, codeStart, i,
 							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}
 				// 电话号码
 				else if (tmpSubString.matches(Patterns.PHONE_NUMBER_PATTERN)) {
-					MyPhoneSpan span = new MyPhoneSpan(context,
-							tmpSubString, myHandler);
+					MyPhoneSpan span = new MyPhoneSpan(context, tmpSubString, myHandler, floatView);
 					style.setSpan(span, codeStart, i,
 							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}
 				// 验证码
 				else if (tmpSubString.matches(Patterns.CODE_PATTERN)) {
-					MyCodeSpan span = new MyCodeSpan(context, text
-							.subSequence(codeStart, i).toString(),
-							myHandler);
+					MyCodeSpan span = new MyCodeSpan(context, text.subSequence(codeStart, i).toString(),
+							myHandler, floatView);
 					style.setSpan(span, codeStart, i,
 							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				}

@@ -23,7 +23,6 @@ import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
-import com.fang.controls.CustomProgressDialog;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
 import com.fang.receiver.MainService;
@@ -64,6 +63,8 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	private ImageButton mOrderByOutgoingButton;
 	private ImageButton mOrderByIncomingButton;
 	private ImageButton mOrderByMissedButton;
+
+    private View mProgressBar;
     /** 查找联系人 */
     private EditText mSearchEditText;
     /** 映射联系人列表 */
@@ -101,7 +102,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 					}
 				}
 				updateList();
-				CustomProgressDialog.cancel(mContext);
+				hideLoading();
 				break;
 			case MessageWhat.UPDATE_NUMBER_DATABASE:
 				if (null != mAllCallRecords) {
@@ -118,7 +119,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 
 	};
 
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = getActivity();
@@ -138,6 +139,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.call_layout, container, false);
+        mProgressBar = view.findViewById(R.id.progressBar);
 		mOrderByAllButton = (Button) view.findViewById(R.id.byAll);
 		mOrderByOutgoingButton = (ImageButton) view
 				.findViewById(R.id.byOutgoing);
@@ -334,12 +336,26 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		}
 		return false;
 	}
+
+    @Override
+    public void showLoading() {
+        if (null != mProgressBar) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (null != mProgressBar) {
+            mProgressBar.setVisibility(View.GONE);
+        }
+    }
 	
 	/**
 	 *  重新获取通话记录
 	 */
 	private void freshCallRecords() {
-		CustomProgressDialog.show(mContext);
+        showLoading();
 		mAllCallRecords.clear();
 		new Thread() {
 			@Override

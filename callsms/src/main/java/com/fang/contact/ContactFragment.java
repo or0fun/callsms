@@ -30,7 +30,6 @@ import com.fang.base.BaseFragment;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
 import com.fang.contact.MyLetterListView.OnTouchingLetterChangedListener;
-import com.fang.controls.CustomProgressDialog;
 import com.fang.database.NumberDatabaseManager;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
@@ -85,6 +84,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	private Button mSortByNameButton;
 	private Button mSortByTimesbButton;
 	private TextView mTitleTextView;
+    private View mProgressBar;
 
     private boolean mIsShowDalay = false;
 
@@ -107,13 +107,14 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				setAdapter(mList);
 				
 				mTitleTextView.setText("共有" + len + "个联系人");
-				CustomProgressDialog.cancel(mContext);
+				hideLoading();
 				break;
 				default:
 			}
 		}
 	};
-	@Override
+
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -128,6 +129,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.contact_layout, container,
 				false);
+        mProgressBar = rootView.findViewById(R.id.progressBar);
 		mTitleTextView = (TextView) rootView.findViewById(R.id.title);
 		mSortByTimesbButton = (Button)rootView.findViewById(R.id.byTimes);
 		mSortByNameButton = (Button)rootView.findViewById(R.id.byName);
@@ -267,7 +269,22 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 
 		return super.onBackPressed();
 	}
-	/**
+
+    @Override
+    public void showLoading() {
+        if (null != mProgressBar) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (null != mProgressBar) {
+            mProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    /**
 	 * 更新列表
 	 * @param key
 	 */
@@ -365,15 +382,11 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				holder = new ViewHolder();
 				holder.alpha = (TextView) convertView.findViewById(R.id.alpha);
 				holder.name = (TextView) convertView.findViewById(R.id.name);
-				holder.number = (TextView) convertView
-						.findViewById(R.id.number);
-				holder.icon = (ImageView) convertView
-						.findViewById(R.id.imageView);
-				holder.lastRecord = (TextView) convertView
-						.findViewById(R.id.lastRecord);
-				holder.totalRecord = (TextView) convertView
-						.findViewById(R.id.totalRecord);
-				convertView.setTag(holder);
+                holder.number = (TextView) convertView.findViewById(R.id.number);
+                holder.icon = (ImageView) convertView.findViewById(R.id.imageView);
+                holder.lastRecord = (TextView) convertView.findViewById(R.id.lastRecord);
+                holder.totalRecord = (TextView) convertView.findViewById(R.id.totalRecord);
+                convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}

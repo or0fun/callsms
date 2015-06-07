@@ -84,4 +84,7 @@
     <dimen name="comment_button_height">35dp</dimen>
 
     <dimen name="nameTextSize">16.0sp</dimen>
+
+    <dimen name="clearBtn_width">25dp</dimen>
+    <dimen name="clearBtn_height">25dp</dimen>
 </resources>

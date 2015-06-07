@@ -3,10 +3,14 @@ package com.fang.controls;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fang.callsms.R;
@@ -34,12 +38,14 @@ public class CustomDialog extends Dialog {
 		private String confirm_btnText;
 		private String cancel_btnText;
 		private View contentView;
+        private int height;
 
 		private DialogInterface.OnClickListener confirm_btnClickListener;
 		private DialogInterface.OnClickListener cancel_btnClickListener;
 
 		public Builder(Context context) {
 			this.context = context;
+            height = WindowManager.LayoutParams.WRAP_CONTENT;
 		}
 
 		public Builder setMessage(String message) {
@@ -84,6 +90,11 @@ public class CustomDialog extends Dialog {
 			this.contentView = v;
 			return this;
 		}
+
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
 
 		/**
 		 * Set the positive button resource and it's listener
@@ -141,19 +152,32 @@ public class CustomDialog extends Dialog {
 
 		public CustomDialog create() {
 			// instantiate the dialog with the custom Theme
-			final CustomDialog dialog = new CustomDialog(context,
-					R.style.customDialog);
+			final CustomDialog dialog = new CustomDialog(context, R.style.customDialog);
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.custom_dialog, null);
+
+            dialog.setContentView(layout, new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+            //全屏
+            Window win = dialog.getWindow();
+            win.setGravity(Gravity.CENTER);
+            WindowManager.LayoutParams lp = win.getAttributes();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = height;
+            win.setAttributes(lp);
+
+
 			if (contentView != null) {
-				dialog.setContentView(contentView);
-				dialog.setCanceledOnTouchOutside(false);
+                LinearLayout root = (LinearLayout) layout.findViewById(R.id.root);
+                root.removeAllViews();
+                root.addView(contentView, new LayoutParams(
+                        LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 				return dialog;
 			}
 
-			LayoutInflater inflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			View layout = inflater.inflate(R.layout.custom_dialog, null);
-			dialog.addContentView(layout, new LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+
 			// set the dialog title
 			((TextView) layout.findViewById(R.id.title)).setText(title);
 			((TextView) layout.findViewById(R.id.title)).getPaint()
@@ -197,8 +221,9 @@ public class CustomDialog extends Dialog {
 			if (message != null) {
 				((TextView) layout.findViewById(R.id.message)).setText(message);
 			}
-			dialog.setContentView(layout);
-			dialog.setCanceledOnTouchOutside(false);
+			dialog.setCanceledOnTouchOutside(true);
+
+
 			return dialog;
 		}
 

@@ -20,11 +20,13 @@ import android.widget.TextView;
 
 import com.fang.base.BaseActivity;
 import com.fang.base.BaseFragment;
+import com.fang.base.Model;
 import com.fang.call.CallFragment;
 import com.fang.call.CallHelper;
 import com.fang.common.CustomConstant;
 import com.fang.contact.ContactFragment;
-import com.fang.controls.CustomProgressDialog;
+import com.fang.datatype.CallFrom;
+import com.fang.datatype.ExtraName;
 import com.fang.listener.IDownloadListener;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
@@ -38,6 +40,7 @@ import com.fang.util.MIUIHelper;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
 import com.fang.version.UpdateVersion;
+import com.fang.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,11 +92,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected TextView mContactTitleTextView;
 	protected TextView mNumberTitleTextView;
 	protected TextView mSettingTitleTextView;
-	
-	protected final int NUMBER_FRAGMENT = 0;
-	protected final int CALL_FRAGMENT = 1;
-	protected final int CONTACT_FRAGMENT = 2;
-	protected final int SETTING_FRAGMENT = 3;
 
 	protected final int REQUEST_CODE_SEARCH = 0;
 	/** 检查是否更新的消息 */
@@ -102,8 +100,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected final int MSG_CREATE_SHORT = 2;
 	/** 提示开启悬浮窗 */
 	protected final int MSG_SHOW_FLOAT = 3;
+    /** 创建扫一扫快捷方式 */
+    protected final int MSG_CREATE_SHORT_SCAN = 4;
 	
 	private AsyncQueryHandler mAsyncQuery;
+
+    private Model mModel;
 	
 	protected Handler mHandler = new Handler() {
 		@Override
@@ -118,6 +120,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				break;
 			case MSG_SHOW_FLOAT:
 				Util.showOpenFloatDialog(mContext);
+                break;
+            case MSG_CREATE_SHORT_SCAN:
+                Util.createShortCut(mContext, mContext.getString(R.string.scan_short), CallFrom.SCAN);
+                break;
 			default:
 				break;
 			}
@@ -132,12 +138,18 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		
 		mTitleBar = findViewById(R.id.titleBar);
 
-		mCallFragment = new CallFragment();
-		mSettingFragment = new SettingFragment();
-		mContactFragment = new ContactFragment();
-		mNumberFragment = new NumberFragment();
+        mModel = new Model(mContext);
 
-		mFragmentList = new ArrayList<Fragment>();
+		mCallFragment = new CallFragment();
+        mCallFragment.setModel(mModel);
+		mSettingFragment = new SettingFragment();
+        mCallFragment.setModel(mModel);
+		mContactFragment = new ContactFragment();
+        mCallFragment.setModel(mModel);
+		mNumberFragment = new NumberFragment();
+        mCallFragment.setModel(mModel);
+
+		mFragmentList = new ArrayList<>();
 		mFragmentList.add(mNumberFragment);
 		mFragmentList.add(mCallFragment);
 		mFragmentList.add(mContactFragment);
@@ -189,11 +201,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //		mShowHotAppButton.setOnClickListener(this);
 //		mShowHotAppButton.setVisibility(View.GONE);
 		//默认选择号码通
-		int selected = SharedPreferencesHelper.getInt(mContext, SharedPreferencesHelper.SELECTED_PAGE, NUMBER_FRAGMENT);
+		int selected = SharedPreferencesHelper.getInt(mContext, SharedPreferencesHelper.SELECTED_PAGE, Model.NUMBER_FRAGMENT);
 		mViewPager.setCurrentItem(selected);
 		pageSelected(selected);
 
-		
 		//创建快捷方式
 		if (SharedPreferencesHelper.getBoolean(mContext, SharedPreferencesHelper.FIRST_TIME_OPEN, true)) {
 			if (MIUIHelper.getInstance().isMiUIV5() || MIUIHelper.getInstance().isMiUIV6()) {
@@ -203,10 +214,23 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			}
 			SharedPreferencesHelper.setBoolean(mContext, SharedPreferencesHelper.FIRST_TIME_OPEN, false);
 		}
-		
+
+        //扫一扫快捷方式
+        if (SharedPreferencesHelper.getBoolean(mContext, SharedPreferencesHelper.SCAN, true)) {
+            mHandler.sendEmptyMessageDelayed(MSG_CREATE_SHORT_SCAN, CustomConstant.FIVE_SECONDS);
+            SharedPreferencesHelper.setBoolean(mContext, SharedPreferencesHelper.SCAN, false);
+        }
+
+        handleIntent();
 	}
 
-	@Override
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent();
+    }
+
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
@@ -231,7 +255,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		super.onResume();
 		mHandler.sendEmptyMessage(MSG_CHECK_VERSION);
 		if (CallHelper.isMissedIncomingCall(getIntent())) {
-			mViewPager.setCurrentItem(CALL_FRAGMENT);
+			mViewPager.setCurrentItem(Model.CALL_FRAGMENT);
 			mShowingFragment = mContactFragment;
 		}
 		
@@ -295,18 +319,28 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		if (view == mCallTab) {
-			mViewPager.setCurrentItem(CALL_FRAGMENT);
+			mViewPager.setCurrentItem(Model.CALL_FRAGMENT);
 		} else if (view == mNumberTab) {
-			mViewPager.setCurrentItem(NUMBER_FRAGMENT);
+			mViewPager.setCurrentItem(Model.NUMBER_FRAGMENT);
 		} else if (view == mContactTab) {
-			mViewPager.setCurrentItem(CONTACT_FRAGMENT);
+			mViewPager.setCurrentItem(Model.CONTACT_FRAGMENT);
 		} else if (view == mSettingTab) {
-			mViewPager.setCurrentItem(SETTING_FRAGMENT);
+			mViewPager.setCurrentItem(Model.SETTING_FRAGMENT);
 		} 
 //		else if (view == mShowHotAppButton) {
 //	        Ads.showAppWall(MainActivity.this, ADHelper.TAG_LIST);
 //		}
 	}
+
+    private void handleIntent() {
+        int callFrom = getIntent().getIntExtra(ExtraName.CALL_FROM, 0);
+        if (CallFrom.SCAN.ordinal() == callFrom) {
+            //扫描二维码
+            Intent openCameraIntent = new Intent(MainActivity.this,
+                    CaptureActivity.class);
+            startActivityForResult(openCameraIntent, 0);
+        }
+    }
 
 	/**
 	 * 选择页面后的界面显示
@@ -328,20 +362,20 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		mNumberFragment.setSelected(false);
 		mSettingFragment.setSelected(false);
 
-		if (index == CALL_FRAGMENT) {
+		if (index == Model.CALL_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
 			mCallIcon.setImageResource(R.drawable.call_foucs);
 			mShowingFragment = mCallFragment;
-		} else if (index == NUMBER_FRAGMENT) {
+		} else if (index == Model.NUMBER_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
 			mNumberIcon.setImageResource(R.drawable.sms_foucs);
 			mShowingFragment = mNumberFragment;
-		} else if (index == CONTACT_FRAGMENT) {
+		} else if (index == Model.CONTACT_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
 			mContactIcon.setImageResource(R.drawable.contact_foucs);
 			mContactFragment.updateContacts(true);
 			mShowingFragment = mContactFragment;
-		} else if (index == SETTING_FRAGMENT) {
+		} else if (index == Model.SETTING_FRAGMENT) {
 			mTitleBar.setVisibility(View.VISIBLE);
 			mSettingIcon.setImageResource(R.drawable.setting_foucs);
 			mShowingFragment = mSettingFragment;
@@ -353,7 +387,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				R.color.blue));
 		
 		if (mShowingFragment.isNeedLoading()) {
-			CustomProgressDialog.show(mContext);
+            mShowingFragment.showLoading();
 		}
 	}
 	
@@ -421,5 +455,18 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 	};
-	
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString(ExtraName.RESULT);
+            mViewPager.setCurrentItem(Model.NUMBER_FRAGMENT);
+            pageSelected(Model.NUMBER_FRAGMENT);
+
+            mNumberFragment.setResultText(scanResult);
+
+        }
+    }
 }

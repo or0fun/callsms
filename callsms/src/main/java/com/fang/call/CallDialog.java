@@ -19,7 +19,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
@@ -384,8 +383,6 @@ public class CallDialog implements OnClickListener {
 	 */
 	protected void copyNumber() {
 		Util.copy(mContext, mNumberString);
-		Toast.makeText(mContext, "号码" + mNumberString + "已复制。",
-				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

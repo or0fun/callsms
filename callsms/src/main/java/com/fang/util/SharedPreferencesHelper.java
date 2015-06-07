@@ -49,6 +49,9 @@ public class SharedPreferencesHelper {
     /** 天气 */
     public static final String WEATHER = "WEATHER";
 
+    //扫一扫 快捷方式
+    public static final String SCAN = "scan";
+
 	public static String getString(Context ctx, String key) {
 		
 		SharedPreferences sharedata = ctx.getSharedPreferences(key, Context.MODE_PRIVATE );

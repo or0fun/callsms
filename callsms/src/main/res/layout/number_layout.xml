@@ -30,6 +30,14 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
+        <Button
+            android:id="@+id/scan"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:padding="3dp"
+            android:background="#dd333333"
+            android:textColor="@color/white"
+            android:text="@string/scan_short"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,15 +47,29 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <EditText
-            android:id="@+id/search"
-            style="@style/singleLineEdit"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:hint="@string/number_search"
-            android:inputType="number" >
-        </EditText>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/search"
+                style="@style/singleLineEdit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:hint="@string/number_search"
+                android:inputType="number"></EditText>
+
+            <ImageView
+                android:id="@+id/clearBtn"
+                android:layout_width="@dimen/clearBtn_width"
+                android:layout_height="@dimen/clearBtn_height"
+                android:layout_marginRight="@dimen/smallmargin"
+                android:src="@drawable/clear" />
+        </LinearLayout>
         <Button
             android:id="@+id/searchBtn"
             style="@style/mainButton"

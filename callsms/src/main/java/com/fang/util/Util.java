@@ -26,10 +26,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.widget.Toast;
 
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.controls.CustomDialog;
+import com.fang.datatype.CallFrom;
+import com.fang.datatype.ExtraName;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.receiver.AlarmReceiver;
 
@@ -61,6 +64,7 @@ public class Util {
 					.getSystemService(Context.CLIPBOARD_SERVICE);
 			clipboard.setText(content);
 		}
+        Toast.makeText(context, " 已复制 " + content,Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -426,18 +430,20 @@ public class Util {
 	 * 
 	 * @param context
 	 */
-	public static void createShortCut(Context context) {
+	public static void createShortCut(Context context, String name, CallFrom callFrom) {
 		Intent returnIntent = new Intent();
 		// 设置创建快捷方式的过滤器action
 		returnIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+		// 不允许重复创建
+        returnIntent.putExtra("duplicate", false);
 		// 设置生成的快捷方式的名字
-		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-				context.getString(R.string.app_name));
+		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, name);
 		// 设置生成的快捷方式的图标
 		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
 				Intent.ShortcutIconResource.fromContext(context,
 						R.drawable.ic_launcher));
 		Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(ExtraName.CALL_FROM, callFrom.ordinal());
 		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
 		// 发送广播生成快捷方式
 		context.sendBroadcast(returnIntent);
@@ -491,7 +497,7 @@ public class Util {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								if (!Util.hasShortCut(context)) {
-									Util.createShortCut(context);
+									Util.createShortCut(context, context.getString(R.string.app_name), CallFrom.LOCAL);
 								}
 								dialog.dismiss();
 							}
@@ -505,6 +511,7 @@ public class Util {
 						}).create();
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
+
 	}
 	/**
 	 * 显示开启悬浮窗提示

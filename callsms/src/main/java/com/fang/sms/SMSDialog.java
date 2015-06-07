@@ -180,7 +180,7 @@ public class SMSDialog implements OnClickListener {
 		mSenderTextView.setText(senderString);
 		mInfoTextView.setText(mContext.getString(R.string.getting_info));
 
-		MySpan.formatTextView(mContext, mMsgBodyTextView, mBodyString);
+		MySpan.formatTextView(mContext, mMsgBodyTextView, mBodyString, true);
 	}
 
 	/**
@@ -236,8 +236,6 @@ public class SMSDialog implements OnClickListener {
 	 */
 	protected void copyNumber() {
 		Util.copy(mContext, mNumberString);
-		Toast.makeText(mContext, "号码" + mNumberString + "已复制。",
-				Toast.LENGTH_SHORT).show();
 	}
 
 	/**
