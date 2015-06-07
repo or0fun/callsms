@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
-import com.fang.base.Model;
 import com.fang.business.BusinessHelper;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
@@ -38,8 +37,6 @@ import com.fang.util.StringUtil;
 import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
 import com.fang.zxing.activity.CaptureActivity;
-
-import java.text.SimpleDateFormat;
 
 public class NumberFragment extends BaseFragment implements OnClickListener {
 
@@ -306,11 +303,10 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
     private void handlerNongli(final String nongli) {
         if (!StringUtil.isEmpty(nongli)) {
             StringBuilder today = new StringBuilder();
-            SimpleDateFormat format = new SimpleDateFormat("M月d日");
             today.append("今天是");
             if (nongli.trim().length() > 0) {
                 today.append(nongli.replace("\n", "<br/>"));
-                mToday.setText(Html.fromHtml(today.toString() + "  <a href=\"http://zh.wikipedia.org/wiki/" + format.format(new java.util.Date()) + "\">历史上的今天</a> "));
+                mToday.setText(Html.fromHtml(today.toString() + "  <a href=\""+ CustomConstant.HISTORY_OF_TODAY + "\">历史上的今天</a> "));
                 mToday.setMovementMethod(LinkMovementMethod.getInstance());
 
                 SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.NONGLI, nongli);

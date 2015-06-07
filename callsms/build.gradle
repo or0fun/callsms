@@ -18,11 +18,11 @@ android {
     }
     productFlavors {
         develop {}
-//        wandoujia {}
-//        baidu {}
-//        c360 {}
-//        blog {}
-//        hiapk {}
+        wandoujia {}
+        baidu {}
+        c360 {}
+        blog {}
+        hiapk {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [channel: name]

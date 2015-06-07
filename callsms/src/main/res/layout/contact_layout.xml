@@ -45,7 +45,7 @@
         style="@style/singleLineEdit"
         android:hint="@string/sms_search"
         android:focusable="true"
-        android:enabled="true"></EditText>
+        android:enabled="true"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -88,6 +88,7 @@
                 android:layout_height="40dip" />
         </LinearLayout>
     </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="fill_parent"

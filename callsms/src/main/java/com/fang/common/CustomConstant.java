@@ -11,7 +11,7 @@ import android.net.Uri;
 public class CustomConstant {
 
     /** 调试状态 */
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     /** 应用渠道 */
     //wandoujia  hiapk  blog baidu  qq 360 appchina lenovo mi anzhi
@@ -29,6 +29,8 @@ public class CustomConstant {
 	/** 版本更新地址 测试地址 */
 	//public static final String VERSION_GET_URL = "http://115.29.17.79/we/version_test.php";
 
+    /** 历史上的今天 **/
+    public static final String HISTORY_OF_TODAY = "http://ie8384.com/we/today.php";
 	/** 收件箱Uri */
 	public static final Uri SMS_INBOX_URI = Uri.parse("content://sms/inbox");  
     /** 选择联系人 传递数据的参数名 */
