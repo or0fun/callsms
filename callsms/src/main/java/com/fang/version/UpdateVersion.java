@@ -108,7 +108,7 @@ public class UpdateVersion {
 		try {
 			ServerUtil server = ServerUtil.getInstance(mContext);
 			NetRequest request = new NetRequest();
-			request.setUrl(CustomConstant.VERSION_GET_URL);
+			request.setUrl(getVersionUrl());
 			request.setRequestType(NetRequestConstant.TYPE_GET);
 			request.setRequestCode(NetResuestHelper.getRequestCode());
 			server.request(request, mNetRequestListener);
@@ -240,6 +240,17 @@ public class UpdateVersion {
 			return true;
 		}
 	}
+
+    /**
+     * 获取version api地址
+     * @return
+     */
+    private String getVersionUrl() {
+        if (CustomConstant.DEBUG) {
+            return  CustomConstant.VERSION_GET_URL_TEST;
+        }
+        return CustomConstant.VERSION_GET_URL;
+    }
 
 	/**
 	 * 监听系统下载广播
