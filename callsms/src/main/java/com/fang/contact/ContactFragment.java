@@ -21,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,11 +28,12 @@ import android.widget.TextView;
 import com.fang.base.BaseFragment;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
+import com.fang.util.DebugLog;
 import com.fang.contact.MyLetterListView.OnTouchingLetterChangedListener;
+import com.fang.controls.CustomEditText;
 import com.fang.database.NumberDatabaseManager;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
 import com.fang.util.Util;
@@ -65,7 +65,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	/** 映射联系人列表 */
 	private SparseIntArray mContactPositionMapArray;
 	/** 查找联系人 */
-	private EditText mSearchEditText;
+	private CustomEditText mSearchEditText;
 	/** 通讯录数据 */
 	public List<HashMap<String, Object>> mList;
 	/** 按名字排序通讯录数据 */
@@ -203,23 +203,23 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 					int visibleItemCount, int totalItemCount) {
 			}
 		});
-		mSearchEditText = (EditText) rootView.findViewById(R.id.search);
+		mSearchEditText = (CustomEditText) rootView.findViewById(R.id.search);
 		mSearchEditText.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence text, int arg1, int arg2,
-					int arg3) {
-				searchContacts(text);
-			}
+            @Override
+            public void onTextChanged(CharSequence text, int arg1, int arg2,
+                                      int arg3) {
+                searchContacts(text);
+            }
 
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1,
-					int arg2, int arg3) {
-			}
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
+            }
 
-			@Override
-			public void afterTextChanged(Editable arg0) {
-			}
-		});
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
 
         rootView.findViewById(R.id.system_contact).setOnClickListener(new OnClickListener() {
             @Override

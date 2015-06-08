@@ -64,7 +64,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 			switch (msg.what) {
 			case INCOMING_CALL_MSG:
 				if (SharedPreferencesHelper.getBoolean(mContext,
-						SharedPreferencesHelper.SETTING_NEW_CALL_POPUP, true)) {
+                        SharedPreferencesHelper.SETTING_NEW_CALL_POPUP, true)) {
 					if (null != mCallDialog) {
 						mCallDialog.remove();
 						mCallDialog = null;

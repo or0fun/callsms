@@ -17,17 +17,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <!-- 标题 -->
-    <style name="tipText" parent="@android:style/Widget.TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:marqueeRepeatLimit">marquee_forever</item>
-        <item name="android:scrollHorizontally">true</item>
-    </style>
     <!-- 主按钮 -->
     <style name="mainButton" parent="@android:style/Widget.Button">
         <item name="android:layout_width">wrap_content</item>
@@ -85,17 +74,7 @@
         <item name="android:layout_height">@dimen/hSplitHeight</item>
         <item name="android:background">@color/hint</item>
     </style>
-    <!-- 进度条 -->
-    <style name="dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimAmount">0.8</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:background">@android:color/transparent</item>
-    </style>
+
     <!-- 设置项标题 -->
     <style name="settingItemTextview" parent="android:style/Widget.TextView">
         <item name="android:layout_width">0dp</item>
@@ -150,15 +129,5 @@
         <item name="android:layout_height">@dimen/hSplitHeight</item>
         <item name="android:background">@color/white</item>
     </style>
-    
-    <!-- 对话框 -->
-   
-    <style name="customDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/bg</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
+
 </resources>

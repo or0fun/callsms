@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -23,6 +22,7 @@ import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
+import com.fang.controls.CustomEditText;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
 import com.fang.logs.LogCode;
@@ -68,7 +68,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 
     private View mProgressBar;
     /** 查找联系人 */
-    private EditText mSearchEditText;
+    private CustomEditText mSearchEditText;
     /** 映射联系人列表 */
     private SparseIntArray mContactPositionMapArray;
 
@@ -154,7 +154,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 		mOrderByMissedButton.setOnClickListener(this);
         view.findViewById(R.id.system_call).setOnClickListener(this);
 
-        mSearchEditText = (EditText) view.findViewById(R.id.search);
+        mSearchEditText = (CustomEditText) view.findViewById(R.id.search);
         mSearchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence text, int arg1, int arg2,

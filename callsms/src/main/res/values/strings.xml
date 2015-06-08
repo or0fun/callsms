@@ -18,16 +18,10 @@
     <string name="system_contact">进入系统通讯录</string>
     <string name="system_call">进入拨号</string>
     
-    <string name="confirm">确定</string>
-    <string name="cancel">取消</string>
-    <string name="back">返回</string>
-    
     <string name="qq_group">344944406</string>
     
     <string name="qq">官方QQ群 344944406 (点击复制)</string>
-    
-    <string name="prompt">提示</string>
-    <string name="exit_app">你确定要退出应用吗?</string>
+
     
     <!-- 加载中 -->
     <string name="loading">加载中…</string>

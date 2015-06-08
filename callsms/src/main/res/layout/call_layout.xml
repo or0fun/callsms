@@ -39,7 +39,7 @@
             android:text="@string/system_call"/>
     </LinearLayout>
 
-    <EditText
+    <com.fang.controls.CustomEditText
         android:id="@+id/search"
         style="@style/singleLineEdit"
         android:hint="@string/sms_search"

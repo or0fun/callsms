@@ -10,11 +10,7 @@
     <dimen name="splitMargin">12.0dp</dimen>
     <dimen name="textSize">18.0sp</dimen>
     <dimen name="buttonTextSize">18.0sp</dimen>
-    
-    <dimen name="xmargin">16dp</dimen>
-    <dimen name="margin">10dp</dimen>
-    <dimen name="smallmargin">5dp</dimen>
-    
+
     <dimen name="title_bar_height">46dp</dimen>
     <dimen name="title_bar_icon_width">30dp</dimen>
     <dimen name="title_bar_icon_height">30dp</dimen>
@@ -45,7 +41,6 @@
     <!-- 号码 -->
     <dimen name="titleHeight">36.0dp</dimen>
     <dimen name="titleWidth">300.0dp</dimen>
-    <dimen name="titleTextSize">18.0sp</dimen>
     
     <dimen name="incomingCallTitleTextSize">22.0sp</dimen>
     <dimen name="incomingCallInfoTextSize">18.0sp</dimen>
@@ -53,7 +48,6 @@
     <!-- 副标题 -->
     <dimen name="subHeight">24.0dp</dimen>
     <dimen name="subWidth">300.0dp</dimen>
-    <dimen name="subTextSize">14.0sp</dimen>
     <!-- 设置页面 -->
     <dimen name="setting_text_size">18dp</dimen>
     <dimen name="item_margin">6dp</dimen> 
@@ -68,9 +62,6 @@
     <!-- 弹窗 -->
     <dimen name="dialog_icon_width">40dp</dimen>
     <dimen name="dialog_icon_height">40dp</dimen>
-    <!-- switch -->
-    <dimen name="switch_width">58dp</dimen>
-    <dimen name="switch_height">30dp</dimen>
     <!-- item 高度 -->
     <dimen name="record_list_item_height">30dp</dimen>
     <!-- 弹窗通话记录高度 -->

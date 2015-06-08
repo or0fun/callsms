@@ -1,0 +1,12 @@
+<resources>
+
+    <dimen name="xmargin">16dp</dimen>
+    <dimen name="margin">10dp</dimen>
+    <dimen name="smallmargin">5dp</dimen>
+
+    <dimen name="titleTextSize">18.0sp</dimen>
+    <dimen name="subTextSize">14.0sp</dimen>
+
+    <dimen name="switch_width">58dp</dimen>
+    <dimen name="switch_height">30dp</dimen>
+</resources>

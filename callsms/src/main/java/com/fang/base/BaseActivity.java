@@ -47,7 +47,7 @@ public abstract class BaseActivity extends Activity {
 	public boolean isNeedUpdateVersion() {
 		long now = new Date().getTime();
 		long last = SharedPreferencesHelper.getLong(mContext,
-				SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
+                SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
 		SharedPreferencesHelper.setLong(mContext,
 				SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
 		if (now - last > CustomConstant.ONE_DAY) {

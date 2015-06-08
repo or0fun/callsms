@@ -6,5 +6,10 @@
     <drawable name="sub_normal">#ff463265</drawable>
     <drawable name="sub_pressed">#aa463265</drawable>
 
-    <string name="app_name">common</string>
+    <string name="prompt">提示</string>
+    <string name="exit_app">你确定要退出应用吗?</string>
+
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="back">返回</string>
 </resources>

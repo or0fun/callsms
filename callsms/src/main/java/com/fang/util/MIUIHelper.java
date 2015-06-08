@@ -20,6 +20,8 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.fang.util.DebugLog;
+
 /**
  * MIUI 权限管理帮助类
  * 

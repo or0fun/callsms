@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
-import com.fang.controls.CustomDialog;
 import com.fang.listener.IDownloadListener;
 import com.fang.net.NetRequest;
 import com.fang.net.NetRequestConstant;
@@ -129,7 +128,7 @@ public class UpdateVersion {
 	private void doNewVersionUpdate(final Context context, String newVerName,
 			final String addr, final String content) {
 
-		Dialog dialog = new CustomDialog.Builder(context)
+		Dialog dialog = new com.fang.controls.CustomDialog.Builder(context)
 				.setTitle(context.getString(R.string.findnewversion))
 				.setMessage(content)
 				.setPositiveButton(context.getString(R.string.update),
