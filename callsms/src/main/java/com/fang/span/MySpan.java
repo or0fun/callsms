@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.controls.CustomDialog;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.Patterns;
-import com.fang.util.Util;
 
 public class MySpan extends ClickableSpan {
 
@@ -58,7 +58,7 @@ public class MySpan extends ClickableSpan {
 
     public void cancel(View view) {
         if (mFloatView) {
-            Util.removeView(mWindowManager, view);
+            BaseUtil.removeView(mWindowManager, view);
         } else  {
             mDialog.cancel();
         }
@@ -74,7 +74,7 @@ public class MySpan extends ClickableSpan {
         });
 
         if (mFloatView) {
-		    Util.addView(mWindowManager, view);
+		    BaseUtil.addView(mWindowManager, view);
         } else  {
             if (null == mDialog) {
                 mDialog = new CustomDialog.Builder(mContext).setContentView(view)

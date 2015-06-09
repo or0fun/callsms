@@ -31,9 +31,10 @@ import com.fang.contact.ContactHelper;
 import com.fang.controls.CustomDialog;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.util.BaseUtil;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
+import com.fang.util.ViewUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -215,7 +216,7 @@ public class CallRecordDialog implements OnClickListener {
 		mSenderTextView.setText(senderString);
 		mTypeTip.setVisibility(View.GONE);
 		mTypeIcon.setImageBitmap(icon);
-        mTypeIcon.setLayoutParams(new LinearLayout.LayoutParams(Util.dip2px(mContext, 40), Util.dip2px(mContext, 40)));
+        mTypeIcon.setLayoutParams(new LinearLayout.LayoutParams(ViewUtil.dip2px(mContext, 40), ViewUtil.dip2px(mContext, 40)));
 
 	}
 
@@ -272,7 +273,7 @@ public class CallRecordDialog implements OnClickListener {
 			setLayoutParams();
 			if (null != mView) {
 				if (mIsShowing) {
-					Util.removeView(mWindowManager, mView);
+					BaseUtil.removeView(mWindowManager, mView);
 				}
 				mIsShowing = true;
 				mWindowManager.addView(mView, mLayoutParams);
@@ -294,7 +295,7 @@ public class CallRecordDialog implements OnClickListener {
 		if (mIsMissed) {
 			if (null != mView) {
 				mIsShowing = false;
-                Util.removeView(mWindowManager, mView);
+                BaseUtil.removeView(mWindowManager, mView);
 			}
 		}else {
 			if (null != mDialog) {
@@ -311,14 +312,14 @@ public class CallRecordDialog implements OnClickListener {
 	 * 复制号码
 	 */
 	protected void copyNumber() {
-		Util.copy(mContext, mNumberString);
+		BaseUtil.copy(mContext, mNumberString);
 	}
 
 	/**
 	 * 复制姓名
 	 */
 	protected void copyName() {
-		Util.copy(mContext, mNameString);
+		BaseUtil.copy(mContext, mNameString);
 		Toast.makeText(mContext, "姓名" + mNameString + "已复制。",
 				Toast.LENGTH_SHORT).show();
 	}
@@ -361,7 +362,7 @@ public class CallRecordDialog implements OnClickListener {
 			break;
 		case R.id.call:
 			remove();
-			Util.gotoCall(mContext, mNumberString);
+			BaseUtil.gotoCall(mContext, mNumberString);
 			break;
 		case R.id.logo:
 			// 记录日志
@@ -369,7 +370,7 @@ public class CallRecordDialog implements OnClickListener {
 
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.setClass(mContext, MainActivity.class);
-			Util.startActivityNewTask(mContext, intent);
+			BaseUtil.startActivityNewTask(mContext, intent);
 			break;
 		default:
 			break;

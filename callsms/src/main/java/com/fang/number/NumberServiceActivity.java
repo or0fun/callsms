@@ -19,7 +19,7 @@ import android.widget.SimpleAdapter;
 import com.fang.callsms.R;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.Util;
+import com.fang.util.BaseUtil;
 
 public class NumberServiceActivity extends ListActivity {
 
@@ -71,7 +71,7 @@ public class NumberServiceActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		
 		String number = (String) mList.get(position).get(NumberServiceHelper.PARAM_NUMBER);
-		Util.gotoCall(mContext, number);
+		BaseUtil.gotoCall(mContext, number);
 		//日志上传
 		LogOperate.updateLog(mContext, LogCode.CALL_COMMON_NUMBER);
 	}

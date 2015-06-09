@@ -18,9 +18,9 @@ import com.fang.comment.CommentActivity;
 import com.fang.database.NumberDatabaseManager;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
 
 import java.util.List;
 import java.util.Map;
@@ -119,7 +119,7 @@ public class CallRecordAdapter extends BaseAdapter {
 		}
 
 		holder.icon.setImageResource((Integer)record.get(CallHelper.PARAM_ICON));
-		holder.date.setText(Util.longDateToStringDate(Long
+		holder.date.setText(BaseUtil.longDateToStringDate(Long
                 .parseLong(record.get(CallHelper.PARAM_DATE).toString())));
 
         //时长

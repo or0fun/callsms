@@ -11,10 +11,10 @@ import android.provider.CallLog.Calls;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.database.NumberDatabaseManager;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,7 +93,7 @@ public class CallHelper {
             if (cursor.moveToFirst()) {
                 long date = Long.parseLong(cursor.getString(cursor
                         .getColumnIndexOrThrow(Calls.DATE)));
-                lastDateString = Util.longDateToStringDate(date);
+                lastDateString = BaseUtil.longDateToStringDate(date);
             }
             cursor.close();
         }
@@ -254,13 +254,13 @@ public class CallHelper {
 
                     callRecord.put(
                             PARAM_DATE,
-                            Util.longDateToStringDate(Long.parseLong(cursor.getString(cursor
+                            BaseUtil.longDateToStringDate(Long.parseLong(cursor.getString(cursor
                                     .getColumnIndexOrThrow(Calls.DATE)))));
                     long duration = Long.parseLong(cursor.getString(cursor
                             .getColumnIndexOrThrow(Calls.DURATION)));
 
                     callRecord.put(PARAM_DURATION,
-                            Util.secondsToString(duration));
+                            BaseUtil.secondsToString(duration));
 
 
                     callRecords.add(callRecord);
@@ -477,7 +477,7 @@ public class CallHelper {
 
                     //时长
                     callRecord.put(PARAM_DURATION,
-                            Util.secondsToString(duration));
+                            BaseUtil.secondsToString(duration));
                     //信息
                     callRecord.put(
                             PARAM_INFO,

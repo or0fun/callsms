@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.fang.base.BaseFragment;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.contact.MyLetterListView.OnTouchingLetterChangedListener;
 import com.fang.controls.CustomEditText;
@@ -36,7 +37,6 @@ import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.util.MessageWhat;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,6 +127,11 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+        if (isViewCreated()) {
+            return mView;
+        }
+
 		View rootView = inflater.inflate(R.layout.contact_layout, container,
 				false);
         mProgressBar = rootView.findViewById(R.id.progressBar);
@@ -275,6 +280,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
     @Override
     public void showLoading() {
         if (null != mProgressBar) {
+            mListView.setEnabled(false);
             mProgressBar.setVisibility(View.VISIBLE);
         }
     }
@@ -282,6 +288,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
     @Override
     public void hideLoading() {
         if (null != mProgressBar) {
+            mListView.setEnabled(true);
             mProgressBar.setVisibility(View.GONE);
         }
     }
@@ -581,7 +588,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		super.onDestroyView();
 		ContactHelper.unregisterListener(this);
         if (mWindowManager != null && mIsShowDalay) {
-            Util.removeView(mWindowManager, mOverlay);
+            BaseUtil.removeView(mWindowManager, mOverlay);
             mIsShowDalay = false;
         }
 	}
@@ -589,9 +596,11 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 
 	@Override
 	public boolean isNeedLoading() {
-		if (false == ContactHelper.hasReaded() && null != mByNameList && mByNameList.size() == 0) {
+		if (false == ContactHelper.hasReaded()) {
 			return true;
-		}
+		} else if (null != mByNameList && mByNameList.size() == 0) {
+            return true;
+        }
 		return false;
 	}
 }

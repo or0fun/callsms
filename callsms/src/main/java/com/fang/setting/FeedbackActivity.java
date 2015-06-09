@@ -14,9 +14,9 @@ import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
-import com.fang.util.Util;
 
 public class FeedbackActivity extends BaseActivity {
 
@@ -68,7 +68,7 @@ public class FeedbackActivity extends BaseActivity {
 		mCopyQQ.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Util.copy(mContext, mContext.getString(R.string.qq_group));
+				BaseUtil.copy(mContext, mContext.getString(R.string.qq_group));
 				showTip(mContext.getString(R.string.copied) + mContext.getString(R.string.qq_group));
 			}
 		});

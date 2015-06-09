@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
-import com.fang.util.Util;
+import com.fang.util.BaseUtil;
 
 public class MyPhoneSpan extends MySpan {
 
@@ -27,7 +27,7 @@ public class MyPhoneSpan extends MySpan {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				Util.gotoCall(mContext, mText);
+				BaseUtil.gotoCall(mContext, mText);
 			}
 		});
 		view.findViewById(R.id.add).setOnClickListener(new OnClickListener() {
@@ -41,7 +41,7 @@ public class MyPhoneSpan extends MySpan {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				Util.copy(context, str);
+				BaseUtil.copy(context, str);
 			}
 		});
         show(view);

@@ -38,7 +38,11 @@ public class SettingFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.setting_layout, container, false);
+        if (isViewCreated()) {
+            return mView;
+        }
+
+        View rootView = inflater.inflate(R.layout.setting_layout, container, false);
 		Button feedbackBtn = (Button)rootView.findViewById(R.id.feedback);
 		feedbackBtn.setOnClickListener(new OnClickListener() {
 			@Override

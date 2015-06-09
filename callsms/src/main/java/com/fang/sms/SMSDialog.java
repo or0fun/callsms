@@ -29,6 +29,7 @@ import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.span.MySpan;
 import com.fang.speach.SpeachHelper;
+import com.fang.util.BaseUtil;
 import com.fang.util.MessageWhat;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
@@ -195,7 +196,7 @@ public class SMSDialog implements OnClickListener {
 			// 日志
 			LogOperate.updateLog(mContext, LogCode.SMS_INCOMING_DIALOG_SHOW);
 			//播报
-			if (Util.isWiredHeadsetOn(mContext)) {
+			if (BaseUtil.isWiredHeadsetOn(mContext)) {
 				if (SharedPreferencesHelper.getBoolean(mContext,
 						SharedPreferencesHelper.SETTING_BROADCAST_WHEN_WIREDHEADSETON, true)) {
 					broadcastContent(createSMSBroadcastContent());
@@ -226,7 +227,7 @@ public class SMSDialog implements OnClickListener {
 	public void remove() {
 		if (isShowing) {
 			isShowing = false;
-            Util.removeView(mWindowManager, mView);
+            BaseUtil.removeView(mWindowManager, mView);
 		}
 		SpeachHelper.getInstance(mContext).getmTts().stopSpeaking();
 	}
@@ -235,14 +236,14 @@ public class SMSDialog implements OnClickListener {
 	 * 复制号码
 	 */
 	protected void copyNumber() {
-		Util.copy(mContext, mNumberString);
+		BaseUtil.copy(mContext, mNumberString);
 	}
 
 	/**
 	 * 复制姓名
 	 */
 	protected void copyName() {
-		Util.copy(mContext, mNameString);
+		BaseUtil.copy(mContext, mNameString);
 		Toast.makeText(mContext, "姓名" + mNameString + "已复制。",
 				Toast.LENGTH_SHORT).show();
 	}
@@ -289,14 +290,14 @@ public class SMSDialog implements OnClickListener {
 			break;
 		case R.id.call:
 			remove();
-			Util.gotoCall(mContext, mNumberString);
+			BaseUtil.gotoCall(mContext, mNumberString);
 			break;
 		case R.id.broadcast:
 			broadcastContent(mBodyString);
 			break;
 		case R.id.delete:
-			Util.deleteConfirm(mContext, mWindowManager, mID, -1,
-					mSMSDeleteConfirm);
+            Util.deleteConfirm(mContext, mWindowManager, mID, -1,
+                    mSMSDeleteConfirm);
 			break;
 		case R.id.logo:
 			//记录日志
@@ -304,7 +305,7 @@ public class SMSDialog implements OnClickListener {
 			
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.setClass(mContext, MainActivity.class);
-			Util.startActivityNewTask(mContext, intent);
+			BaseUtil.startActivityNewTask(mContext, intent);
 			break;
 		default:
 			break;

@@ -140,6 +140,9 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+        if (isViewCreated()) {
+            return mView;
+        }
 		View view = inflater.inflate(R.layout.call_layout, container, false);
         mProgressBar = view.findViewById(R.id.progressBar);
 		mOrderByAllButton = (Button) view.findViewById(R.id.byAll);
@@ -220,11 +223,11 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 					public boolean onItemLongClick(AdapterView<?> arg0,
 							View arg1, int position, long arg3) {
 						Util.deleteConfirm(
-								mContext,
-								mWindowManager,
-								(Integer) mCallRecords.get(position).get(
-										CallHelper.PARAM_ID), position,
-								mCallRecordDeleteConfirm);
+                                mContext,
+                                mWindowManager,
+                                (Integer) mCallRecords.get(position).get(
+                                        CallHelper.PARAM_ID), position,
+                                mCallRecordDeleteConfirm);
 						return true;
 					}
 				});
@@ -334,15 +337,18 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 
 	@Override
 	public boolean isNeedLoading() {
-		if (false == CallHelper.hasRead() && null == mAllCallRecords) {
+		if (false == CallHelper.hasRead()) {
 			return true;
-		}
+		} else if (null == mAllCallRecords) {
+            return true;
+        }
 		return false;
 	}
 
     @Override
     public void showLoading() {
         if (null != mProgressBar) {
+            mCallRecordListView.setEnabled(false);
             mProgressBar.setVisibility(View.VISIBLE);
         }
     }
@@ -350,6 +356,7 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
     @Override
     public void hideLoading() {
         if (null != mProgressBar) {
+            mCallRecordListView.setEnabled(true);
             mProgressBar.setVisibility(View.GONE);
         }
     }

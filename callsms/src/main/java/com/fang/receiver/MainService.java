@@ -16,9 +16,9 @@ import com.fang.net.ServerUtil;
 import com.fang.push.PushHelper;
 import com.fang.sms.SendSMSInfo;
 import com.fang.speach.SpeachHelper;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
-import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
 
 import java.util.List;
@@ -161,8 +161,8 @@ public class MainService extends Service {
 	 * 监听短信变化
 	 */
 	private void registerContentObservers() {
-		Uri smsUri = Util.getSmsUriALL();
-		Uri contatcUri = Util.getContactUriALL();
+		Uri smsUri = BaseUtil.getSmsUriALL();
+		Uri contatcUri = BaseUtil.getContactUriALL();
 		mSMSContentObserver = new SMSContentObserver(this, null);
 		getApplicationContext().getContentResolver().registerContentObserver(
 				smsUri, true, mSMSContentObserver);
@@ -181,9 +181,9 @@ public class MainService extends Service {
 		if (null != infos) {
 			for (SendSMSInfo sendSMSInfo : infos) {
 				Intent intent = new Intent(context, AlarmReceiver.class);
-				Util.registerAlarm(context, intent,
-						sendSMSInfo.getResultCode(),
-						sendSMSInfo.getTimeInMillis());
+				BaseUtil.registerAlarm(context, intent,
+                        sendSMSInfo.getResultCode(),
+                        sendSMSInfo.getTimeInMillis());
 			}
 		}
 	}

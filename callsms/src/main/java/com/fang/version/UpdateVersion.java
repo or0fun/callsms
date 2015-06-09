@@ -28,6 +28,7 @@ import com.fang.net.NetRequestResult;
 import com.fang.net.NetRequestResultCode;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.Util;
 
@@ -234,7 +235,7 @@ public class UpdateVersion {
 				break;
 			case MSG_EVENT_INSTALL:
 				// 直接安装
-				Util.installAPK(mContext, Uri.fromFile(new File((String)msg.obj)));
+				BaseUtil.installAPK(mContext, Uri.fromFile(new File((String) msg.obj)));
 				break;
 			}
 			return true;

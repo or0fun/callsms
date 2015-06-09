@@ -25,9 +25,9 @@ import com.fang.contact.ContactHelper;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.receiver.AlarmReceiver;
+import com.fang.util.BaseUtil;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -180,7 +180,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 		cancelButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-                Util.removeView(mWindowManager, dateTimeView);
+                BaseUtil.removeView(mWindowManager, dateTimeView);
 			}
 		});
 		confirmButton.setOnClickListener(new OnClickListener() {
@@ -213,7 +213,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 		timePicker.setCurrentHour(cal.get(Calendar.HOUR_OF_DAY));
 		timePicker.setCurrentMinute(cal.get(Calendar.MINUTE));
 
-		Util.addView(mWindowManager, dateTimeView);
+		BaseUtil.addView(mWindowManager, dateTimeView);
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 		} else if (mSendTimeTextView == view) {
 			ShowDateTimePickerDialog();
 		} else if (mOpenListButton == view) {
-			Util.startActivity(mContext, SMSQueueActivity.class);
+			BaseUtil.startActivity(mContext, SMSQueueActivity.class);
 		}
 	}
 
@@ -263,8 +263,8 @@ public class SMSFragment extends BaseFragment implements Runnable,
 					
 					Intent intent = new Intent(mContext, AlarmReceiver.class);
 					intent.putExtra(AlarmReceiver.INFO, info);
-					Util.registerAlarm(mContext, intent, code,
-							mSendCalendar.getTimeInMillis());
+					BaseUtil.registerAlarm(mContext, intent, code,
+                            mSendCalendar.getTimeInMillis());
 
 				}
 				clearSMSInfo();

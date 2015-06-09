@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.fang.callsms.R;
-import com.fang.util.Util;
+import com.fang.util.BaseUtil;
 
 public class MyEmailSpan extends MySpan {
 
@@ -26,14 +26,14 @@ public class MyEmailSpan extends MySpan {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				Util.email(mContext, str);
+				BaseUtil.email(mContext, str);
 			}
 		});
 		view.findViewById(R.id.copy).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				Util.copy(context, str);
+				BaseUtil.copy(context, str);
 			}
 		});
 

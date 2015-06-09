@@ -28,13 +28,13 @@ import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.span.MySpan;
+import com.fang.util.BaseUtil;
 import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.Patterns;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.StringUtil;
-import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
 import com.fang.zxing.activity.CaptureActivity;
 
@@ -113,7 +113,11 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.number_layout, container,
+        if (isViewCreated()) {
+            return mView;
+        }
+
+        View rootView = inflater.inflate(R.layout.number_layout, container,
 				false);
 		mResultTextView = (TextView) rootView.findViewById(R.id.result);
         MySpan.formatTextView(mContext, mResultTextView, mNumberInfoString, false);
@@ -162,7 +166,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		DebugLog.d(TAG, "onResume");
-		String str = Util.paste(mContext);
+		String str = BaseUtil.paste(mContext);
 		if (str != null && str.matches(Patterns.NUMBER_PATTERN) && !str.equals(mPasteNumberString)) {
 			mSearchEditView.setText(str);
 			mPasteNumberString = str;

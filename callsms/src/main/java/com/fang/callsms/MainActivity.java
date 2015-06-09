@@ -116,10 +116,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				checkUpdateVersion(false);
 				break;
 			case MSG_CREATE_SHORT:
-				Util.showCreateShortDialog(mContext);
+                Util.showCreateShortDialog(mContext);
 				break;
 			case MSG_SHOW_FLOAT:
-				Util.showOpenFloatDialog(mContext);
+                Util.showOpenFloatDialog(mContext);
                 break;
             case MSG_CREATE_SHORT_SCAN:
                 Util.createShortCut(mContext, mContext.getString(R.string.scan_short), CallFrom.SCAN);

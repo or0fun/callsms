@@ -2,9 +2,8 @@ package com.fang.span;
 
 import android.content.Context;
 import android.os.Handler;
-import android.widget.Toast;
 
-import com.fang.util.Util;
+import com.fang.util.BaseUtil;
 
 public class MyCodeSpan extends MySpan {
 
@@ -14,6 +13,6 @@ public class MyCodeSpan extends MySpan {
 	@Override
 	public void handle(final Context context, final String str) {
 		super.handle(context, str);
-		Util.copy(mContext, mText);
+		BaseUtil.copy(mContext, mText);
 	}
 }

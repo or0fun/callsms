@@ -74,7 +74,6 @@ public class CustomSlideSwitch extends View {
 		mSwitch_on = BitmapFactory.decodeResource(res, R.drawable.bg_switch_on);
 		mSwitch_thumb = BitmapFactory.decodeResource(res,
                 R.drawable.switch_thumb);
-		mThumbWidth = mSwitch_thumb.getWidth();
 	}
 
 	@Override
@@ -154,6 +153,11 @@ public class CustomSlideSwitch extends View {
                 matrix, true);
         mSwitch_on = Bitmap.createBitmap(mSwitch_on, 0, 0, mSwitch_on.getWidth(), mSwitch_on.getHeight(),
                 matrix, true);
+        Matrix matrix2 = new Matrix();
+        matrix2.postScale(mBmpHeight * 1.0f / mSwitch_thumb.getHeight(), mBmpHeight * 1.0f / mSwitch_thumb.getHeight());
+        mSwitch_thumb = Bitmap.createBitmap(mSwitch_thumb, 0, 0, mSwitch_thumb.getWidth(), mSwitch_thumb.getHeight(),
+                matrix2, true);
+        mThumbWidth = mSwitch_thumb.getWidth();
 
         if (mSwitchStatus == SWITCH_OFF) {
 			drawBitmap(canvas, null, null, mSwitch_off);

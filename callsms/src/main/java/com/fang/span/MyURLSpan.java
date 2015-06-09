@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.fang.callsms.R;
-import com.fang.util.Util;
+import com.fang.util.BaseUtil;
 
 public class MyURLSpan extends MySpan {
 
@@ -28,14 +28,14 @@ public class MyURLSpan extends MySpan {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				Util.openURL(mContext, str);
+				BaseUtil.openURL(mContext, str);
 			}
 		});
 		view.findViewById(R.id.copy).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				Util.copy(context, str);
+				BaseUtil.copy(context, str);
 			}
 		});
 

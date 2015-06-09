@@ -14,6 +14,7 @@ import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.controls.CustomProgressDialog;
+import com.fang.util.BaseUtil;
 import com.fang.util.Util;
 
 import java.util.List;
@@ -85,8 +86,8 @@ public class SMSQueueActivity extends BaseActivity {
 			TextView dateTextView = (TextView) convertView
 					.findViewById(R.id.date);
 			contentTextView.setText(info.getContent());
-			dateTextView.setText(Util.longDateToStringDate(info
-					.getTimeInMillis()));
+			dateTextView.setText(BaseUtil.longDateToStringDate(info
+                    .getTimeInMillis()));
             StringBuilder nameStringBuffer = new StringBuilder();
 			for (String number : info.getmReceiverList()) {
 				nameStringBuffer.append(ContactHelper.getPerson(mContext,
@@ -104,7 +105,7 @@ public class SMSQueueActivity extends BaseActivity {
 				public void onClick(View arg0) {
 					CustomProgressDialog.show(mContext);
 					int requestCode = info.getResultCode();
-					Util.cancelAlarm(mContext, requestCode);
+                    Util.cancelAlarm(mContext, requestCode);
 					SMSHelper.removeSMSInfo(mContext, requestCode);
 					refreshList();
 					CustomProgressDialog.cancel(mContext);

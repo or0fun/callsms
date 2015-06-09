@@ -1,7 +1,5 @@
 package com.fang.receiver;
 
-import java.util.List;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +7,8 @@ import android.content.Intent;
 import com.fang.sms.SMSHelper;
 import com.fang.sms.SendSMSInfo;
 import com.fang.util.Util;
+
+import java.util.List;
 
 public class AlarmReceiver extends BroadcastReceiver {
 	
@@ -30,7 +30,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 					}
         			
         		}.start();
-        		Util.cancelAlarm(context, info.getResultCode());
+                Util.cancelAlarm(context, info.getResultCode());
         		SMSHelper.removeSMSInfo(context, requestCode);
     		}
 		}
