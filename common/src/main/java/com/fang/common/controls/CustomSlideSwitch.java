@@ -1,4 +1,4 @@
-package com.fang.controls;
+package com.fang.common.controls;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.fang.common.R;
-import com.fang.util.DebugLog;
-import com.fang.util.SharedPreferencesHelper;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.SharedPreferencesHelper;
 
 /**
  * 自定义switch设置开关
@@ -211,7 +211,7 @@ public class CustomSlideSwitch extends View {
 	 */
 	public void setKey(String key) {
 		mKeyString = key;
-		mSwitchStatus = SharedPreferencesHelper.getBoolean(getContext(), mKeyString, true) ? SWITCH_ON:SWITCH_OFF;
+		mSwitchStatus = SharedPreferencesHelper.getInstance().getBoolean(mKeyString, true) ? SWITCH_ON:SWITCH_OFF;
 		invalidate();
 	}
 
@@ -263,9 +263,9 @@ public class CustomSlideSwitch extends View {
 						: SWITCH_OFF;
 				CustomSlideSwitch.this.postInvalidate();
 				if (CustomSlideSwitch.this.mSwitchStatus == SWITCH_ON) {
-					SharedPreferencesHelper.setBoolean(getContext(), mKeyString, true);
+					SharedPreferencesHelper.getInstance().setBoolean(mKeyString, true);
 				}else {
-					SharedPreferencesHelper.setBoolean(getContext(), mKeyString, false);
+					SharedPreferencesHelper.getInstance().setBoolean(mKeyString, false);
 				}
 			}
 		}

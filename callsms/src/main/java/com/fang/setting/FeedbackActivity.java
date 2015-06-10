@@ -1,8 +1,5 @@
 package com.fang.setting;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +9,14 @@ import android.widget.EditText;
 
 import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class FeedbackActivity extends BaseActivity {
 

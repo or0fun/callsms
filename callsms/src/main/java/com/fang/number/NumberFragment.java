@@ -22,19 +22,19 @@ import com.fang.business.BusinessHelper;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.Patterns;
+import com.fang.common.util.StringUtil;
 import com.fang.contact.ContactHelper;
 import com.fang.datatype.ExtraName;
 import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.span.MySpan;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
-import com.fang.util.Patterns;
 import com.fang.util.SharedPreferencesHelper;
-import com.fang.util.StringUtil;
 import com.fang.weather.WeatherHelper;
 import com.fang.zxing.activity.CaptureActivity;
 
@@ -156,8 +156,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         rootView.findViewById(R.id.scan).setOnClickListener(this);
 
         // 显示农历和天气
-        handlerNongli(SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NONGLI));
-        handlerWeather(SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.WEATHER));
+        handlerNongli(SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.NONGLI));
+        handlerWeather(SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.WEATHER));
 
         return rootView;
 	}
@@ -171,7 +171,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mSearchEditView.setText(str);
 			mPasteNumberString = str;
 		} else {
-            str = SharedPreferencesHelper.getString(mContext, SharedPreferencesHelper.NUMBER_SEARCH);
+            str = SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.NUMBER_SEARCH);
             mSearchEditView.setText(str);
         }
 
@@ -236,7 +236,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mNumberString = String.format("%s", str);
 			BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
 		}
-        SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.NUMBER_SEARCH, str);
+        SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.NUMBER_SEARCH, str);
 		//日志
 		LogOperate.updateLog(mContext, LogCode.SEARCH_NUMBER);
 	}
@@ -286,7 +286,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
      */
     private void handlerWeather(String weather) {
         if(!StringUtil.isEmpty(weather)) {
-            SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.WEATHER, weather);
+            SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.WEATHER, weather);
             int index = weather.indexOf(" ");
             if (index > 0) {
                 String city = weather.substring(0, index);
@@ -315,7 +315,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
                 mToday.setText(Html.fromHtml(today.toString() + "  <a href=\""+ CustomConstant.HISTORY_OF_TODAY + "\">历史上的今天</a> "));
                 mToday.setMovementMethod(LinkMovementMethod.getInstance());
 
-                SharedPreferencesHelper.setString(mContext, SharedPreferencesHelper.NONGLI, nongli);
+                SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.NONGLI, nongli);
             }
         }
     }

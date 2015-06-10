@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
+import com.fang.common.controls.CustomProgressDialog;
+import com.fang.common.util.BaseUtil;
 import com.fang.contact.ContactHelper;
-import com.fang.controls.CustomProgressDialog;
-import com.fang.util.BaseUtil;
 import com.fang.util.Util;
 
 import java.util.List;

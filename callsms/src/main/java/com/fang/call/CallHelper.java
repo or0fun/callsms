@@ -11,10 +11,10 @@ import android.provider.CallLog.Calls;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.database.NumberDatabaseManager;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
 import com.fang.util.MessageWhat;
-import com.fang.util.StringUtil;
+import com.fang.common.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

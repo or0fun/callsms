@@ -9,7 +9,7 @@ import com.fang.callsms.MySMSMessage;
 import com.fang.common.CustomConstant;
 import com.fang.sms.SMSHandler;
 import com.fang.sms.SMSHelper;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 import com.fang.util.SharedPreferencesHelper;
 
 public class SMSContentObserver extends ContentObserver {
@@ -25,7 +25,7 @@ public class SMSContentObserver extends ContentObserver {
 	public SMSContentObserver(Context context, Handler handler) {
 		super(handler);
 		mContext = context;
-		SharedPreferencesHelper.setLong(mContext,
+		SharedPreferencesHelper.getInstance().setLong(
 				SharedPreferencesHelper.SENT_SMS_LAST_TIME, SMSHelper.getLastTime(mContext));
 		mHandler = SMSHandler.getInstance(context);
 	}
@@ -33,7 +33,7 @@ public class SMSContentObserver extends ContentObserver {
 	@Override
 	public void onChange(boolean selfChange) {
 		DebugLog.d("SMSContentObserver", "selfChange");
-		lastTime = SharedPreferencesHelper.getLong(mContext,
+		lastTime = SharedPreferencesHelper.getInstance().getLong(
 				SharedPreferencesHelper.SENT_SMS_LAST_TIME, SMSHelper.getLastTime(mContext) - 1);
 
 		Cursor cusor = mContext.getContentResolver().query(CustomConstant.SMS_INBOX_URI, null,
@@ -65,7 +65,7 @@ public class SMSContentObserver extends ContentObserver {
 			}
 			cusor.close();
 			if (maxTime > lastTime) {
-				SharedPreferencesHelper.setLong(mContext,
+				SharedPreferencesHelper.getInstance().setLong(
 						SharedPreferencesHelper.SENT_SMS_LAST_TIME, maxTime);
 			}
 		}

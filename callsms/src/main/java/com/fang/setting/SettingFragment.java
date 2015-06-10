@@ -17,7 +17,7 @@ import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 
 /**
  * 设置页面

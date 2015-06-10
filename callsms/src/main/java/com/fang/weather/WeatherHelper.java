@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.StringUtil;
 import com.fang.logs.LogCode;
-import com.fang.util.DebugLog;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.NotificationHelper;
 import com.fang.util.SharedPreferencesHelper;
-import com.fang.util.StringUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,7 +39,7 @@ public class WeatherHelper {
      */
     public static void postWeatherNotification(final Context context) {
 
-        if (false == SharedPreferencesHelper.getBoolean(context, SharedPreferencesHelper.SETTING_WEATHER_NOTIFICATION, true)) {
+        if (false == SharedPreferencesHelper.getInstance().getBoolean(SharedPreferencesHelper.SETTING_WEATHER_NOTIFICATION, true)) {
             DebugLog.d(TAG, "postWeatherNotification: SETTING_WEATHER_NOTIFICATION is false");
             return;
         }

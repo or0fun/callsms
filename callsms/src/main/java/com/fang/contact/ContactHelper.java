@@ -16,8 +16,8 @@ import android.text.TextUtils;
 
 import com.fang.call.CallHelper;
 import com.fang.callsms.R;
-import com.fang.util.DebugLog;
-import com.fang.util.StringUtil;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.StringUtil;
 
 import java.io.InputStream;
 import java.util.ArrayList;

@@ -10,14 +10,14 @@ import android.os.Message;
 
 import com.fang.call.CallHelper;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
 import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressHelper;
 import com.fang.net.ServerUtil;
 import com.fang.push.PushHelper;
 import com.fang.sms.SendSMSInfo;
 import com.fang.speach.SpeachHelper;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.weather.WeatherHelper;
 

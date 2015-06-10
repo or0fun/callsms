@@ -3,7 +3,7 @@ package com.fang.span;
 import android.content.Context;
 import android.os.Handler;
 
-import com.fang.util.BaseUtil;
+import com.fang.common.util.BaseUtil;
 
 public class MyCodeSpan extends MySpan {
 

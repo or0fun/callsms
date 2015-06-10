@@ -28,11 +28,11 @@ import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.speach.SpeachHelper;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.SharedPreferencesHelper;
-import com.fang.util.StringUtil;
+import com.fang.common.util.StringUtil;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
@@ -116,9 +116,8 @@ public class CallDialog implements OnClickListener {
 				if (mType == PhoneReceiver.INCOMING_CALL_MSG) {
 					// 来电播报
 					if (BaseUtil.isWiredHeadsetOn(mContext)) {
-						if (SharedPreferencesHelper
+						if (SharedPreferencesHelper.getInstance()
 								.getBoolean(
-										mContext,
 										SharedPreferencesHelper.SETTING_BROADCAST_WHEN_WIREDHEADSETON,
 										true)) {
 							broadcastContent(createCallBroadcastContent());

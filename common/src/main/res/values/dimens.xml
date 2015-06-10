@@ -9,4 +9,8 @@
 
     <dimen name="switch_width">58dp</dimen>
     <dimen name="switch_height">30dp</dimen>
+
+    <dimen name="bigbuttonHeight">60.0dp</dimen>
+    <dimen name="buttonHeight">40.0dp</dimen>
+    <dimen name="subbuttonHeight">30.0dp</dimen>
 </resources>

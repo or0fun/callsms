@@ -18,9 +18,9 @@ import com.fang.comment.CommentActivity;
 import com.fang.database.NumberDatabaseManager;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
-import com.fang.util.StringUtil;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;

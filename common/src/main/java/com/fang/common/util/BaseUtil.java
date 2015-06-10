@@ -1,4 +1,4 @@
-package com.fang.util;
+package com.fang.common.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,8 +10,6 @@ import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -20,6 +18,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
+
+import com.fang.common.util.DebugLog;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

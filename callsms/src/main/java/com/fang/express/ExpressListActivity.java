@@ -77,13 +77,13 @@ public class ExpressListActivity extends BaseActivity {
 		mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSpinner.setAdapter(mAdapter);
 		mSpinner.setSelection(
-				SharedPreferencesHelper.getInt(mContext, 
+				SharedPreferencesHelper.getInstance().getInt(
 						SharedPreferencesHelper.SELECTED_EXPRESS_COMPANY, 0));
 		mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				SharedPreferencesHelper.setInt(mContext, 
+				SharedPreferencesHelper.getInstance().setInt(
 						SharedPreferencesHelper.SELECTED_EXPRESS_COMPANY, 
 						position);
 			}
@@ -159,7 +159,7 @@ public class ExpressListActivity extends BaseActivity {
 		for (ExpressInfo info : mExpressList) {
 			BusinessHelper.getExpressInfo(mContext, info, myHandler);
 		}
-		SharedPreferencesHelper.setLong(mContext,
+		SharedPreferencesHelper.getInstance().setLong(
 				SharedPreferencesHelper.LAST_UPDATE_EXPRESS_LIST,
 				System.currentTimeMillis());
 	}

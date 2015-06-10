@@ -16,7 +16,7 @@ import com.fang.contact.ContactHelper;
 import com.fang.listener.IPhoneStateListener;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 import com.fang.util.SharedPreferencesHelper;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case INCOMING_CALL_MSG:
-				if (SharedPreferencesHelper.getBoolean(mContext,
+				if (SharedPreferencesHelper.getInstance().getBoolean(
                         SharedPreferencesHelper.SETTING_NEW_CALL_POPUP, true)) {
 					if (null != mCallDialog) {
 						mCallDialog.remove();
@@ -77,7 +77,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 				}
 				break;
 			case OUTGOING_CALL_MSG:
-				if (SharedPreferencesHelper.getBoolean(mContext,
+				if (SharedPreferencesHelper.getInstance().getBoolean(
 						SharedPreferencesHelper.SETTING_OUTGOING_CALL_POPUP,
 						true)) {
 					if (null != mCallDialog) {
@@ -103,9 +103,8 @@ public class PhoneReceiver extends BroadcastReceiver {
 				}
 				break;
 			case MISSED_CALL_SHOW_MSG:
-				if (SharedPreferencesHelper
+				if (SharedPreferencesHelper.getInstance()
 						.getBoolean(
-								mContext,
 								SharedPreferencesHelper.SETTING_MISSED_CALL_POPUP,
 								true)) {
 					if (null != mMissedCallDialog) {

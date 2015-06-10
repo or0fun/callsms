@@ -23,13 +23,13 @@ import com.fang.business.BusinessHelper;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.MySMSMessage;
 import com.fang.callsms.R;
+import com.fang.common.util.BaseUtil;
 import com.fang.contact.ContactHelper;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.span.MySpan;
 import com.fang.speach.SpeachHelper;
-import com.fang.util.BaseUtil;
 import com.fang.util.MessageWhat;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
@@ -197,8 +197,8 @@ public class SMSDialog implements OnClickListener {
 			LogOperate.updateLog(mContext, LogCode.SMS_INCOMING_DIALOG_SHOW);
 			//播报
 			if (BaseUtil.isWiredHeadsetOn(mContext)) {
-				if (SharedPreferencesHelper.getBoolean(mContext,
-						SharedPreferencesHelper.SETTING_BROADCAST_WHEN_WIREDHEADSETON, true)) {
+				if (SharedPreferencesHelper.getInstance().getBoolean(
+                        SharedPreferencesHelper.SETTING_BROADCAST_WHEN_WIREDHEADSETON, true)) {
 					broadcastContent(createSMSBroadcastContent());
 					// 日志
 					LogOperate.updateLog(mContext, LogCode.SMS_BROADCAST);

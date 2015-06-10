@@ -74,7 +74,7 @@ public class NumberServiceHelper {
 	 */
 	public static final Map<String,String> NUMBERS_SERVICE = new HashMap<String,String>(){//构造方法
 		{
-		put("支付宝客服","057188156688");
+		put("支付宝客服","95188");
 		put("淘宝客服","057188158198");
 		put("京东商城客服","4006065500");
 		put("亚马逊客服","4008105666");

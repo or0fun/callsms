@@ -6,7 +6,7 @@ import android.util.Log;
 import com.fang.common.CustomConstant;
 import com.fang.security.AESUtil;
 import com.fang.security.SecurityHelper;
-import com.fang.util.JsonUtil;
+import com.fang.common.util.JsonUtil;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
@@ -49,10 +49,10 @@ public class ServerUtil implements Runnable {
 
 		defaultAesutil = new AESUtil();
 		mThread = new Thread(this);
-		mUserID = SharedPreferencesHelper.getString(mContext,
+		mUserID = SharedPreferencesHelper.getInstance().getString(
 				SharedPreferencesHelper.USER_ID, null);
-		mParamsBuffer = JsonUtil.getNameValuePairList(SharedPreferencesHelper
-				.getString(mContext, SharedPreferencesHelper.OFFLINE_DATA));
+		mParamsBuffer = JsonUtil.getNameValuePairList(SharedPreferencesHelper.getInstance()
+				.getString(SharedPreferencesHelper.OFFLINE_DATA));
 		mThread.start();
 	}
 
@@ -297,7 +297,7 @@ public class ServerUtil implements Runnable {
 			public void onResult(NetRequestResult result) {
 				if (result.getResultCode() == NetRequestResultCode.HTTP_OK) {
 					mUserID = result.getValue();
-					SharedPreferencesHelper.setString(context,
+					SharedPreferencesHelper.getInstance().setString(
 							SharedPreferencesHelper.USER_ID, mUserID);
 					checkOffLineData(context);
 				}
@@ -313,7 +313,7 @@ public class ServerUtil implements Runnable {
 	private void addOfflineData(NameValuePair param) {
 		synchronized (mLock) {
 			mParamsBuffer.add(param);
-			SharedPreferencesHelper.setString(mContext,
+			SharedPreferencesHelper.getInstance().setString(
 					SharedPreferencesHelper.OFFLINE_DATA,
 					JsonUtil.getJsonString(mParamsBuffer));
 		}

@@ -1,4 +1,4 @@
-package com.fang.util;
+package com.fang.common.util;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.fang.callsms.R;
-import com.fang.util.BaseUtil;
+import com.fang.common.util.BaseUtil;
 
 public class MyEmailSpan extends MySpan {
 

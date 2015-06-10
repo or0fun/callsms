@@ -27,14 +27,14 @@ import android.widget.Toast;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.common.controls.CustomDialog;
 import com.fang.contact.ContactHelper;
-import com.fang.controls.CustomDialog;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.util.BaseUtil;
+import com.fang.common.util.BaseUtil;
 import com.fang.util.MessageWhat;
-import com.fang.util.StringUtil;
-import com.fang.util.ViewUtil;
+import com.fang.common.util.StringUtil;
+import com.fang.common.util.ViewUtil;
 
 import java.util.List;
 import java.util.Map;

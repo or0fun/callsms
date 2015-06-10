@@ -24,6 +24,8 @@ import com.fang.base.Model;
 import com.fang.call.CallFragment;
 import com.fang.call.CallHelper;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.MIUIHelper;
 import com.fang.contact.ContactFragment;
 import com.fang.datatype.CallFrom;
 import com.fang.datatype.ExtraName;
@@ -35,8 +37,6 @@ import com.fang.push.ActionType;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.setting.SettingFragment;
-import com.fang.util.DebugLog;
-import com.fang.util.MIUIHelper;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
 import com.fang.version.UpdateVersion;
@@ -201,24 +201,24 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //		mShowHotAppButton.setOnClickListener(this);
 //		mShowHotAppButton.setVisibility(View.GONE);
 		//默认选择号码通
-		int selected = SharedPreferencesHelper.getInt(mContext, SharedPreferencesHelper.SELECTED_PAGE, Model.NUMBER_FRAGMENT);
+		int selected = SharedPreferencesHelper.getInstance().getInt(SharedPreferencesHelper.SELECTED_PAGE, Model.NUMBER_FRAGMENT);
 		mViewPager.setCurrentItem(selected);
 		pageSelected(selected);
 
 		//创建快捷方式
-		if (SharedPreferencesHelper.getBoolean(mContext, SharedPreferencesHelper.FIRST_TIME_OPEN, true)) {
+		if (SharedPreferencesHelper.getInstance().getBoolean(SharedPreferencesHelper.FIRST_TIME_OPEN, true)) {
 			if (MIUIHelper.getInstance().isMiUIV5() || MIUIHelper.getInstance().isMiUIV6()) {
 				mHandler.sendEmptyMessageDelayed(MSG_SHOW_FLOAT, CustomConstant.FIVE_SECONDS);
 			}else {
 				mHandler.sendEmptyMessageDelayed(MSG_CREATE_SHORT, CustomConstant.FIVE_SECONDS);
 			}
-			SharedPreferencesHelper.setBoolean(mContext, SharedPreferencesHelper.FIRST_TIME_OPEN, false);
+			SharedPreferencesHelper.getInstance().setBoolean(SharedPreferencesHelper.FIRST_TIME_OPEN, false);
 		}
 
         //扫一扫快捷方式
-        if (SharedPreferencesHelper.getBoolean(mContext, SharedPreferencesHelper.SCAN, true)) {
+        if (SharedPreferencesHelper.getInstance().getBoolean(SharedPreferencesHelper.SCAN, true)) {
             mHandler.sendEmptyMessageDelayed(MSG_CREATE_SHORT_SCAN, CustomConstant.FIVE_SECONDS);
-            SharedPreferencesHelper.setBoolean(mContext, SharedPreferencesHelper.SCAN, false);
+            SharedPreferencesHelper.getInstance().setBoolean(SharedPreferencesHelper.SCAN, false);
         }
 
         handleIntent();
@@ -381,7 +381,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			mShowingFragment = mSettingFragment;
 		}
 		
-		SharedPreferencesHelper.setInt(mContext, SharedPreferencesHelper.SELECTED_PAGE, index);
+		SharedPreferencesHelper.getInstance().setInt(SharedPreferencesHelper.SELECTED_PAGE, index);
 		mShowingFragment.setSelected(true);
 		mTextViewList.get(index).setTextColor(mContext.getResources().getColor(
 				R.color.blue));
@@ -396,13 +396,13 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	 */
 	public void checkUpdateVersion(boolean manual) {
 		long now = new Date().getTime();
-		long last = SharedPreferencesHelper.getLong(mContext,
-				SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
+		long last = SharedPreferencesHelper.getInstance().getLong(
+                SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
 		if (manual || now - last > CustomConstant.ONE_DAY) {
 			UpdateVersion.checkVersion(mContext, manual, mDownloadListener);
 
             //保持时间
-            SharedPreferencesHelper.setLong(mContext,
+            SharedPreferencesHelper.getInstance().setLong(
                     SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
 
             //日志

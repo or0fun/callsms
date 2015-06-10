@@ -2,7 +2,7 @@ package com.fang.speach;
 
 import android.content.Context;
 
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;

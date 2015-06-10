@@ -6,7 +6,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
 import com.fang.common.CustomConstant;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.StringUtil;
 import com.fang.security.AESUtil;
 
 import org.apache.http.HttpResponse;

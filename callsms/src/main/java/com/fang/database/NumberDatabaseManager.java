@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.fang.util.DebugLog;
-import com.fang.util.StringUtil;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.StringUtil;
 
 import java.util.HashMap;
 

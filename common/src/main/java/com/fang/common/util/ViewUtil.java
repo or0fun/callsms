@@ -1,4 +1,4 @@
-package com.fang.util;
+package com.fang.common.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

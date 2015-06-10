@@ -21,6 +21,6 @@ public class Model {
     }
 
     public int getCurrentFragment() {
-        return SharedPreferencesHelper.getInt(context, SharedPreferencesHelper.SELECTED_PAGE, NUMBER_FRAGMENT);
+        return SharedPreferencesHelper.getInstance().getInt(SharedPreferencesHelper.SELECTED_PAGE, NUMBER_FRAGMENT);
     }
 }

@@ -1,4 +1,4 @@
-package com.fang.controls;
+package com.fang.common.controls;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fang.common.R;
-import com.fang.util.StringUtil;
+import com.fang.common.util.StringUtil;
 
 public class CustomSwitchPreference extends LinearLayout {
 	
@@ -32,7 +32,7 @@ public class CustomSwitchPreference extends LinearLayout {
 	
 	protected TextView mTitleTextView;
 	protected TextView mSummaryTextView;
-	protected com.fang.controls.CustomSlideSwitch mSlideSwitch;
+	protected CustomSlideSwitch mSlideSwitch;
 	
 	protected boolean mIsOn;
 	
@@ -93,7 +93,7 @@ public class CustomSwitchPreference extends LinearLayout {
 		}else {
 			mSummaryTextView.setText(mSummaryString);
 		}
-        mSlideSwitch = (com.fang.controls.CustomSlideSwitch)mItemView.findViewById(R.id.slideSwitch);
+        mSlideSwitch = (CustomSlideSwitch)mItemView.findViewById(R.id.slideSwitch);
         mSlideSwitch.setKey(mKeyString);
         addView(mItemView, params);
 	}

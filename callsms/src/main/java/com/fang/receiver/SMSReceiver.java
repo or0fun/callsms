@@ -11,7 +11,7 @@ import com.fang.callsms.MySMSMessage;
 import com.fang.common.CustomConstant;
 import com.fang.sms.SMSHandler;
 import com.fang.sms.SMSHelper;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 import com.fang.util.SharedPreferencesHelper;
 
 public class SMSReceiver extends BroadcastReceiver {
@@ -37,12 +37,12 @@ public class SMSReceiver extends BroadcastReceiver {
 					"address = " + addressString, null, "date desc limit 1");
 			if (cusor != null) {
 				long smsTime = 0;
-				long lastTime = SharedPreferencesHelper.getLong(context,
+				long lastTime = SharedPreferencesHelper.getInstance().getLong(
 						SharedPreferencesHelper.SENT_SMS_LAST_TIME, SMSHelper.getLastTime(context) - 1);
 				while (cusor.moveToNext()) {
 					smsTime = cusor.getLong(cusor.getColumnIndex("date"));
 					if (smsTime > lastTime) {
-						SharedPreferencesHelper.setLong(context,
+						SharedPreferencesHelper.getInstance().setLong(
 								SharedPreferencesHelper.SENT_SMS_LAST_TIME, smsTime);
 						int id = cusor.getInt(cusor.getColumnIndex("_id"));
 						mHandler.sendMessage(mHandler.obtainMessage(

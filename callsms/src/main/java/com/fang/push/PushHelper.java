@@ -9,7 +9,7 @@ import com.fang.net.NetRequestResultCode;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 import com.fang.util.NotificationHelper;
-import com.fang.util.StringUtil;
+import com.fang.common.util.StringUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

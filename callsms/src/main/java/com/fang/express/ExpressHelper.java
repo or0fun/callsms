@@ -8,7 +8,7 @@ import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.net.IResponseListener;
 import com.fang.net.ResponseInfo;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.NotificationHelper;
 import com.fang.util.SharedPreferencesHelper;
@@ -39,7 +39,7 @@ public class ExpressHelper {
 	 * @return
 	 */
 	public static List<ExpressInfo> getExpressInfos(Context context) {
-		return (List<ExpressInfo>) SharedPreferencesHelper.getObject(context,
+		return (List<ExpressInfo>) SharedPreferencesHelper.getInstance().getObject(
 				SharedPreferencesHelper.EXPRESS_LIST);
 	}
 
@@ -50,7 +50,7 @@ public class ExpressHelper {
 	 */
 	public static void saveExpressInfos(Context context,
 			List<ExpressInfo> infoList) {
-		SharedPreferencesHelper.setObject(context,
+		SharedPreferencesHelper.getInstance().setObject(
 				SharedPreferencesHelper.EXPRESS_LIST, infoList);
 	}
 
@@ -80,9 +80,8 @@ public class ExpressHelper {
 										ExpressInfo responseInfo = (ExpressInfo)info;
 										if (expressInfo.isChanged()) {
 
-											if (SharedPreferencesHelper
+											if (SharedPreferencesHelper.getInstance()
 													.getBoolean(
-															context,
 															SharedPreferencesHelper.SETTING_EXPRESS_TRACK,
 															true)) {
 

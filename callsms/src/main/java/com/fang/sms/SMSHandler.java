@@ -31,7 +31,7 @@ public class SMSHandler extends Handler{
 		super.handleMessage(msg);
 		switch (msg.what) {
 		case SHOW_MSG:
-			if (SharedPreferencesHelper.getBoolean(mContext,
+			if (SharedPreferencesHelper.getInstance().getBoolean(
 					SharedPreferencesHelper.SETTING_SMS_POPUP, true)) {
 				new SMSDialog(mContext, (MySMSMessage) msg.obj).show();
 			}

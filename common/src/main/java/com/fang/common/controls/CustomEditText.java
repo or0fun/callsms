@@ -1,4 +1,4 @@
-package com.fang.controls;
+package com.fang.common.controls;
 
 import android.content.Context;
 import android.util.AttributeSet;

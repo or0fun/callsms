@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
-import com.fang.util.BaseUtil;
+import com.fang.common.util.BaseUtil;
 
 public class MyPhoneSpan extends MySpan {
 

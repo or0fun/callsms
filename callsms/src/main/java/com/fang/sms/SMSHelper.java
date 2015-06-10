@@ -74,7 +74,7 @@ public class SMSHelper {
 	 * @return
 	 */
 	public static List<SendSMSInfo> getSendSMSInfos(Context context) {
-		return (List<SendSMSInfo>) SharedPreferencesHelper.getObject(context,
+		return (List<SendSMSInfo>) SharedPreferencesHelper.getInstance().getObject(
 				SharedPreferencesHelper.TIMING_SMS_INFO);
 	}
 
@@ -85,7 +85,7 @@ public class SMSHelper {
 	 */
 	public static void saveSendSMSInfos(Context context,
 			List<SendSMSInfo> sendSMSInfoList) {
-		SharedPreferencesHelper.setObject(context,
+		SharedPreferencesHelper.getInstance().setObject(
 				SharedPreferencesHelper.TIMING_SMS_INFO, sendSMSInfoList);
 	}
 
@@ -95,13 +95,13 @@ public class SMSHelper {
 	 * @param requestCode
 	 */
 	public static void removeSMSInfo(Context context, int requestCode) {
-		List<SendSMSInfo> sendSMSInfoList = (List<SendSMSInfo>) SharedPreferencesHelper
-				.getObject(context, SharedPreferencesHelper.TIMING_SMS_INFO);
+		List<SendSMSInfo> sendSMSInfoList = (List<SendSMSInfo>) SharedPreferencesHelper.getInstance()
+				.getObject(SharedPreferencesHelper.TIMING_SMS_INFO);
 		if (null != sendSMSInfoList) {
 			for (SendSMSInfo info : sendSMSInfoList) {
 				if (info.getResultCode() == requestCode) {
 					sendSMSInfoList.remove(info);
-					SharedPreferencesHelper.setObject(context,
+					SharedPreferencesHelper.getInstance().setObject(
 							SharedPreferencesHelper.TIMING_SMS_INFO,
 							sendSMSInfoList);
 				}

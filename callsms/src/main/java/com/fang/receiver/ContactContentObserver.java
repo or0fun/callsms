@@ -7,7 +7,7 @@ import android.os.Handler;
 
 import com.fang.call.CallHelper;
 import com.fang.contact.ContactHelper;
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
 
 public class ContactContentObserver extends ContentObserver {
 

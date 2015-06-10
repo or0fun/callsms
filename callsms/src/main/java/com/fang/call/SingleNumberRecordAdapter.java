@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fang.callsms.R;
-import com.fang.util.StringUtil;
+import com.fang.common.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;

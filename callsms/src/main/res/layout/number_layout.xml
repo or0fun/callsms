@@ -245,7 +245,7 @@
             android:id="@+id/searchExpressBtn"
             style="@style/mainButton"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bigbuttonHeight"
+            android:layout_height="@dimen/buttonHeight"
             android:text="@string/number_searchExpress" />
     </LinearLayout>
 

@@ -14,10 +14,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.fang.callsms.R;
-import com.fang.controls.CustomDialog;
-import com.fang.util.BaseUtil;
-import com.fang.util.DebugLog;
-import com.fang.util.Patterns;
+import com.fang.common.controls.CustomDialog;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.Patterns;
 
 public class MySpan extends ClickableSpan {
 

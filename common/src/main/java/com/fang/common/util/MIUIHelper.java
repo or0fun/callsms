@@ -1,10 +1,4 @@
-package com.fang.util;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+package com.fang.common.util;
 
 import android.annotation.TargetApi;
 import android.app.AppOpsManager;
@@ -20,7 +14,13 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.fang.util.DebugLog;
+import com.fang.common.util.DebugLog;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * MIUI 权限管理帮助类
