@@ -38,18 +38,36 @@ public class NetWorkUtil {
 	 * @param context
 	 * @return
 	 */
-	public static boolean isNetworkAvailable(Context context) {
+	public static boolean isNetworkConnected(Context context) {
 		if (context != null) {
-			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+			ConnectivityManager connectivityManager = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo mNetworkInfo = mConnectivityManager
+			NetworkInfo networkInfo = connectivityManager
 					.getActiveNetworkInfo();
-			if (mNetworkInfo != null) {
-				return mNetworkInfo.isAvailable();
+			if (networkInfo != null) {
+				return networkInfo.isConnected();
 			}
 		}
 		return false;
 	}
+
+    /**
+     * wifi连接
+     * @param context
+     * @return
+     */
+    public static boolean isWifiConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager
+                    .getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                return networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            }
+        }
+        return false;
+    }
 
 	/**
 	 * 移动网络是否连接

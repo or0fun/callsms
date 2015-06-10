@@ -51,7 +51,7 @@ public class WeatherHelper {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (NetWorkUtil.isNetworkAvailable(context)) {
+                if (NetWorkUtil.isNetworkConnected(context)) {
                     String weather = NetWorkUtil.getInstance().searchWeather(2);
                     if (!StringUtil.isEmpty(weather)) {
                         Intent notificationIntent = new Intent(

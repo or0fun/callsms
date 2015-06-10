@@ -19,8 +19,8 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-import com.fang.common.util.DebugLog;
-
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -328,4 +328,39 @@ public class BaseUtil {
 		return android.os.Build.VERSION.SDK_INT;
 	}
 
+    /**
+     * 记录crash日志
+     * @param throwable
+     */
+    public static void addCrashException(Throwable throwable) {
+        String info = null;
+        ByteArrayOutputStream baos = null;
+        PrintStream printStream = null;
+        try {
+            baos = new ByteArrayOutputStream();
+            printStream = new PrintStream(baos);
+            throwable.printStackTrace(printStream);
+            byte[] data = baos.toByteArray();
+            info = new String(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (printStream != null) {
+                    printStream.close();
+                }
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String date = sDateFormat.format(new java.util.Date());
+        String str = SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.CRASH_EXCEPTION, "");
+        str += date + ":" + info + "|";
+        SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.CRASH_EXCEPTION, str);
+    }
 }

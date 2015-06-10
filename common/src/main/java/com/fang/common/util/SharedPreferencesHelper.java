@@ -18,6 +18,7 @@ public class SharedPreferencesHelper extends AbsSharedPre {
 	public static final String SETTING_EXPRESS_TRACK = "SETTING_EXPRESS_TRACK";
 	public static final String SETTING_WEATHER_NOTIFICATION = "SETTING_WEATHER_NOTIFICATION";
 
+    public static final String CRASH_EXCEPTION = "CRASH_EXCEPTION";
     @Override
     public void init(Context context) {
         mSharedPreferences = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);

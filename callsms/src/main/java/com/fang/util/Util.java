@@ -22,9 +22,7 @@ import android.view.WindowManager;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomDialog;
-import com.fang.common.util.BaseUtil;
-import com.fang.common.util.DebugLog;
-import com.fang.common.util.MIUIHelper;
+import com.fang.common.util.*;
 import com.fang.datatype.CallFrom;
 import com.fang.datatype.ExtraName;
 import com.fang.listener.IDeleteConfirmListener;
@@ -247,4 +245,5 @@ public class Util {
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
 	}
+
 }

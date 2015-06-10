@@ -40,7 +40,7 @@ public class ExpressHelper {
 	 */
 	public static List<ExpressInfo> getExpressInfos(Context context) {
 		return (List<ExpressInfo>) SharedPreferencesHelper.getInstance().getObject(
-				SharedPreferencesHelper.EXPRESS_LIST);
+                SharedPreferencesHelper.EXPRESS_LIST);
 	}
 
 	/**
@@ -51,14 +51,14 @@ public class ExpressHelper {
 	public static void saveExpressInfos(Context context,
 			List<ExpressInfo> infoList) {
 		SharedPreferencesHelper.getInstance().setObject(
-				SharedPreferencesHelper.EXPRESS_LIST, infoList);
+                SharedPreferencesHelper.EXPRESS_LIST, infoList);
 	}
 
 	/**
 	 * 查询快递信息
 	 */
 	public static void checkExpressInfo(final Context context) {
-		if (false == NetWorkUtil.isNetworkAvailable(context)) {
+		if (false == NetWorkUtil.isNetworkConnected(context)) {
 			return;
 		}
 		new Thread() {
@@ -82,8 +82,8 @@ public class ExpressHelper {
 
 											if (SharedPreferencesHelper.getInstance()
 													.getBoolean(
-															SharedPreferencesHelper.SETTING_EXPRESS_TRACK,
-															true)) {
+                                                            SharedPreferencesHelper.SETTING_EXPRESS_TRACK,
+                                                            true)) {
 
 												expressInfo.setChanged(false);
 												expressInfo.setInfo(responseInfo

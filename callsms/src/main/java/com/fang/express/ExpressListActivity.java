@@ -77,15 +77,15 @@ public class ExpressListActivity extends BaseActivity {
 		mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSpinner.setAdapter(mAdapter);
 		mSpinner.setSelection(
-				SharedPreferencesHelper.getInstance().getInt(
-						SharedPreferencesHelper.SELECTED_EXPRESS_COMPANY, 0));
+                SharedPreferencesHelper.getInstance().getInt(
+                        SharedPreferencesHelper.SELECTED_EXPRESS_COMPANY, 0));
 		mSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				SharedPreferencesHelper.getInstance().setInt(
-						SharedPreferencesHelper.SELECTED_EXPRESS_COMPANY, 
-						position);
+                        SharedPreferencesHelper.SELECTED_EXPRESS_COMPANY,
+                        position);
 			}
 
 			@Override
@@ -127,7 +127,7 @@ public class ExpressListActivity extends BaseActivity {
 
 				ExpressHelper.saveExpressInfos(mContext, mExpressList);
 
-				if (false == NetWorkUtil.isNetworkAvailable(mContext)) {
+				if (false == NetWorkUtil.isNetworkConnected(mContext)) {
 					showTip(mContext
 							.getString(R.string.open_network_to_recognise_express));
 				} else {
@@ -160,8 +160,8 @@ public class ExpressListActivity extends BaseActivity {
 			BusinessHelper.getExpressInfo(mContext, info, myHandler);
 		}
 		SharedPreferencesHelper.getInstance().setLong(
-				SharedPreferencesHelper.LAST_UPDATE_EXPRESS_LIST,
-				System.currentTimeMillis());
+                SharedPreferencesHelper.LAST_UPDATE_EXPRESS_LIST,
+                System.currentTimeMillis());
 	}
 
 	private class MyAdapter extends BaseAdapter {

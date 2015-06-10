@@ -41,7 +41,7 @@ public class FeedbackActivity extends BaseActivity {
 		mSubmitBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				if (false == NetWorkUtil.isNetworkAvailable(mContext)) {
+				if (false == NetWorkUtil.isNetworkConnected(mContext)) {
 					showTip(mContext.getString(R.string.open_network));
 					return;
 				}

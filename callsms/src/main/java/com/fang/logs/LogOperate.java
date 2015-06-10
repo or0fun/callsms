@@ -2,6 +2,8 @@ package com.fang.logs;
 
 import android.content.Context;
 
+import com.fang.common.util.SharedPreferencesHelper;
+import com.fang.common.util.StringUtil;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 
@@ -14,4 +16,16 @@ public class LogOperate {
 	static public void updateLog(final Context context, final String code) {
 		ServerUtil.getInstance(context).request(NetResuestHelper.CODE, code, null);
 	}
+
+    /**
+     * 上次crash日志
+     * @param context
+     */
+    public static void uploadCrashLog(final Context context) {
+        String str = SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.CRASH_EXCEPTION, "");
+        if (StringUtil.isEmpty(str)) {
+            return;
+        }
+        ServerUtil.getInstance(context).request(NetResuestHelper.CRASH, str, null);
+    }
 }

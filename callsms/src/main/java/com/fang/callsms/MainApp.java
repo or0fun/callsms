@@ -7,8 +7,8 @@ import android.content.pm.PackageManager;
 
 import com.fang.background.BackgroundService;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.BaseUtil;
 import com.fang.receiver.MainService;
-import com.fang.util.SharedPreferencesHelper;
 
 /**
  * Created by fang on 3/2/15.
@@ -17,6 +17,8 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Thread.setDefaultUncaughtExceptionHandler(this);
 
         //获取渠道号
         try {
@@ -37,5 +39,6 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
 
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
+        BaseUtil.addCrashException(ex);
     }
 }

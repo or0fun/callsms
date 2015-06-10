@@ -41,14 +41,14 @@ public class BusinessHelper {
 				String infoString = NumberDatabaseManager.getInstance(context).query(
 						number);
 				if ((StringUtil.isEmpty(infoString) || infoString.endsWith(context.getString(R.string.number_unknow)))
-						&& NetWorkUtil.isNetworkAvailable(context)) {
+						&& NetWorkUtil.isNetworkConnected(context)) {
 					infoString = NetWorkUtil.getInstance().searchPhone(context, number, ServerUtil.getInstance(context).getUserID());
 					if (!infoString.endsWith(context.getString(R.string.number_unknow))) {
 						NumberDatabaseManager.getInstance(context).update(number, infoString);
 					}
 				}
 				
-				if (StringUtil.isEmpty(infoString) && !NetWorkUtil.isNetworkAvailable(context)) {
+				if (StringUtil.isEmpty(infoString) && !NetWorkUtil.isNetworkConnected(context)) {
 					infoString = context.getString(R.string.open_network_to_recognise_number);
 				}
 				
@@ -79,7 +79,7 @@ public class BusinessHelper {
 					String number = map.get(CallHelper.PARAM_NUMBER).toString();
 					String infoString = NumberDatabaseManager.getInstance(context).query(
 							number);
-					if (StringUtil.isEmpty(infoString) && NetWorkUtil.isNetworkAvailable(context)) {
+					if (StringUtil.isEmpty(infoString) && NetWorkUtil.isNetworkConnected(context)) {
 						infoString = NetWorkUtil.getInstance().searchPhone(context, number, ServerUtil.getInstance(context).getUserID());
 						NumberDatabaseManager.getInstance(context).update(number, infoString);
                         DebugLog.d(TAG, "getNumberInfo:" + number + "= " + infoString);
@@ -108,7 +108,7 @@ public class BusinessHelper {
 	 */
 	public static void getExpressInfo(final Context context, final ExpressInfo info,
 			final Handler handler) {
-		if (!NetWorkUtil.isNetworkAvailable(context)) {
+		if (!NetWorkUtil.isNetworkConnected(context)) {
 			return;
 		}
 		if (null == info) {
@@ -146,7 +146,7 @@ public class BusinessHelper {
 	 */
 	public static void getExpressInfo(final Context context, final ExpressInfo info,
 			final IResponseListener expressListener) {
-		if (!NetWorkUtil.isNetworkAvailable(context)) {
+		if (!NetWorkUtil.isNetworkConnected(context)) {
 			return;
 		}
 		if (null == info) {
@@ -189,7 +189,7 @@ public class BusinessHelper {
 	 */
 	public static void getWeatherInfo(final Context context, final String city,
 			final Handler handler) {
-		if (!NetWorkUtil.isNetworkAvailable(context)) {
+		if (!NetWorkUtil.isNetworkConnected(context)) {
 			return;
 		}
 		if (StringUtil.isEmpty(city)) {

@@ -50,9 +50,9 @@ public class ServerUtil implements Runnable {
 		defaultAesutil = new AESUtil();
 		mThread = new Thread(this);
 		mUserID = SharedPreferencesHelper.getInstance().getString(
-				SharedPreferencesHelper.USER_ID, null);
+                SharedPreferencesHelper.USER_ID, null);
 		mParamsBuffer = JsonUtil.getNameValuePairList(SharedPreferencesHelper.getInstance()
-				.getString(SharedPreferencesHelper.OFFLINE_DATA));
+                .getString(SharedPreferencesHelper.OFFLINE_DATA));
 		mThread.start();
 	}
 
@@ -87,7 +87,7 @@ public class ServerUtil implements Runnable {
 				NetRequestResult result = new NetRequestResult();
 				result.setRequestCode(request.getRequestCode());
 				// 网络不可用
-				if (!NetWorkUtil.isNetworkAvailable(mContext)) {
+				if (!NetWorkUtil.isNetworkConnected(mContext)) {
 					result.setResultCode(NetRequestResultCode.NETWORK_NOT_AVAILABLE);
 					if (request.getRequestType() == NetRequestConstant.TYPE_POST) {
 						addOfflineData(request.getValue());
@@ -298,7 +298,7 @@ public class ServerUtil implements Runnable {
 				if (result.getResultCode() == NetRequestResultCode.HTTP_OK) {
 					mUserID = result.getValue();
 					SharedPreferencesHelper.getInstance().setString(
-							SharedPreferencesHelper.USER_ID, mUserID);
+                            SharedPreferencesHelper.USER_ID, mUserID);
 					checkOffLineData(context);
 				}
 			}
@@ -314,8 +314,8 @@ public class ServerUtil implements Runnable {
 		synchronized (mLock) {
 			mParamsBuffer.add(param);
 			SharedPreferencesHelper.getInstance().setString(
-					SharedPreferencesHelper.OFFLINE_DATA,
-					JsonUtil.getJsonString(mParamsBuffer));
+                    SharedPreferencesHelper.OFFLINE_DATA,
+                    JsonUtil.getJsonString(mParamsBuffer));
 		}
 	}
 
@@ -340,7 +340,7 @@ public class ServerUtil implements Runnable {
 		if (null == mParamsBuffer) {
 			synchronized (mLock) {
 				if (mParamsBuffer.size() > 0) {
-					if (NetWorkUtil.isNetworkAvailable(context)) {
+					if (NetWorkUtil.isNetworkConnected(context)) {
 						request(mParamsBuffer.remove(0), null);
 					}
 				}

@@ -29,6 +29,8 @@ public class NetResuestHelper {
 	public static final String GETCOMMENTS = "getcomments";
     /** 消息推送 */
     public static final String PUSH = "push";
+    /** CRASH日志类型 */
+    public static final String CRASH = "crash";
 	
 	private static int code = 0;
 	public static synchronized int getRequestCode() {
