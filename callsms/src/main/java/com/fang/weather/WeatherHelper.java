@@ -63,7 +63,7 @@ public class WeatherHelper {
                         if (null != str && str.length >= 2) {
                             NotificationHelper.showResidentNotification(
                                     context,
-                                    NotificationHelper.TYPE.WEATHER_ID.ordinal(),
+                                    NotificationHelper.WEATHER_ID,
                                     str[0],
                                     "明天" + str[1],
                                     notificationIntent);

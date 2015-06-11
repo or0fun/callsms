@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,7 @@ import com.fang.span.MySpan;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.SharedPreferencesHelper;
+import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
 import com.fang.zxing.activity.CaptureActivity;
 
@@ -63,6 +63,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
     TextView mWeatherCity;
     //今天日期
     TextView mToday;
+    TextView mHistory;
 	//缓存号码
 	String mNumberString = "";
 	//缓存信息
@@ -151,6 +152,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         mWeatherCity = (TextView) rootView.findViewById(R.id.weather_city);
 
         mToday = (TextView) rootView.findViewById(R.id.today);
+        mHistory = (TextView) rootView.findViewById(R.id.history);
+        mHistory.setOnClickListener(this);
 
         rootView.findViewById(R.id.clearBtn).setOnClickListener(this);
         rootView.findViewById(R.id.scan).setOnClickListener(this);
@@ -210,6 +213,8 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
                     CaptureActivity.class);
             startActivityForResult(openCameraIntent, 0);
             LogOperate.updateLog(mContext, LogCode.SCAN);
+        } else if (id == R.id.history) {
+            Util.openUrl(CustomConstant.HISTORY_OF_TODAY);
         }
 	}
 	
@@ -312,8 +317,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             today.append("今天是");
             if (nongli.trim().length() > 0) {
                 today.append(nongli.replace("\n", "<br/>"));
-                mToday.setText(Html.fromHtml(today.toString() + "  <a href=\""+ CustomConstant.HISTORY_OF_TODAY + "\">历史上的今天</a> "));
-                mToday.setMovementMethod(LinkMovementMethod.getInstance());
+                mToday.setText(Html.fromHtml(today.toString()));
 
                 SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.NONGLI, nongli);
             }

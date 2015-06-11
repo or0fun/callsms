@@ -103,7 +103,7 @@ public class ExpressHelper {
 														ExpressListActivity.class);
 												NotificationHelper.showNotification(
                                                         context,
-                                                        NotificationHelper.TYPE.EXPRESS_ID.ordinal(),
+                                                        NotificationHelper.EXPRESS_ID,
                                                         NOTIFY_TITLE
                                                                 + "-"
                                                                 + expressInfo

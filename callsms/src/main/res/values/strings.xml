@@ -176,4 +176,5 @@
     <string name="open_float_desc">开启悬浮窗，才能使您更方便处理来电来信。</string>
     <string name="scan_short">扫一扫</string>
 
+    <string name="history_of_today"><u>历史上的今天</u></string>
 </resources>

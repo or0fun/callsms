@@ -9,10 +9,12 @@ import android.net.Uri;
 
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.common.util.StringUtil;
 import com.fang.datatype.CallFrom;
 import com.fang.datatype.ExtraName;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.webview.WebViewActivity;
 
 /**
  * 通知栏帮助类
@@ -20,9 +22,10 @@ import com.fang.logs.LogOperate;
  */
 public class NotificationHelper {
 
-    public static enum TYPE {
-        EXPRESS_ID, WEATHER_ID, PUSH_ID
-    }
+    public static final int EXPRESS_ID = 0;
+    public static final int WEATHER_ID = 1;
+    public static final int PUSH_ID = 2;
+
 
     /**
      * 显示消息推送的通知栏
@@ -32,13 +35,18 @@ public class NotificationHelper {
      * @param task
      */
     public static void showPushNotification(Context context, String title, String content, int task, String url) {
-        Intent notificationIntent = new Intent(context, MainActivity.class);
+        Intent notificationIntent = new Intent();
+        if (StringUtil.isEmpty(url)) {
+            notificationIntent.setClass(context, MainActivity.class);
+        } else {
+            notificationIntent.setClass(context, WebViewActivity.class);
+        }
         notificationIntent.putExtra(ExtraName.URL, url);
         notificationIntent.putExtra(ExtraName.TASK_ACTION, task);
         notificationIntent.putExtra(ExtraName.CALL_FROM, CallFrom.NOTIFICATION_CLICK);
         showNotification(
                 context,
-                NotificationHelper.TYPE.PUSH_ID.ordinal(),
+                NotificationHelper.PUSH_ID,
                 title,
                 content,
                 notificationIntent,

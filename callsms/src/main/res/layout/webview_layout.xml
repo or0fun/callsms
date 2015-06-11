@@ -21,9 +21,9 @@
 
         <View
             android:layout_width="1dp"
-            android:layout_height="@dimen/vSplitHeight"
-            android:background="@color/white"
-            android:layout_marginLeft="@dimen/smallmargin"/>
+            android:layout_height="20dp"
+            android:background="@color/hint"
+            android:layout_marginRight="@dimen/smallmargin"/>
 
         <TextView
             android:id="@+id/title"
