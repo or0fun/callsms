@@ -81,9 +81,11 @@ public class PushHelper {
                         if (StringUtil.isEmpty(user) || user.equals(ServerUtil.getInstance(mContext).getUserID())) {
                             String title = object.getString(ParamType.TITLE);
                             String content = object.getString(ParamType.CONTENT);
+                            String url = object.getString(ParamType.URL);
+
                             int task = object.getInt(ParamType.TASK);
 
-                            NotificationHelper.showPushNotification(mContext, title, content, task);
+                            NotificationHelper.showPushNotification(mContext, title, content, task, url);
                         }else {
                             Log.d(TAG, "user is " + user);
                         }

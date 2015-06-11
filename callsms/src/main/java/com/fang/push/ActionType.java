@@ -14,4 +14,8 @@ public class ActionType {
      * 更新提示
      */
     public static final int UPDATE_ACTION = 2;
+    /**
+     * 打开url
+     */
+    public static final int URL_ACTION = 3;
 }

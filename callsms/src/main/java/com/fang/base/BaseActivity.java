@@ -19,6 +19,8 @@ public abstract class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mContext = this;
+
+        Global.mContext = this;
 	}
 
     @Override

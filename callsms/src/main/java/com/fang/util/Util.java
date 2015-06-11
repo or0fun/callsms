@@ -138,7 +138,7 @@ public class Util {
 	 * 
 	 * @param context
 	 */
-	public static void createShortCut(Context context, String name, CallFrom callFrom) {
+	public static void createShortCut(Context context, String name, int callFrom) {
 		Intent returnIntent = new Intent();
 		// 设置创建快捷方式的过滤器action
 		returnIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
@@ -151,7 +151,7 @@ public class Util {
 				Intent.ShortcutIconResource.fromContext(context,
 						R.drawable.ic_launcher));
 		Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(ExtraName.CALL_FROM, callFrom.ordinal());
+        intent.putExtra(ExtraName.CALL_FROM, callFrom);
 		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
 		// 发送广播生成快捷方式
 		context.sendBroadcast(returnIntent);

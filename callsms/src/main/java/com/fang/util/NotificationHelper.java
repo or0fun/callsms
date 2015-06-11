@@ -9,6 +9,8 @@ import android.net.Uri;
 
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.datatype.CallFrom;
+import com.fang.datatype.ExtraName;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 
@@ -29,11 +31,11 @@ public class NotificationHelper {
      * @param content
      * @param task
      */
-    public static void showPushNotification(Context context, String title, String content, int task) {
-        Intent notificationIntent = new Intent(
-                context,
-                MainActivity.class);
-        notificationIntent.putExtra(MainActivity.TASK_ACTION, task);
+    public static void showPushNotification(Context context, String title, String content, int task, String url) {
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        notificationIntent.putExtra(ExtraName.URL, url);
+        notificationIntent.putExtra(ExtraName.TASK_ACTION, task);
+        notificationIntent.putExtra(ExtraName.CALL_FROM, CallFrom.NOTIFICATION_CLICK);
         showNotification(
                 context,
                 NotificationHelper.TYPE.PUSH_ID.ordinal(),

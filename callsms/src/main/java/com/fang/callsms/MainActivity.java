@@ -49,11 +49,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private final String TAG = "MainActivity";
-
-    /** 来源 */
-    public static final String ENTRY_FROM = "ENTRY_FROM";
-    /** task行为 */
-    public static final String TASK_ACTION = "TASK_ACTION";
 	
 	private ViewPager mViewPager;
 	/** 电话按钮 */
@@ -221,13 +216,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
             SharedPreferencesHelper.getInstance().setBoolean(SharedPreferencesHelper.SCAN, false);
         }
 
-        handleIntent();
+        //  处理消息
+        handleIntent(getIntent());
 	}
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleIntent();
+        handleIntent(intent);
     }
 
     @Override
@@ -241,8 +237,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     protected void onStart() {
         super.onStart();
 
-        //  处理消息
-        handleIntent(getIntent());
     }
 
     @Override
@@ -332,16 +326,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 //		}
 	}
 
-    private void handleIntent() {
-        int callFrom = getIntent().getIntExtra(ExtraName.CALL_FROM, 0);
-        if (CallFrom.SCAN.ordinal() == callFrom) {
-            //扫描二维码
-            Intent openCameraIntent = new Intent(MainActivity.this,
-                    CaptureActivity.class);
-            startActivityForResult(openCameraIntent, 0);
-        }
-    }
-
 	/**
 	 * 选择页面后的界面显示
 	 * 
@@ -417,21 +401,34 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     private void handleIntent(Intent intent) {
 
         if (null != intent) {
-            String from = intent.getStringExtra(ENTRY_FROM);
-            if (LogCode.WEATHER_NOTIFICATION_CLICK.equals(from)) {
-                LogOperate.updateLog(mContext, LogCode.WEATHER_NOTIFICATION_CLICK);
-            }
+            int callFrom = intent.getIntExtra(ExtraName.CALL_FROM, CallFrom.LOCAL);
+            switch (callFrom) {
+                case CallFrom.SCAN:
+                    //扫描二维码
+                    Intent openCameraIntent = new Intent(MainActivity.this,
+                            CaptureActivity.class);
+                    startActivityForResult(openCameraIntent, 0);
+                    break;
+                case CallFrom.WEATHER_NOTIFICATION_CLICK:
+                    //天气通知栏
+                    LogOperate.updateLog(mContext, LogCode.WEATHER_NOTIFICATION_CLICK);
+                    break;
+                case CallFrom.NOTIFICATION_CLICK:
+                    //通知栏
+                    int task = intent.getIntExtra(ExtraName.TASK_ACTION, 0);
+                    DebugLog.d(TAG, "handleIntent: task" + task);
+                    if (task > 0) {
+                        // 消息推送 通知栏点击
+                        LogOperate.updateLog(mContext, LogCode.PUSH_REQUEST_NOTIFICATION_CLICK);
+                        if (ActionType.NO_ACTION == task) {
 
-            int task = intent.getIntExtra(TASK_ACTION, 0);
-            DebugLog.d(TAG, "handleIntent: task" + task);
-            if (task > 0) {
-                // 消息推送 通知栏点击
-                LogOperate.updateLog(mContext, LogCode.PUSH_REQUEST_NOTIFICATION_CLICK);
-                if (ActionType.NO_ACTION == task) {
-
-                } else if (ActionType.UPDATE_ACTION == task) {
-                    checkUpdateVersion(true);
-                }
+                        } else if (ActionType.UPDATE_ACTION == task) {
+                            checkUpdateVersion(true);
+                        } else if (ActionType.URL_ACTION == task) {
+                            Util.openUrl(intent.getStringExtra(ExtraName.URL));
+                        }
+                    }
+                    break;
             }
         }
     }

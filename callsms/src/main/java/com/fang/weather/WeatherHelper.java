@@ -14,7 +14,8 @@ import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
-import com.fang.logs.LogCode;
+import com.fang.datatype.CallFrom;
+import com.fang.datatype.ExtraName;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.NotificationHelper;
 import com.fang.util.SharedPreferencesHelper;
@@ -57,7 +58,7 @@ public class WeatherHelper {
                         Intent notificationIntent = new Intent(
                                 context,
                                 MainActivity.class);
-                        notificationIntent.putExtra(MainActivity.ENTRY_FROM, LogCode.WEATHER_NOTIFICATION_CLICK);
+                        notificationIntent.putExtra(ExtraName.CALL_FROM, CallFrom.WEATHER_NOTIFICATION_CLICK);
                         String[] str = weather.split("\\|");
                         if (null != str && str.length >= 2) {
                             NotificationHelper.showResidentNotification(

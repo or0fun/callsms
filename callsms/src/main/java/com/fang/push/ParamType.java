@@ -14,4 +14,7 @@ public class ParamType {
 
     public final static String USER = "user";
 
+    public final static String URL = "url";
+
+
 }
