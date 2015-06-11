@@ -21,7 +21,14 @@ public abstract class BaseActivity extends Activity {
 		mContext = this;
 	}
 
-	/**
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Global.mContext = this;
+    }
+
+    /**
 	 * 显示 Toast
 	 * @param str
 	 */
@@ -49,7 +56,7 @@ public abstract class BaseActivity extends Activity {
 		long last = SharedPreferencesHelper.getInstance().getLong(
                 SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
 		SharedPreferencesHelper.getInstance().setLong(
-				SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
+                SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
 		if (now - last > CustomConstant.ONE_DAY) {
 			return true;
 		}

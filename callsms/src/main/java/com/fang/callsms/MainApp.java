@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import com.fang.background.BackgroundService;
 import com.fang.common.CustomConstant;
 import com.fang.common.util.BaseUtil;
+import com.fang.common.util.StringUtil;
 import com.fang.receiver.MainService;
 
 /**
@@ -25,7 +26,10 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
             ApplicationInfo appInfo = this.getPackageManager()
                     .getApplicationInfo(getPackageName(),
                             PackageManager.GET_META_DATA);
-            CustomConstant.sPACKAGE_CHANNEL = appInfo.metaData.getString("channel");
+            String channel = appInfo.metaData.getString("channel");
+            if (!StringUtil.isEmpty(channel)) {
+                CustomConstant.sPACKAGE_CHANNEL = channel;
+            }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

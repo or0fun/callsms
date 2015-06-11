@@ -11,5 +11,5 @@
     <string name="number_meal">订餐</string>
     <string name="number_express">找快递</string>
     <string name="number_service">找客服</string>
-    <string name="number_searchExpress">【特色功能】快递追踪</string>
+    <string name="number_searchExpress">快递追踪</string>
 </resources>

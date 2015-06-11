@@ -258,9 +258,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			mViewPager.setCurrentItem(Model.CALL_FRAGMENT);
 			mShowingFragment = mContactFragment;
 		}
-		
+
 		startService(new Intent(this, MainService.class));
-		
+
 		//移除弹窗
 		sendBroadcast(new Intent(PhoneReceiver.ACTION_REMOVE));
 
@@ -429,6 +429,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
                 LogOperate.updateLog(mContext, LogCode.PUSH_REQUEST_NOTIFICATION_CLICK);
                 if (ActionType.NO_ACTION == task) {
 
+                } else if (ActionType.UPDATE_ACTION == task) {
+                    checkUpdateVersion(true);
                 }
             }
         }

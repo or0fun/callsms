@@ -14,11 +14,13 @@ import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.contact.ContactHelper;
 import com.fang.express.ExpressHelper;
+import com.fang.logs.LogOperate;
 import com.fang.net.ServerUtil;
 import com.fang.push.PushHelper;
 import com.fang.sms.SendSMSInfo;
 import com.fang.speach.SpeachHelper;
 import com.fang.util.MessageWhat;
+import com.fang.util.NetWorkUtil;
 import com.fang.weather.WeatherHelper;
 
 import java.util.List;
@@ -98,6 +100,11 @@ public class MainService extends Service {
                 CallHelper.getCallRecordsList(mContext);
             }
         }).start();
+
+        //上次crash日志
+        if (NetWorkUtil.isNetworkConnected(mContext)) {
+            LogOperate.uploadCrashLog(mContext);
+        }
 	}
 
 	@Override

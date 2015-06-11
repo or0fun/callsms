@@ -35,19 +35,19 @@
                     android:layout_height="15dp"
                     android:src="@drawable/incoming_type" />
 
-                <com.fang.controls.AlwaysMarqueeTextView
+                <com.fang.common.controls.AlwaysMarqueeTextView
                     android:id="@+id/name"
                     style="@style/tipText"
                     android:textSize="@dimen/nameTextSize" />
 
-                <com.fang.controls.AlwaysMarqueeTextView
+                <com.fang.common.controls.AlwaysMarqueeTextView
                     android:id="@+id/count"
                     style="@style/tipText"
                     android:textColor="@color/hint"
                     android:textSize="@dimen/subTextSize" />
             </LinearLayout>
 
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/number"
                 style="@style/tipText"
                 android:gravity="left"

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.fang.base.BaseActivity;
 import com.fang.call.CallHelper;
 import com.fang.contact.ContactHelper;
-import com.fang.receiver.MainService;
 
 public class WelcomeActivity extends BaseActivity implements AnimationListener {
 
@@ -26,8 +25,6 @@ public class WelcomeActivity extends BaseActivity implements AnimationListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		startService(new Intent(mContext, MainService.class));
 		
 		if (ContactHelper.hasReaded() && CallHelper.hasRead()) {
 			Intent intent = new Intent(this, MainActivity.class);

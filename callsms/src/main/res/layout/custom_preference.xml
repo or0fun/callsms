@@ -52,7 +52,7 @@
 
     <!-- Preference should place its actual preference widget here. -->
 
-    <com.fang.controls.CustomSlideSwitch
+    <com.fang.common.controls.CustomSlideSwitch
         android:id="@+android:id/widget_frame"
         android:layout_width="116dip"
         android:layout_height="46dip"

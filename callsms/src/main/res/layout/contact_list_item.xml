@@ -33,7 +33,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:textSize="@dimen/nameTextSize"
                 android:textColor="@color/black" />
 
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:textSize="@dimen/subTextSize"
                 android:textColor="@color/hint" />
 
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/totalRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:textSize="@dimen/subTextSize"
                 android:textColor="@color/hint" />
             
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/lastRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

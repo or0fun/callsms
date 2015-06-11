@@ -19,10 +19,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 
+import com.fang.base.Global;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomDialog;
-import com.fang.common.util.*;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.DebugLog;
+import com.fang.common.util.MIUIHelper;
 import com.fang.datatype.CallFrom;
 import com.fang.datatype.ExtraName;
 import com.fang.listener.IDeleteConfirmListener;
@@ -31,6 +34,7 @@ import com.fang.receiver.AlarmReceiver;
 public class Util {
 
     private static final String TAG = "Util";
+    private static final String ACTION_URL = "com.fang.url";
 
 	/**
 	 * 取消闹钟
@@ -246,4 +250,14 @@ public class Util {
 		dialog.show();
 	}
 
+    /**
+     * 打开webview
+     * @param url
+     */
+    public static void openUrl(String url) {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_URL);
+        intent.putExtra(ExtraName.URL, url);
+        Global.mContext.startActivity(intent);
+    }
 }

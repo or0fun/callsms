@@ -45,14 +45,14 @@
 
             <!-- 标记信息 来自网络 -->
 
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/info"
                 style="@style/subText"
                 android:textColor="@color/white" />
 
             <!-- 次数统计 -->
 
-            <com.fang.controls.AlwaysMarqueeTextView
+            <com.fang.common.controls.AlwaysMarqueeTextView
                 android:id="@+id/record"
                 style="@style/subText"
                 android:textColor="@color/white" />

@@ -24,7 +24,7 @@
             android:textSize="@dimen/subTextSize" />
     </LinearLayout>
 
-    <com.fang.controls.CustomSlideSwitch
+    <com.fang.common.controls.CustomSlideSwitch
         android:id="@+id/slideSwitch"
         android:layout_width="@dimen/switch_width"
         android:layout_height="@dimen/switch_height"

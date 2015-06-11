@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.common.util.BaseUtil;
+import com.fang.util.Util;
 
 public class MyURLSpan extends MySpan {
 
@@ -28,7 +29,7 @@ public class MyURLSpan extends MySpan {
 			@Override
 			public void onClick(View arg0) {
                 cancel(view);
-				BaseUtil.openURL(mContext, str);
+				Util.openUrl(str);
 			}
 		});
 		view.findViewById(R.id.copy).setOnClickListener(new OnClickListener() {

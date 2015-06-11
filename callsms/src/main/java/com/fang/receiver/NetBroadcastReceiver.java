@@ -17,12 +17,12 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
         if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
         	if (NetWorkUtil.isNetworkConnected(context)) {
                 if (NetWorkUtil.isWifiConnected(context)) {
-                    ServerUtil server = ServerUtil.getInstance(context);
-                    server.checkUserID(context);
-                    server.checkOffLineData(context);
-
                     LogOperate.uploadCrashLog(context);
                 }
+
+                ServerUtil server = ServerUtil.getInstance(context);
+                server.checkUserID(context);
+                server.checkOffLineData(context);
 
                 Intent mainintent = new Intent(context, MainService.class);
                 mainintent.putExtra(MainService.TASK, MainService.TASK_TYPE.POST_WEATHER_NOTIFICATION.ordinal());

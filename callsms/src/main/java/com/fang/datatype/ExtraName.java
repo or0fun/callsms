@@ -6,4 +6,5 @@ package com.fang.datatype;
 public class ExtraName {
     public static String CALL_FROM = "callfrom";
     public static String RESULT = "result";
+    public static String URL = "url";
 }

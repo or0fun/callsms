@@ -13,68 +13,68 @@
         android:layout_weight="1"
         android:orientation="vertical" >
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_SMS_POPUP"
             custom:summary="@string/setting_sms_popup_summary"
             custom:title="@string/setting_sms_popup" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_NEW_CALL_POPUP"
             custom:summary="@string/setting_new_call_popup_summary"
             custom:title="@string/setting_new_call_popup" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_MISSED_CALL_POPUP"
             custom:summary="@string/setting_missed_call_popup_summary"
             custom:title="@string/setting_missed_call_popup" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_OUTGOING_CALL_POPUP"
             custom:summary="@string/setting_outgoing_call_popup_summary"
             custom:title="@string/setting_outgoing_call_popup" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_BROADCAST_WHEN_WIREDHEADSETON"
             custom:summary="@string/setting_broadcast_when_wiredheadseton_summary"
             custom:title="@string/setting_broadcast_when_wiredheadseton" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_EXPRESS_TRACK"
             custom:summary="@string/setting_express_track_summary"
             custom:title="@string/setting_express_track" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
 
-        <com.fang.controls.CustomSwitchPreference
+        <com.fang.common.controls.CustomSwitchPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"
             custom:key="@string/SETTING_WEATHER_NOTIFICATION"
             custom:summary="@string/setting_weather_notification_summary"
             custom:title="@string/setting_weather_notification_title" >
-        </com.fang.controls.CustomSwitchPreference>
+        </com.fang.common.controls.CustomSwitchPreference>
     </LinearLayout>
 
     <Button

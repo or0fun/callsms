@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.fang.common.util.SharedPreferencesHelper;
 import com.fang.common.util.StringUtil;
+import com.fang.net.NetRequestListener;
+import com.fang.net.NetRequestResult;
+import com.fang.net.NetRequestResultCode;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 
@@ -26,6 +29,13 @@ public class LogOperate {
         if (StringUtil.isEmpty(str)) {
             return;
         }
-        ServerUtil.getInstance(context).request(NetResuestHelper.CRASH, str, null);
+        ServerUtil.getInstance(context).request(NetResuestHelper.CRASH, str, new NetRequestListener() {
+            @Override
+            public void onResult(NetRequestResult result) {
+                if (null != result && NetRequestResultCode.HTTP_OK == result.getResultCode()) {
+                    SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.CRASH_EXCEPTION, "");
+                }
+            }
+        });
     }
 }

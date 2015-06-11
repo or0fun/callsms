@@ -102,6 +102,14 @@
         <activity
             android:name="com.fang.comment.CommentActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.fang.webview.WebViewActivity"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="com.fang.url" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service android:name="com.fang.receiver.MainService" />
         <service android:name="com.fang.background.BackgroundService"
