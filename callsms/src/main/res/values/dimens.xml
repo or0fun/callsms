@@ -21,17 +21,6 @@
     <dimen name="MultiEditHeight">100.0dip</dimen>
     <dimen name="bigMultiEditHeight">200.0dip</dimen>
     
-    <!-- 竖向隔线 -->
-    <dimen name="vSplitWidth">1.0dp</dimen>
-    <dimen name="vSplitHeight">25.0dp</dimen>
-    <dimen name="vSplitMarginTB">10.0dp</dimen>
-    <dimen name="vSplitMarginLR">1.0dp</dimen>
-    
-    <!-- 横向隔线 -->
-    <dimen name="hSplitHeight">1.0dp</dimen>
-    <dimen name="hSplitMarginTB">1.0dp</dimen>
-    <dimen name="hSplitMarginLR">10.0dp</dimen>
-    
     <!-- 短信内容 -->
     <dimen name="topmargin">20dp</dimen>
     <dimen name="leftmargin">20dp</dimen>

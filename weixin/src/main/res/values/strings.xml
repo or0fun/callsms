@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">weixin</string>
+
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+
+    <string name="share_to">分享到</string>
+    <string name="weixin">微信</string>
+    <string name="timeline">朋友圈</string>
+    <string name="copy_link">复制链接</string>
+
+    <string name="qrcode">二维码</string>
+</resources>

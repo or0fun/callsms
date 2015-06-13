@@ -18,7 +18,7 @@
             android:layout_height="@dimen/title_bar_icon_height"
             android:layout_margin="@dimen/smallmargin"
             android:gravity="bottom"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/we" />
 
         <TextView
             android:layout_width="0dp"
@@ -55,13 +55,13 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <EditText
+            <com.fang.common.controls.CustomEditText
                 android:id="@+id/search"
                 style="@style/singleLineEdit"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:hint="@string/number_search"
-                android:inputType="number"></EditText>
+                android:inputType="number"></com.fang.common.controls.CustomEditText>
 
             <ImageView
                 android:id="@+id/clearBtn"

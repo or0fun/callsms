@@ -61,19 +61,6 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <!-- 竖向隔离线 -->
-    <style name="vsplitView" parent="android:style/Widget.TextView">
-        <item name="android:layout_width">@dimen/vSplitWidth</item>
-        <item name="android:layout_height">@dimen/vSplitHeight</item>
-        <item name="android:background">@color/hint</item>
-    </style>
-
-    <!-- 横向隔离线 -->
-    <style name="hsplitView" parent="android:style/Widget.TextView">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">@dimen/hSplitHeight</item>
-        <item name="android:background">@color/hint</item>
-    </style>
 
     <!-- 设置项标题 -->
     <style name="settingItemTextview" parent="android:style/Widget.TextView">

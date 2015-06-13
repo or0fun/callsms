@@ -34,6 +34,7 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
             e.printStackTrace();
         }
 
+        com.fang.weixin.Common.init(this);
         com.fang.util.SharedPreferencesHelper.getInstance().init(this);
         com.fang.util.SharedPreferencesHelper.getInstance().init(this);
 

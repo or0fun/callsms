@@ -18,7 +18,7 @@
             android:layout_height="@dimen/title_bar_icon_height"
             android:layout_margin="@dimen/smallmargin"
             android:gravity="bottom"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/we" />
 
         <TextView
             android:id="@+id/title"

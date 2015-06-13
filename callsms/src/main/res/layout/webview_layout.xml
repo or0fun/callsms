@@ -33,6 +33,8 @@
             android:layout_weight="1"
             android:paddingTop="1dip"
             android:textColor="@color/white"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textSize="20sp" />
 
         <ImageView

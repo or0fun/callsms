@@ -1,16 +1,16 @@
 package com.fang.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.fang.common.CustomConstant;
 import com.fang.util.SharedPreferencesHelper;
+import com.fang.weixin.WXEntryActivity;
 
 import java.util.Date;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends WXEntryActivity {
 	
 	protected Context mContext;
 	private static Toast mToast;

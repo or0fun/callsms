@@ -1,12 +1,14 @@
 package com.fang.webview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -16,24 +18,28 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomWebView;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
+import com.fang.weixin.ShareHandler;
 
 
 /**
  * Created by benren.fj on 6/11/15.
  */
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends BaseActivity {
 
     private CustomWebView mWebView;
     private TextView mTitleTV;
     private ProgressBar mProgressBar;
     private ImageView mBack;
+    private ImageView mShare;
 
     private View myView;
     private WebChromeClient.CustomViewCallback myCallback;
+    private ShareHandler shareHandler;
 
 
     @Override
@@ -51,6 +57,17 @@ public class WebViewActivity extends Activity {
             }
         });
 
+        mShare = (ImageView) findViewById(R.id.share);
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null == shareHandler) {
+                    shareHandler = new ShareHandler(mContext);
+                }
+                shareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
+                        BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we));
+            }
+        });
         initWebView();
 
         open(getIntent());
@@ -80,13 +97,13 @@ public class WebViewActivity extends Activity {
     private void initWebView() {
         WebSettings settings = mWebView.getSettings();
         settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
         settings.setJavaScriptEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setDomStorageEnabled(true);
 
         mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.setDownloadListener(new MyWebViewDownLoadListener());
     }
 
     private void open(Intent intent) {
@@ -180,6 +197,19 @@ public class WebViewActivity extends Activity {
             super.onReceivedTitle(view, title);
             mTitleTV.setText(title);
         }
+    }
+
+    private class MyWebViewDownLoadListener implements DownloadListener {
+
+        @Override
+        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
+                                    long contentLength) {
+            Uri uri = Uri.parse(url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     public boolean hiddenVideoView(){

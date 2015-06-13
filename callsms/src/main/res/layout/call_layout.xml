@@ -17,7 +17,7 @@
             android:layout_width="@dimen/title_bar_icon_width"
             android:layout_height="@dimen/title_bar_icon_height"
             android:layout_margin="@dimen/smallmargin"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/we" />
 
         <TextView
             android:layout_width="0dp"
