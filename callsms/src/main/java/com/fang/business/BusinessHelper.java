@@ -3,11 +3,11 @@ package com.fang.business;
 import android.content.Context;
 import android.os.Handler;
 
-import com.fang.call.CallHelper;
 import com.fang.callsms.R;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
 import com.fang.database.NumberDatabaseManager;
+import com.fang.datatype.ExtraName;
 import com.fang.express.ExpressInfo;
 import com.fang.net.IResponseListener;
 import com.fang.net.ServerUtil;
@@ -76,7 +76,7 @@ public class BusinessHelper {
 			public void run() {
                 int len = 5;
 				for (Map<String, Object> map : callRecords) {
-					String number = map.get(CallHelper.PARAM_NUMBER).toString();
+					String number = map.get(ExtraName.PARAM_NUMBER).toString();
 					String infoString = NumberDatabaseManager.getInstance(context).query(
 							number);
 					if (StringUtil.isEmpty(infoString) && NetWorkUtil.isNetworkConnected(context)) {

@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.Photo;
@@ -18,6 +19,8 @@ import com.fang.call.CallHelper;
 import com.fang.callsms.R;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
+import com.fang.datatype.ExtraName;
+import com.fang.util.MessageWhat;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 通讯录帮助类
@@ -44,11 +48,9 @@ public class ContactHelper {
 	public static final int CONTACT_ID = 5;
 	public static final int TIMES_CONTACTED = 6;
 
-	public static final String PARAM_ID = "id";
-	public static final String PARAM_NAME = "name";
-	public static final String PARAM_NUMBER = "number";
 	public static final String PARAM_SORT_KEY = "sort_key";
 	public static final String PARAM_PHOTO_ID = "photo_id";
+    public static final String PARAM_PHOTO = "photo";
 	public static final String PARAM_CONTACT_ID = "contact_id";
 	public static final String PARAM_IS_SELECTED = "selected";
 	public static final String PARAM_LAST_RECORD_DATE = "last_record_date";
@@ -59,13 +61,14 @@ public class ContactHelper {
     private static boolean isReading = false;
 
     private static Bitmap mDefaultBitmap;
+    private static long Default_CONTACT_PHOTO_ID = -1;
 
 	/** 按名字排序通讯录数据 */
 	private static List<HashMap<String, Object>> mByNameList = new ArrayList<HashMap<String, Object>>();
 	/** 按通话次数排序通讯录数据 */
 	private static List<HashMap<String, Object>> mByTimesList = new ArrayList<HashMap<String, Object>>();
 
-	protected static List<IContactListener> mconContactListeners = new ArrayList<IContactListener>();
+	protected static List<IContactListener> mContactListeners = new ArrayList<IContactListener>();
 
 	public static List<HashMap<String, Object>> getContactByNameList() {
 		return mByNameList;
@@ -76,11 +79,11 @@ public class ContactHelper {
 	}
 
 	public static void registerListener(IContactListener listener) {
-		mconContactListeners.add(listener);
+		mContactListeners.add(listener);
 	}
 
 	public static void unregisterListener(IContactListener listener) {
-		mconContactListeners.remove(listener);
+		mContactListeners.remove(listener);
 	}
 
 	/**
@@ -132,6 +135,31 @@ public class ContactHelper {
 		return dataList;
 	}
 
+    /**
+     * 获取姓名
+     * @param context
+     * @param callRecords
+     * @param handler
+     */
+    public static void getPersonInfo(final Context context, final List<Map<String, Object>> callRecords,
+                                     final Handler handler) {
+        if (null == callRecords) {
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Map<String, Object> map : callRecords) {
+                    String number = map.get(ExtraName.PARAM_NUMBER).toString();
+                    String name = getPerson(context, number);
+                    map.put(ExtraName.PARAM_NAME, name);
+                }
+                if (null != handler) {
+                    handler.sendEmptyMessage(MessageWhat.UPDATE_NUMBER_DATABASE);
+                }
+            }
+        }).run();
+    }
 	/**
 	 * 根据号码获取通讯录里的姓名
 	 * 
@@ -145,7 +173,7 @@ public class ContactHelper {
             return name;
         }
 
-		name = getPersonOnce(context, num);
+		name = getPersonFromContact(context, num);
 
         if (StringUtil.isEmpty(name)) {
             if (num.contains(" ")) {
@@ -161,7 +189,7 @@ public class ContactHelper {
                                     + num.substring(8, 12);
                 }
             }
-            name = getPersonOnce(context, num);
+            name = getPersonFromContact(context, num);
         }
 		return name;
 	}
@@ -172,7 +200,7 @@ public class ContactHelper {
      * @param num
      * @return
      */
-    private static String getPersonOnce(Context context, String num) {
+    private static String getPersonFromContact(Context context, String num) {
         String name = "";
 
         if (StringUtil.isEmpty(num)) {
@@ -259,7 +287,7 @@ public class ContactHelper {
             return;
         }
 		if (null == context || mHasReaded) {
-			for (IContactListener listener : mconContactListeners) {
+			for (IContactListener listener : mContactListeners) {
 				listener.onResult(true);
 			}
 			return;
@@ -281,30 +309,20 @@ public class ContactHelper {
 			while (cursor.moveToNext()) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				String number = cursor.getString(ContactHelper.NUMBER);
-				map.put(ContactHelper.PARAM_NAME,
+				map.put(ExtraName.PARAM_NAME,
 						cursor.getString(ContactHelper.NAME));
-				map.put(ContactHelper.PARAM_NUMBER, number);
+				map.put(ExtraName.PARAM_NUMBER, number);
 				map.put(ContactHelper.PARAM_SORT_KEY,
 						cursor.getString(ContactHelper.SORT_KEY));
-				Long contactid = cursor.getLong(ContactHelper.CONTACT_ID);
-				Long photoid = cursor.getLong(ContactHelper.PHOTO_ID);
-				Bitmap contactPhoto = null;
-				if (photoid > 0) {
-					Uri uri = ContentUris.withAppendedId(
-							ContactsContract.Contacts.CONTENT_URI, contactid);
-					InputStream input = ContactsContract.Contacts
-							.openContactPhotoInputStream(resolver, uri);
-					contactPhoto = BitmapFactory.decodeStream(input);
+				long contactid = cursor.getLong(ContactHelper.CONTACT_ID);
+                long photoid = cursor.getLong(ContactHelper.PHOTO_ID);
+				if (photoid <= 0) {
+                    contactid = Default_CONTACT_PHOTO_ID;
 				} else {
-                    if (null == mDefaultBitmap) {
-                        mDefaultBitmap = BitmapFactory.decodeResource(
-                                context.getResources(), R.drawable.contact_photo);
-                    }
-					contactPhoto = mDefaultBitmap;
 				}
-				map.put(ContactHelper.PARAM_PHOTO_ID, contactPhoto);
-				map.put(ContactHelper.PARAM_LAST_RECORD_DATE,
-						CallHelper.getLastRecordDate(context, number));
+				map.put(ContactHelper.PARAM_PHOTO_ID, contactid);
+//				map.put(ContactHelper.PARAM_LAST_RECORD_DATE,
+//						CallHelper.getLastRecordDate(context, number));
 				map.put(ContactHelper.PARAM_TIMES_CONTACTED,
 						CallHelper.getCallTimes(context, number));
 				byNameList.add(map);
@@ -317,12 +335,64 @@ public class ContactHelper {
 		mByNameList = byNameList;
 		mByTimesList = byTimesList;
 
-		for (IContactListener listener : mconContactListeners) {
+		for (IContactListener listener : mContactListeners) {
 			listener.onResult(true);
 		}
 		ContactHelper.setReaded(true);
         isReading = false;
+
+        getContactPhoto(context);
 	}
+
+    /**
+     * 获取姓名
+     * @param context
+     */
+    public static void getContactPhoto(final Context context) {
+        if (null == mByNameList) {
+            return;
+        }
+        if (null == mContactListeners) {
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Map<String, Object> map : mByNameList) {
+                    long id = (Long) map.get(PARAM_PHOTO_ID);
+                    Bitmap bitmap = getContactPhoto(context, id);
+                    if (null != bitmap) {
+                        map.put(PARAM_PHOTO, bitmap);
+                    }
+                }
+
+                mByTimesList.clear();
+                mByTimesList.addAll(mByNameList);
+                Collections.sort(mByTimesList, new ContactCompare());
+
+                for (IContactListener listener : mContactListeners) {
+                    listener.onResult(true);
+                }
+            }
+        }).run();
+    }
+
+    /**
+     * 获取头像
+     * @param context
+     * @param contactid
+     * @return
+     */
+    private static Bitmap getContactPhoto(Context context, long contactid) {
+        if (contactid > 0) {
+            Uri uri = ContentUris.withAppendedId(
+                    ContactsContract.Contacts.CONTENT_URI, contactid);
+            InputStream input = ContactsContract.Contacts
+                    .openContactPhotoInputStream(context.getContentResolver(), uri);
+            return BitmapFactory.decodeStream(input);
+        }
+        return null;
+    }
 
 	/**
 	 * 获取通讯录
@@ -350,9 +420,9 @@ public class ContactHelper {
 			while (cursor.moveToNext()) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				String number = cursor.getString(ContactHelper.NUMBER);
-				map.put(ContactHelper.PARAM_NAME,
+				map.put(ExtraName.PARAM_NAME,
 						cursor.getString(ContactHelper.NAME));
-				map.put(ContactHelper.PARAM_NUMBER, number);
+				map.put(ExtraName.PARAM_NUMBER, number);
 				map.put(ContactHelper.PARAM_SORT_KEY,
 						cursor.getString(ContactHelper.SORT_KEY));
 				Long contactid = cursor.getLong(ContactHelper.CONTACT_ID);

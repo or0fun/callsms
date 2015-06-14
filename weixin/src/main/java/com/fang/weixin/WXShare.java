@@ -11,7 +11,7 @@ import com.tencent.mm.sdk.platformtools.Util;
 /**
  * Created by benren.fj on 6/12/15.
  */
-public class Share {
+public class WXShare {
 
     /**
      * 分享文字
@@ -37,12 +37,12 @@ public class Share {
 
         // 构造一个Req
         SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = Common.buildTransaction("text"); // transaction字段用于唯一标识一个请求
+        req.transaction = WXCommon.buildTransaction("text"); // transaction字段用于唯一标识一个请求
         req.message = msg;
         req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
 
         // 调用api接口发送数据到微信
-        Common.getApi().sendReq(req);
+        WXCommon.getApi().sendReq(req);
     }
 
     /**
@@ -63,10 +63,10 @@ public class Share {
         msg.thumbData = Util.bmpToByteArray(thumb, true);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = Common.buildTransaction("webpage");
+        req.transaction = WXCommon.buildTransaction("webpage");
         req.message = msg;
         req.scene = isTimelineCb ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-        Common.getApi().sendReq(req);
+        WXCommon.getApi().sendReq(req);
 
     }
 

@@ -23,7 +23,7 @@ import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.StringUtil;
-import com.fang.contact.ContactHelper;
+import com.fang.datatype.ExtraName;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.receiver.AlarmReceiver;
@@ -147,10 +147,10 @@ public class SMSFragment extends BaseFragment implements Runnable,
 				if (mListDataSelected != null) {
                     StringBuilder contactsBuffer = new StringBuilder();
 					for (HashMap<String, Object> map : mListDataSelected) {
-						contactsBuffer.append(map.get(ContactHelper.PARAM_NAME));
+						contactsBuffer.append(map.get(ExtraName.PARAM_NAME));
 						contactsBuffer.append(";");
 
-						mReceiverList.add((String) map.get(ContactHelper.PARAM_NUMBER));
+						mReceiverList.add((String) map.get(ExtraName.PARAM_NUMBER));
 					}
 					mSelectedContactsTipTextView.setText(String.format(
 							getString(R.string.sms_contactSelectedTip),

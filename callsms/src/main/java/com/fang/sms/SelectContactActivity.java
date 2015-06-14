@@ -1,10 +1,5 @@
 package com.fang.sms;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -34,6 +29,12 @@ import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
 import com.fang.contact.ContactInfo;
+import com.fang.datatype.ExtraName;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 选择联系人
@@ -150,7 +151,7 @@ public class SelectContactActivity extends BaseActivity implements OnClickListen
 				boolean isSelected = false;
 				if (mSelectedContacts != null) {
 					for (HashMap<String, Object> hashmap : mSelectedContacts) {
-						if (hashmap.get(ContactHelper.PARAM_NUMBER).equals(phoneNumber)) {
+						if (hashmap.get(ExtraName.PARAM_NUMBER).equals(phoneNumber)) {
 							isSelected = true;
 							break;
 						}
@@ -159,8 +160,8 @@ public class SelectContactActivity extends BaseActivity implements OnClickListen
 
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put(ContactHelper.PARAM_PHOTO_ID, contactPhoto);
-				map.put(ContactHelper.PARAM_NAME, contactName);
-				map.put(ContactHelper.PARAM_NUMBER, phoneNumber);
+				map.put(ExtraName.PARAM_NAME, contactName);
+				map.put(ExtraName.PARAM_NUMBER, phoneNumber);
 				map.put(ContactHelper.PARAM_IS_SELECTED, isSelected);
 				mContactListData.add(map);
 			}
@@ -211,8 +212,8 @@ public class SelectContactActivity extends BaseActivity implements OnClickListen
 		boolean isSearched = false;
 		for (int i = 0; i < len; i++) {
 			HashMap<String, Object> data = mContactListData.get(i);
-			if (null != data.get(ContactHelper.PARAM_NAME)) {
-				String name = (String) data.get(ContactHelper.PARAM_NAME);
+			if (null != data.get(ExtraName.PARAM_NAME)) {
+				String name = (String) data.get(ExtraName.PARAM_NAME);
 				if (name.contains(text)) {
 					mContactPositionMapArray.put(positon, i);
 					positon++;
@@ -220,8 +221,8 @@ public class SelectContactActivity extends BaseActivity implements OnClickListen
 				}
 			}
 			if (false == isSearched) {
-				if (null != data.get(ContactHelper.PARAM_NUMBER)) {
-					String number = (String) data.get(ContactHelper.PARAM_NUMBER);
+				if (null != data.get(ExtraName.PARAM_NUMBER)) {
+					String number = (String) data.get(ExtraName.PARAM_NUMBER);
 					if (number.contains(text)) {
 						mContactPositionMapArray.put(positon, i);
 						positon++;

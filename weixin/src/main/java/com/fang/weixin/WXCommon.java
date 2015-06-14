@@ -8,7 +8,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 /**
  * Created by benren.fj on 6/12/15.
  */
-public class Common {
+public class WXCommon {
 
     private static IWXAPI api;
 
@@ -21,7 +21,7 @@ public class Common {
     }
 
     public static void init(Context context) {
-        api = WXAPIFactory.createWXAPI(context, Constants.APP_ID);
-        api.registerApp(Constants.APP_ID);
+        api = WXAPIFactory.createWXAPI(context, WXConstants.APP_ID);
+        api.registerApp(WXConstants.APP_ID);
     }
 }

@@ -10,10 +10,23 @@ android {
         targetSdkVersion 14
     }
 
+    signingConfigs {
+        release {
+            storeFile file("baiwanlu.keystore")
+            storePassword "fangjun"
+            keyAlias "fang"
+            keyPassword "fangjun"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     productFlavors {
@@ -23,11 +36,13 @@ android {
         c360 {}
         blog {}
         hiapk {}
+        anzhi {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [channel: name]
         }
     }
+
 }
 
 dependencies {

@@ -128,33 +128,70 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/reply"
-            style="@style/mainButton"
+        <LinearLayout
+            android:id="@+id/smsBtn"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/replyMsg" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sms" />
+
+            <Button
+                android:id="@+id/reply"
+                style="@style/mainButtonTransparent"
+                android:layout_height="40dp"
+                android:text="@string/sms" />
+        </LinearLayout>
 
         <View style="@style/vsplitViewWhite" />
 
-        <Button
-            android:id="@+id/call"
-            style="@style/mainButton"
+        <LinearLayout
+            android:id="@+id/callBtn"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/call" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/call_nor" />
+
+            <Button
+                android:id="@+id/call"
+                style="@style/mainButtonTransparent"
+                android:layout_height="40dp"
+                android:text="@string/call" />
+        </LinearLayout>
 
         <View style="@style/vsplitViewWhite" />
 
-        <Button
-            android:id="@+id/close"
-            style="@style/mainButton"
+        <LinearLayout
+            android:id="@+id/shareBtn"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/close" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/share"/>
+            <Button
+                android:id="@+id/share"
+                style="@style/mainButtonTransparent"
+                android:layout_height="40dp"
+                android:text="@string/share" />
+            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

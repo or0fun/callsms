@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,12 +16,13 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.comment.CommentActivity;
-import com.fang.database.NumberDatabaseManager;
-import com.fang.logs.LogCode;
-import com.fang.logs.LogOperate;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
+import com.fang.database.NumberDatabaseManager;
+import com.fang.datatype.ExtraName;
+import com.fang.logs.LogCode;
+import com.fang.logs.LogOperate;
 
 import java.util.List;
 import java.util.Map;
@@ -36,10 +38,13 @@ public class CallRecordAdapter extends BaseAdapter {
     /** 映射联系人列表 */
     private SparseIntArray mContactPositionMapArray;
 
+    public static WindowManager mWindowManager;
+
 	public CallRecordAdapter(Context context, List<Map<String, Object>> list) {
 		this.mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mCallRecords = list;
+        mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 	}
 	@Override
 	public int getCount() {
@@ -89,9 +94,9 @@ public class CallRecordAdapter extends BaseAdapter {
         final Map<String, Object> record = getRecordMap(index);
 		int callType = Integer.parseInt(record.get(CallHelper.PARAM_TYPE).toString());
         // 如果名字为空，就显示号码
-        String number = record.get(CallHelper.PARAM_NUMBER).toString();
+        String number = record.get(ExtraName.PARAM_NUMBER).toString();
         String info = NumberDatabaseManager.getInstance(mContext).query(number);
-        String name = record.get(CallHelper.PARAM_NAME).toString();
+        String name = record.get(ExtraName.PARAM_NAME).toString();
 		if (StringUtil.isEmpty(name)) {
 			holder.name.setText(number);
             if (StringUtil.isEmpty(info)) {
@@ -145,7 +150,7 @@ public class CallRecordAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(mContext, CommentActivity.class);
-				intent.putExtra(CallHelper.PARAM_NUMBER, record.get(CallHelper.PARAM_NUMBER).toString());
+				intent.putExtra(ExtraName.PARAM_NUMBER, record.get(ExtraName.PARAM_NUMBER).toString());
 				mContext.startActivity(intent);
 			}
 		});
@@ -156,8 +161,8 @@ public class CallRecordAdapter extends BaseAdapter {
                 DebugLog.d(TAG, "click index :" + index);
                 if (null == mCallRecordDialog) {
                     mCallRecordDialog = new CallRecordDialog(mContext,
-                            (String) getRecordMap(index).get(CallHelper.PARAM_NUMBER),
-                            (String) getRecordMap(index).get(CallHelper.PARAM_NAME),
+                            (String) getRecordMap(index).get(ExtraName.PARAM_NUMBER),
+                            (String) getRecordMap(index).get(ExtraName.PARAM_NAME),
                             CallHelper.getCallTypeString(
                                     mContext,
                                     (Integer) getRecordMap(index).get(CallHelper.PARAM_TYPE)),
@@ -176,8 +181,8 @@ public class CallRecordAdapter extends BaseAdapter {
                     );
                 } else {
                     mCallRecordDialog.setContent(
-                            (String) getRecordMap(index).get(CallHelper.PARAM_NUMBER),
-                            (String) getRecordMap(index).get(CallHelper.PARAM_NAME),
+                            (String) getRecordMap(index).get(ExtraName.PARAM_NUMBER),
+                            (String) getRecordMap(index).get(ExtraName.PARAM_NAME),
                             CallHelper.getCallTypeString(
                                     mContext,
                                     (Integer) getRecordMap(index).get(CallHelper.PARAM_TYPE)),
@@ -228,7 +233,6 @@ public class CallRecordAdapter extends BaseAdapter {
         }
         return record;
     }
-
 
 	private class ViewHolder {
 		ImageView icon;

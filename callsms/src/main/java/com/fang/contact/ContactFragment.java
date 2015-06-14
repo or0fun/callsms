@@ -34,6 +34,7 @@ import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
 import com.fang.contact.MyLetterListView.OnTouchingLetterChangedListener;
 import com.fang.database.NumberDatabaseManager;
+import com.fang.datatype.ExtraName;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.util.MessageWhat;
@@ -178,16 +179,16 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				if (null == mCallRecordDialog) {
 					mCallRecordDialog = new CallRecordDialog(mContext,
 							(String) mList.get(index).get(
-									ContactHelper.PARAM_NUMBER), (String) mList
-									.get(index).get(ContactHelper.PARAM_NAME),
+                                    ExtraName.PARAM_NUMBER), (String) mList
+									.get(index).get(ExtraName.PARAM_NAME),
 							(Bitmap) mList.get(index).get(
 									ContactHelper.PARAM_PHOTO_ID));
 				} else {
 					mCallRecordDialog.setContent(
 							(String) mList.get(index).get(
-									ContactHelper.PARAM_NUMBER),
+                                    ExtraName.PARAM_NUMBER),
 							(String) mList.get(index).get(
-									ContactHelper.PARAM_NAME),
+                                    ExtraName.PARAM_NAME),
 							(Bitmap) mList.get(index).get(
 									ContactHelper.PARAM_PHOTO_ID));
 				}
@@ -401,9 +402,9 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			}
 
 			HashMap<String, Object> cv = list.get(index);
-            String number = cv.get(ContactHelper.PARAM_NUMBER).toString();
+            String number = cv.get(ExtraName.PARAM_NUMBER).toString();
             String info = NumberDatabaseManager.getInstance(mContext).query(number);
-            String name = cv.get(ContactHelper.PARAM_NAME).toString();
+            String name = cv.get(ExtraName.PARAM_NAME).toString();
             if (StringUtil.isEmpty(info)) {
                 holder.name.setText(name);
             } else {
@@ -423,24 +424,26 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			} else {
 				holder.alpha.setVisibility(View.GONE);
 			}
-			holder.icon.setImageBitmap((Bitmap) list.get(index).get(
-					ContactHelper.PARAM_PHOTO_ID));
-			String lastString = (String) list.get(index).get(
-					ContactHelper.PARAM_LAST_RECORD_DATE);
+            if (null != list.get(index).get(ContactHelper.PARAM_PHOTO)) {
+                holder.icon.setImageBitmap((Bitmap) list.get(index).get(
+                        ContactHelper.PARAM_PHOTO));
+            }
+//			String lastString = (String) list.get(index).get(
+//					ContactHelper.PARAM_LAST_RECORD_DATE);
 			String totalString = String.format("%d",
 					list.get(index).get(ContactHelper.PARAM_TIMES_CONTACTED));
-			if (StringUtil.isEmpty(lastString)) {
-				holder.lastRecord.setText(mContext
-						.getString(R.string.contact_no_record));
-				holder.totalRecord.setVisibility(View.GONE);
-			} else {
-                holder.lastRecord.setText(Html.fromHtml(mContext
-                        .getString(R.string.contact_last_record) + "<font color='#0BA541'>"+ lastString + "</font>"));
+//			if ("0".equals(totalString)) {
+////				holder.lastRecord.setText(mContext
+////						.getString(R.string.contact_no_record));
+////				holder.totalRecord.setVisibility(View.GONE);
+//			} else {
+//                holder.lastRecord.setText(Html.fromHtml(mContext
+//                        .getString(R.string.contact_last_record) + "<font color='#0BA541'>"+ lastString + "</font>"));
 				holder.totalRecord.setVisibility(View.VISIBLE);
                 holder.totalRecord.setText(Html.fromHtml(mContext
                         .getString(R.string.contact_times) + "<font color='#4C79F9'>"+ totalString + "</font>"));
 
-			}
+//			}
 			return convertView;
 		}
 		
@@ -549,8 +552,8 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		boolean isSearched = false;
 		for (int i = 0; i < len; i++) {
 			HashMap<String, Object> data = mList.get(i);
-			if (null != data.get(ContactHelper.PARAM_NAME)) {
-				String name = (String) data.get(ContactHelper.PARAM_NAME);
+			if (null != data.get(ExtraName.PARAM_NAME)) {
+				String name = (String) data.get(ExtraName.PARAM_NAME);
 				if (name.contains(text)) {
 					mContactPositionMapArray.put(positon, i);
 					positon++;
@@ -558,9 +561,9 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				}
 			}
 			if (false == isSearched) {
-				if (null != data.get(ContactHelper.PARAM_NUMBER)) {
+				if (null != data.get(ExtraName.PARAM_NUMBER)) {
 					String number = (String) data
-							.get(ContactHelper.PARAM_NUMBER);
+							.get(ExtraName.PARAM_NUMBER);
 					if (number.contains(text)) {
 						mContactPositionMapArray.put(positon, i);
 						positon++;

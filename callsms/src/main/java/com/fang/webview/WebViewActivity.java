@@ -23,7 +23,8 @@ import com.fang.callsms.R;
 import com.fang.common.controls.CustomWebView;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
-import com.fang.weixin.ShareHandler;
+import com.fang.weixin.WXConstants;
+import com.fang.weixin.WXShareHandler;
 
 
 /**
@@ -39,7 +40,7 @@ public class WebViewActivity extends BaseActivity {
 
     private View myView;
     private WebChromeClient.CustomViewCallback myCallback;
-    private ShareHandler shareHandler;
+    private WXShareHandler shareHandler;
 
 
     @Override
@@ -62,10 +63,10 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (null == shareHandler) {
-                    shareHandler = new ShareHandler(mContext);
+                    shareHandler = new WXShareHandler(mContext);
                 }
                 shareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
-                        BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we));
+                        BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
             }
         });
         initWebView();

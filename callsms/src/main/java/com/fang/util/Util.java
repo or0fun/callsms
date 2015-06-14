@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 
-import com.fang.base.Global;
+import com.fang.common.base.Global;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomDialog;
@@ -149,7 +149,7 @@ public class Util {
 		// 设置生成的快捷方式的图标
 		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
 				Intent.ShortcutIconResource.fromContext(context,
-						R.drawable.ic_launcher));
+						R.drawable.we));
 		Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ExtraName.CALL_FROM, callFrom);
 		returnIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);

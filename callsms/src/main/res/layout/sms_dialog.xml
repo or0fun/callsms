@@ -134,39 +134,50 @@
         <View style="@style/vsplitViewWhite" />
 
         <Button
+            android:id="@+id/reply"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/reply" />
+
+        <View style="@style/vsplitViewWhite" />
+
+        <Button
             android:id="@+id/close"
             style="@style/mainButton"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:text="@string/close" />
+
     </LinearLayout>
 
     <View style="@style/hsplitViewWhite" />
 
     <!-- 回复 -->
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal" >
+    <!--<LinearLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal" >-->
 
-        <EditText
-            android:id="@+id/content"
-            style="@style/singleLineEdit"
-            android:hint="@string/sms_input_content"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_margin="@dimen/smallmargin"
-            android:layout_weight="1" />
+        <!--<EditText-->
+            <!--android:id="@+id/content"-->
+            <!--style="@style/singleLineEdit"-->
+            <!--android:hint="@string/sms_input_content"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_margin="@dimen/smallmargin"-->
+            <!--android:layout_weight="1" />-->
 
-        <Button
-            android:id="@+id/reply"
-            style="@style/mainButton"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:text="@string/reply" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/reply"-->
+            <!--style="@style/mainButton"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:text="@string/reply" />-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

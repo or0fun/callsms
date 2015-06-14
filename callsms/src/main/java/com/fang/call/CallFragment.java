@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -22,7 +20,7 @@ import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomEditText;
-import com.fang.contact.ContactHelper;
+import com.fang.datatype.ExtraName;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
 import com.fang.logs.LogCode;
@@ -30,7 +28,6 @@ import com.fang.logs.LogOperate;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
 import com.fang.util.MessageWhat;
-import com.fang.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +77,8 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 			case MessageWhat.FRESH_CALL_RECORD:
 				// 获取号码信息
 				BusinessHelper.getNumberInfo(mContext, mAllCallRecords, mHandler);
+                //获取姓名
+//                ContactHelper.getPersonInfo(mContext, mAllCallRecords, mHandler);
 
 				mOutgoingCallRecords.clear();
 				mIncomingCallRecords.clear();
@@ -215,22 +214,23 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
 	 */
 	protected void initListView() {
 		mCallRecordListView = (ListView) mView.findViewById(R.id.callRecord);
+
 		mCallRecordListView.setAdapter(mAdapter);
 
-		mCallRecordListView
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-					@Override
-					public boolean onItemLongClick(AdapterView<?> arg0,
-							View arg1, int position, long arg3) {
-						Util.deleteConfirm(
-                                mContext,
-                                mWindowManager,
-                                (Integer) mCallRecords.get(position).get(
-                                        CallHelper.PARAM_ID), position,
-                                mCallRecordDeleteConfirm);
-						return true;
-					}
-				});
+//		mCallRecordListView
+//				.setOnItemLongClickListener(new OnItemLongClickListener() {
+//					@Override
+//					public boolean onItemLongClick(AdapterView<?> arg0,
+//							View arg1, int position, long arg3) {
+//						Util.deleteConfirm(
+//                                mContext,
+//                                mWindowManager,
+//                                (Integer) mCallRecords.get(position).get(
+//                                        ExtraName.PARAM_ID), position,
+//                                mCallRecordDeleteConfirm);
+//						return true;
+//					}
+//				});
 	}
 
 	@Override
@@ -399,8 +399,8 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
             boolean isSearched = false;
             for (int i = 0; i < len; i++) {
                 Map<String, Object> data = mCallRecords.get(i);
-                if (null != data.get(ContactHelper.PARAM_NAME)) {
-                    String name = (String) data.get(ContactHelper.PARAM_NAME);
+                if (null != data.get(ExtraName.PARAM_NAME)) {
+                    String name = (String) data.get(ExtraName.PARAM_NAME);
                     if (name.contains(text)) {
                         mContactPositionMapArray.put(positon, i);
                         positon++;
@@ -408,9 +408,9 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
                     }
                 }
                 if (false == isSearched) {
-                    if (null != data.get(ContactHelper.PARAM_NUMBER)) {
+                    if (null != data.get(ExtraName.PARAM_NUMBER)) {
                         String number = (String) data
-                                .get(ContactHelper.PARAM_NUMBER);
+                                .get(ExtraName.PARAM_NUMBER);
                         if (number.contains(text)) {
                             mContactPositionMapArray.put(positon, i);
                             positon++;

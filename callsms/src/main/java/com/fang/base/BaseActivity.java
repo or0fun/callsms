@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.fang.common.CustomConstant;
+import com.fang.common.base.Global;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.weixin.WXEntryActivity;
 
@@ -34,8 +35,7 @@ public abstract class BaseActivity extends WXEntryActivity {
 	 * 显示 Toast
 	 * @param str
 	 */
-	public void showTip(final String str)
-	{
+	public void showTip(final String str) {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {

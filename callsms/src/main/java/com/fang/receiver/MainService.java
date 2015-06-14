@@ -122,11 +122,11 @@ public class MainService extends Service {
         if (null != intent) {
             int task = intent.getIntExtra(TASK, -1);
             DebugLog.d(TAG, "task = " + task);
-            if (TASK_TYPE.POST_WEATHER_NOTIFICATION.ordinal() == task) {
+            if (TASK_TYPE_POST_WEATHER_NOTIFICATION == task) {
                 WeatherHelper.postWeatherNotification(mContext);
-            } else if (TASK_TYPE.PUSH_REQUEST.ordinal() == task) {
+            } else if (TASK_TYPE_PUSH_REQUEST == task) {
                 PushHelper.getInstance().checkPushRequest(mContext);
-            } else if (TASK_TYPE.REFRESH_CALL_RECORDS.ordinal() == task) {
+            } else if (TASK_TYPE_REFRESH_CALL_RECORDS == task) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -134,7 +134,7 @@ public class MainService extends Service {
                         CallHelper.getCallRecordsList(mContext);
                     }
                 }).start();
-            } else if (TASK_TYPE.REFRESH_CONTACTS.ordinal() == task) {
+            } else if (TASK_TYPE_REFRESH_CONTACTS == task) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -195,13 +195,14 @@ public class MainService extends Service {
 		}
 	}
 
-    /** 任务类型 */
-    public enum TASK_TYPE {
+    /**
+     * 任务类型
+     */
 
-        POST_WEATHER_NOTIFICATION,//天气通知栏
-        PUSH_REQUEST,//消息推送
-        REFRESH_CALL_RECORDS,//更新通话记录
-        REFRESH_CONTACTS,//更新通讯录
-    }
+    public static int TASK_TYPE_POST_WEATHER_NOTIFICATION = 1;//天气通知栏
+    public static int TASK_TYPE_PUSH_REQUEST = 2;//消息推送
+    public static int TASK_TYPE_REFRESH_CALL_RECORDS = 3; //更新通话记录
+    public static int TASK_TYPE_REFRESH_CONTACTS = 4;//更新通讯录
+
 
 }

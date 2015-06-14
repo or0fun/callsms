@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -42,8 +43,9 @@
 
     <com.fang.common.controls.CustomEditText
         android:id="@+id/search"
-        style="@style/singleLineEdit"
-        android:hint="@string/sms_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:hintText="@string/sms_search"
         android:focusable="true"
         android:enabled="true"/>
 
@@ -64,8 +66,7 @@
                 android:cacheColorHint="@android:color/transparent"
                 android:divider="@color/divider"
                 android:dividerHeight="1px"
-                android:listSelector="@drawable/list_selector"
-                android:scrollbars="none"></ListView>
+                android:listSelector="@drawable/list_selector"/>
 
             <com.fang.contact.MyLetterListView
                 android:id="@+id/my_list_view"

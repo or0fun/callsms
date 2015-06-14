@@ -69,7 +69,8 @@
                 android:ellipsize="marquee"
                 android:singleLine="true"
                 android:textSize="@dimen/subTextSize"
-                android:textColor="@color/hint" />
+                android:textColor="@color/hint"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 

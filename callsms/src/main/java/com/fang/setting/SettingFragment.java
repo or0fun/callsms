@@ -54,7 +54,7 @@ public class SettingFragment extends BaseFragment {
         TextView version = (TextView) rootView.findViewById(R.id.version);
         try {
             PackageInfo info = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
-            version.setText(mContext.getString(R.string.app_name) + " "+ info.versionName + " | ");
+            version.setText(mContext.getString(R.string.app_name) + " V"+ info.versionName + " | ");
         } catch (PackageManager.NameNotFoundException e) {
             DebugLog.e(TAG, e.toString());
         }

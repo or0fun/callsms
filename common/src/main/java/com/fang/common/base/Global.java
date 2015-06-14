@@ -1,4 +1,4 @@
-package com.fang.base;
+package com.fang.common.base;
 
 import android.app.Activity;
 
@@ -7,4 +7,6 @@ import android.app.Activity;
  */
 public class Global {
     public static Activity mContext;
+    public static int fullScreenWidth;
+    public static int fullScreeHeight;
 }

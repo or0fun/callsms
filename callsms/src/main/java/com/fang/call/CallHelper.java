@@ -9,12 +9,12 @@ import android.provider.CallLog;
 import android.provider.CallLog.Calls;
 
 import com.fang.callsms.R;
-import com.fang.contact.ContactHelper;
-import com.fang.database.NumberDatabaseManager;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
-import com.fang.util.MessageWhat;
 import com.fang.common.util.StringUtil;
+import com.fang.database.NumberDatabaseManager;
+import com.fang.datatype.ExtraName;
+import com.fang.util.MessageWhat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,9 +31,6 @@ public class CallHelper {
 
     private static final String TAG = "CallHelper";
 
-    public static final String PARAM_ID = "id";
-    public static final String PARAM_NAME = "name";
-    public static final String PARAM_NUMBER = "number";
     public static final String PARAM_ICON = "icon";
     public static final String PARAM_TYPE = "type";
     public static final String PARAM_DATE = "date";
@@ -243,7 +240,7 @@ public class CallHelper {
                     String numberString = cursor.getString(cursor
                             .getColumnIndex(Calls.NUMBER));
 
-                    callRecord.put(PARAM_ID, id);
+                    callRecord.put(ExtraName.PARAM_ID, id);
 
                     // 类型
                     int callType = Integer.parseInt(cursor.getString(cursor
@@ -421,7 +418,7 @@ public class CallHelper {
                 CallLog.Calls.CONTENT_URI, CALL_RECORD_PARAMETERS, null, null,
                 sortOrder);
         List<Map<String, Object>> callRecords = new ArrayList<Map<String, Object>>();
-        int number = 0;
+
         if (null != cursor) {
             if (cursor.moveToFirst()) {
                 int count = 0;
@@ -436,32 +433,29 @@ public class CallHelper {
                         callRecord = new HashMap<String, Object>();
                         count++;
                     } else if (numberString
-                            .equals(callRecord.get(PARAM_NUMBER))) {
+                            .equals(callRecord.get(ExtraName.PARAM_NUMBER))) {
                         count++;
                         continue;
                     } else {
                         callRecord.put(PARAM_COUNT, count);
                         count = 0;
                         callRecords.add(callRecord);
-                        number++;
+
                         callRecord = new HashMap<String, Object>();
                     }
 
-                    callRecord.put(PARAM_ID, id);
+                    callRecord.put(ExtraName.PARAM_ID, id);
                     //号码
-                    callRecord.put(PARAM_NUMBER, numberString);
+                    callRecord.put(ExtraName.PARAM_NUMBER, numberString);
 
                     // 联系人姓名
                     String nameString = cursor.getString(cursor
                             .getColumnIndexOrThrow(Calls.CACHED_NAME));
+
                     if (StringUtil.isEmpty(nameString)) {
-                        nameString = ContactHelper.getPerson(context,
-                                numberString);
-                    }
-                    if (StringUtil.isEmpty(nameString)) {
-                        callRecord.put(PARAM_NAME, "");
+                        callRecord.put(ExtraName.PARAM_NAME, "");
                     } else {
-                        callRecord.put(PARAM_NAME, nameString);
+                        callRecord.put(ExtraName.PARAM_NAME, nameString);
                     }
                     // 类型
                     int callType = Integer.parseInt(cursor.getString(cursor
@@ -489,7 +483,7 @@ public class CallHelper {
                 //次数
                 callRecord.put(PARAM_COUNT, count);
                 callRecords.add(callRecord);
-                number++;
+
             }
             cursor.close();
 

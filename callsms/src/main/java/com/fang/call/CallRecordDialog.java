@@ -35,6 +35,8 @@ import com.fang.common.util.BaseUtil;
 import com.fang.util.MessageWhat;
 import com.fang.common.util.StringUtil;
 import com.fang.common.util.ViewUtil;
+import com.fang.weixin.WXConstants;
+import com.fang.weixin.WXShareHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -53,6 +55,9 @@ public class CallRecordDialog implements OnClickListener {
 	private String mNumberString;
 	// 联系人
 	private String mNameString;
+    // 号码信息
+    private String mInfoString;
+
 	// 通话记录
 	private SingleNumberRecordAdapter mAdapter;
 
@@ -60,8 +65,6 @@ public class CallRecordDialog implements OnClickListener {
 	protected ImageButton mLogoImageButton;
 	// listview
 	protected ListView mListView;
-	// 关闭
-	protected Button mCloseButton;
 	// 发信人
 	protected TextView mSenderTextView;
 	// 归属地
@@ -72,10 +75,7 @@ public class CallRecordDialog implements OnClickListener {
 	protected Button mCopyNumberButton;
 	// 添加为联系人／ 复制名字
 	protected Button mAddOrCopyButton;
-	// 回复
-	protected Button mReplyButton;
-	// 拨打
-	protected Button mCallButton;
+
 	// type logo
 	protected ImageView mTypeIcon;
 	// 类型说明
@@ -89,7 +89,7 @@ public class CallRecordDialog implements OnClickListener {
 
     private ICallRecordDialogListener mCallDialogListener;
 
-    private String mInfo;
+    private WXShareHandler mShareHandler;
 
 	protected Handler myHandler = new Handler() {
 		@Override
@@ -97,8 +97,8 @@ public class CallRecordDialog implements OnClickListener {
 			switch (msg.what) {
 			case MessageWhat.NET_REQUEST_NUMBER:
 				if (null != msg.obj) {
-                    mInfo = (String) msg.obj;
-					mInfoTextView.setText(mInfo);
+                    mInfoString = (String) msg.obj;
+					mInfoTextView.setText(mInfoString);
 				}
 				break;
 			case MessageWhat.CALL_RECORDS:
@@ -162,14 +162,19 @@ public class CallRecordDialog implements OnClickListener {
 		mContext = context;
 		mWindowManager = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
+
+        mShareHandler = new WXShareHandler(context);
 		
 		mView = LayoutInflater.from(context).inflate(R.layout.called_dialog,
 				null);
 
 		mLogoImageButton = (ImageButton) mView.findViewById(R.id.logo);
 		mLogoImageButton.setOnClickListener(this);
-		mCloseButton = (Button) mView.findViewById(R.id.close);
-		mCloseButton.setOnClickListener(this);
+
+		mView.findViewById(R.id.shareBtn).setOnClickListener(this);
+        mView.findViewById(R.id.callBtn).setOnClickListener(this);
+        mView.findViewById(R.id.smsBtn).setOnClickListener(this);
+
 		mSenderTextView = (TextView) mView.findViewById(R.id.sender);
 		mInfoTextView = (TextView) mView.findViewById(R.id.info);
 		mMsgBodyTextView = (TextView) mView.findViewById(R.id.body);
@@ -177,10 +182,6 @@ public class CallRecordDialog implements OnClickListener {
 		mCopyNumberButton.setOnClickListener(this);
 		mAddOrCopyButton = (Button) mView.findViewById(R.id.add);
 		mAddOrCopyButton.setOnClickListener(this);
-		mReplyButton = (Button) mView.findViewById(R.id.reply);
-		mReplyButton.setOnClickListener(this);
-		mCallButton = (Button) mView.findViewById(R.id.call);
-		mCallButton.setOnClickListener(this);
 
 		mListView = (ListView) mView.findViewById(R.id.recordlist);
 
@@ -304,7 +305,7 @@ public class CallRecordDialog implements OnClickListener {
 			}
 		}
         if (null != mCallDialogListener) {
-            mCallDialogListener.remove(mInfo);
+            mCallDialogListener.remove(mInfoString);
         }
 	}
 
@@ -341,8 +342,9 @@ public class CallRecordDialog implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
-		case R.id.close:
+		case R.id.shareBtn:
 			remove();
+            share();
 			break;
 		case R.id.copy:
 			copyNumber();
@@ -356,11 +358,11 @@ public class CallRecordDialog implements OnClickListener {
 				copyName();
 			}
 			break;
-		case R.id.reply:
+		case R.id.smsBtn:
 			remove();
 			gotoReply(mNumberString);
 			break;
-		case R.id.call:
+		case R.id.callBtn:
 			remove();
 			BaseUtil.gotoCall(mContext, mNumberString);
 			break;
@@ -404,4 +406,20 @@ public class CallRecordDialog implements OnClickListener {
 					| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 		}
 	}
+
+    /**
+     * 分享
+     */
+    private void share() {
+        StringBuilder builder = new StringBuilder(mNumberString);
+        if (!TextUtils.isEmpty(mNameString)) {
+            builder.append("\n");
+            builder.append(mNameString);
+        }
+        if (!TextUtils.isEmpty(mInfoString)) {
+            builder.append("\n");
+            builder.append(mInfoString);
+        }
+        mShareHandler.share(builder.toString(), WXConstants.SHARE_WEIXIN | WXConstants.SHARE_TIMELINE);
+    }
 }

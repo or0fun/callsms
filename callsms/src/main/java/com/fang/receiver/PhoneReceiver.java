@@ -172,7 +172,7 @@ public class PhoneReceiver extends BroadcastReceiver {
                 //更新通话记录内存
                 CallHelper.setHasRead(false);
                 Intent serviceIntent = new Intent(mContext, MainService.class);
-                serviceIntent.putExtra(MainService.TASK, MainService.TASK_TYPE.REFRESH_CALL_RECORDS);
+                serviceIntent.putExtra(MainService.TASK, MainService.TASK_TYPE_REFRESH_CALL_RECORDS);
                 mContext.startService(serviceIntent);
 				break;
 			case TelephonyManager.CALL_STATE_RINGING: // 来电

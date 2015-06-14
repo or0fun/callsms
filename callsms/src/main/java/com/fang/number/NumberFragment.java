@@ -1,6 +1,7 @@
 package com.fang.number;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +21,7 @@ import com.fang.business.BusinessHelper;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
+import com.fang.common.controls.CustomEditText;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.Patterns;
@@ -44,7 +45,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	//显示结果
 	TextView mResultTextView;
 	//搜索框
-	EditText mSearchEditView;
+    CustomEditText mSearchEditView;
 	//搜索按钮
 	Button mSearchBtn;
 	//订餐
@@ -77,6 +78,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 
     // 号码信息对话框
     CallRecordDialog mCallRecordDialog;
+    Bitmap mContactBitmap;
 
 	protected Handler myHandler = new Handler() {
 		@Override
@@ -125,7 +127,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 
 		mSearchBtn = (Button) rootView.findViewById(R.id.searchBtn);
 		mSearchBtn.setOnClickListener(this);
-		mSearchEditView = (EditText) rootView.findViewById(R.id.search);
+		mSearchEditView = (CustomEditText) rootView.findViewById(R.id.search);
 		mSearchEditView.setOnKeyListener(new View.OnKeyListener() {
 		    @Override
 		    public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -155,7 +157,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         mHistory = (TextView) rootView.findViewById(R.id.history);
         mHistory.setOnClickListener(this);
 
-        rootView.findViewById(R.id.clearBtn).setOnClickListener(this);
         rootView.findViewById(R.id.scan).setOnClickListener(this);
 
         // 显示农历和天气
@@ -205,10 +206,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			searchBtnClick();
 		}else if (view == mSearchExpressBtn) {
 			mContext.startActivity(new Intent(mContext, ExpressListActivity.class));
-		} else if (id == R.id.clearBtn) {
-            mSearchEditView.setText("");
-            LogOperate.updateLog(mContext, LogCode.CLEAR_NUMBER);
-        } else if (id == R.id.scan) {//扫一扫
+		} else if (id == R.id.scan) {//扫一扫
             Intent openCameraIntent = new Intent(mContext,
                     CaptureActivity.class);
             startActivityForResult(openCameraIntent, 0);
@@ -223,25 +221,26 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	 */
 	protected void searchBtnClick() {
 		String str = mSearchEditView.getText().toString();
-		if (!str.equals(mNumberString) || StringUtil.isEmpty(mNumberInfoString)) {
-            if (null == mCallRecordDialog) {
-                mCallRecordDialog = new CallRecordDialog(mContext, str,
-                        ContactHelper.getPerson(mContext, str),
-                        BitmapFactory.decodeResource(
-                                mContext.getResources(), R.drawable.contact_photo));
-            } else {
-                mCallRecordDialog.setContent(str,
-                        ContactHelper.getPerson(mContext, str),
-                        BitmapFactory.decodeResource(
-                                mContext.getResources(), R.drawable.contact_photo));
+        if (null == mCallRecordDialog) {
+            if (null == mContactBitmap) {
+                mContactBitmap = BitmapFactory.decodeResource(
+                        mContext.getResources(), R.drawable.contact_photo);
             }
-            mCallRecordDialog.show();
+            mCallRecordDialog = new CallRecordDialog(mContext, str,
+                    ContactHelper.getPerson(mContext, str), mContactBitmap);
+        } else {
+            if (!str.equals(mNumberString)) {
+                mCallRecordDialog.setContent(str,
+                        ContactHelper.getPerson(mContext, str), mContactBitmap);
+                mResultTextView.setText(mContext.getString(R.string.number_seaching));
+                mNumberString = String.format("%s", str);
+                BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
 
-			mResultTextView.setText(mContext.getString(R.string.number_seaching));
-			mNumberString = String.format("%s", str);
-			BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
-		}
-        SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.NUMBER_SEARCH, str);
+                SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.NUMBER_SEARCH, str);
+            }
+        }
+        mCallRecordDialog.show();
+
 		//日志
 		LogOperate.updateLog(mContext, LogCode.SEARCH_NUMBER);
 	}

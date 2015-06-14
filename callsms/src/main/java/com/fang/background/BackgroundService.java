@@ -23,7 +23,7 @@ public class BackgroundService extends Service {
         super.onCreate();
 
         // 3小时一次消息推送
-        QueryTaskUtil.startTask(this, MainService.TASK_TYPE.PUSH_REQUEST.ordinal(),
+        QueryTaskUtil.startTask(this, MainService.TASK_TYPE_PUSH_REQUEST,
                 CustomConstant.THREE_HOUR,
                 System.currentTimeMillis() + 5000);
     }

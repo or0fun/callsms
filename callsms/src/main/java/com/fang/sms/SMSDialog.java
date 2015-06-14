@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ import com.fang.span.MySpan;
 import com.fang.speach.SpeachHelper;
 import com.fang.util.MessageWhat;
 import com.fang.util.SharedPreferencesHelper;
-import com.fang.util.Util;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
@@ -92,8 +90,6 @@ public class SMSDialog implements OnClickListener {
 	protected Button mCallButton;
 	// 关闭
 	protected Button mCloseButton;
-	// 回复编辑框
-	protected EditText mReplyContentEditText;
 
 	protected Handler myHandler = new Handler() {
 		@Override
@@ -143,9 +139,6 @@ public class SMSDialog implements OnClickListener {
 		mCallButton.setOnClickListener(this);
 		mCloseButton = (Button) mView.findViewById(R.id.close);
 		mCloseButton.setOnClickListener(this);
-		
-		mReplyContentEditText = (EditText)mView.findViewById(R.id.content);
-		mReplyContentEditText.setOnClickListener(this);
 
 		setContent(msg);
 	}
@@ -270,6 +263,7 @@ public class SMSDialog implements OnClickListener {
 			break;
 		case R.id.copy:
 			copyNumber();
+            remove();
 			break;
 		case R.id.add:
 			if (TextUtils.isEmpty(mNameString)) {
@@ -280,13 +274,8 @@ public class SMSDialog implements OnClickListener {
 			}
 			break;
 		case R.id.reply:
-			String content = mReplyContentEditText.getText().toString();
-			if (content.length() > 0) {
-				remove();
-				SMSHelper.sendSMS(mNumberString, content);
-			}else {
-				Toast.makeText(mContext, mContext.getString(R.string.sms_empty_content_tip), Toast.LENGTH_SHORT).show();
-			}
+            remove();
+            gotoReply(mNumberString);
 			break;
 		case R.id.call:
 			remove();
@@ -296,8 +285,10 @@ public class SMSDialog implements OnClickListener {
 			broadcastContent(mBodyString);
 			break;
 		case R.id.delete:
-            Util.deleteConfirm(mContext, mWindowManager, mID, -1,
-                    mSMSDeleteConfirm);
+            remove();
+            gotoReply(mNumberString);
+//            Util.deleteConfirm(mContext, mWindowManager, mID, -1,
+//                    mSMSDeleteConfirm);
 			break;
 		case R.id.logo:
 			//记录日志

@@ -1,8 +1,5 @@
 package com.fang.comment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,15 +12,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fang.base.BaseActivity;
-import com.fang.call.CallHelper;
 import com.fang.callsms.R;
+import com.fang.common.util.DebugLog;
+import com.fang.datatype.ExtraName;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
-import com.fang.common.util.DebugLog;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 吐槽
@@ -77,7 +77,7 @@ public class CommentActivity extends BaseActivity {
 		setContentView(R.layout.comment_layout);
 		Intent intent = getIntent();
 		if (null != intent) {
-			mNumberString = intent.getStringExtra(CallHelper.PARAM_NUMBER);
+			mNumberString = intent.getStringExtra(ExtraName.PARAM_NUMBER);
 		}
 		setTitle(mContext.getString(R.string.comment_title) + mNumberString);
 

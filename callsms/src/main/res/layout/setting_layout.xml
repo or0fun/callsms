@@ -113,6 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/blue"
+            android:layout_marginLeft="@dimen/smallmargin"
             android:text="@string/check_update" />
     </LinearLayout>
     <!--

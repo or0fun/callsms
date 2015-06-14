@@ -4,7 +4,6 @@
     
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
-    <dimen name="splitMargin">12.0dp</dimen>
     <dimen name="textSize">18.0sp</dimen>
     <dimen name="buttonTextSize">18.0sp</dimen>
 
@@ -14,12 +13,7 @@
     
     <dimen name="dialg_icon_width">40dp</dimen>
     <dimen name="dialg_icon_height">40dp</dimen>
-    
-    <!-- 编辑框 -->
-    <dimen name="editTextSize">16.0sp</dimen>
-    <dimen name="editHeight">40.0dip</dimen>
-    <dimen name="MultiEditHeight">100.0dip</dimen>
-    <dimen name="bigMultiEditHeight">200.0dip</dimen>
+
     
     <!-- 短信内容 -->
     <dimen name="topmargin">20dp</dimen>
@@ -62,6 +56,4 @@
 
     <dimen name="nameTextSize">16.0sp</dimen>
 
-    <dimen name="clearBtn_width">25dp</dimen>
-    <dimen name="clearBtn_height">25dp</dimen>
 </resources>

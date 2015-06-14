@@ -39,6 +39,7 @@ public class CustomDialog extends Dialog {
 		private String cancel_btnText;
 		private View contentView;
         private int height;
+        private int width;
 
 		private OnClickListener confirm_btnClickListener;
 		private OnClickListener cancel_btnClickListener;
@@ -46,6 +47,7 @@ public class CustomDialog extends Dialog {
 		public Builder(Context context) {
 			this.context = context;
             height = WindowManager.LayoutParams.WRAP_CONTENT;
+            width = WindowManager.LayoutParams.MATCH_PARENT;
 		}
 
 		public Builder setMessage(String message) {
@@ -93,6 +95,11 @@ public class CustomDialog extends Dialog {
 
         public Builder setHeight(int height) {
             this.height = height;
+            return this;
+        }
+
+        public Builder setWidth(int width) {
+            this.width = width;
             return this;
         }
 
@@ -164,7 +171,7 @@ public class CustomDialog extends Dialog {
             Window win = dialog.getWindow();
             win.setGravity(Gravity.CENTER);
             WindowManager.LayoutParams lp = win.getAttributes();
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.width = width;
             lp.height = height;
             win.setAttributes(lp);
 

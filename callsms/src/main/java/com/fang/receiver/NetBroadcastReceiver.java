@@ -25,7 +25,7 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
                 server.checkOffLineData(context);
 
                 Intent mainintent = new Intent(context, MainService.class);
-                mainintent.putExtra(MainService.TASK, MainService.TASK_TYPE.POST_WEATHER_NOTIFICATION.ordinal());
+                mainintent.putExtra(MainService.TASK, MainService.TASK_TYPE_POST_WEATHER_NOTIFICATION);
                 context.startService(mainintent);
 			}
         }

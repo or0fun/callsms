@@ -11,4 +11,9 @@
         <attr name="defaultValue" format="string" />
         <attr name="key" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="CustomEditText">
+        <attr name="hintText" format="string"/>
+        <attr name="clearBtn" format="boolean" />
+    </declare-styleable>
 </resources> 

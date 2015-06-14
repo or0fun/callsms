@@ -13,4 +13,11 @@
     <string name="cancel">取消</string>
     <string name="back">返回</string>
 
+
+    <string name="close">关闭</string>
+    <string name="share">分享</string>
+
+    <string name="sms">短信</string>
+    <string name="search">搜索</string>
+
 </resources>

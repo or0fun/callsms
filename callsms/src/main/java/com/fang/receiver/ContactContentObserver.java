@@ -28,13 +28,13 @@ public class ContactContentObserver extends ContentObserver {
             //更新通讯录
 			ContactHelper.setReaded(false);
             Intent serviceIntent1 = new Intent(mContext, MainService.class);
-            serviceIntent1.putExtra(MainService.TASK, MainService.TASK_TYPE.REFRESH_CONTACTS);
+            serviceIntent1.putExtra(MainService.TASK, MainService.TASK_TYPE_REFRESH_CONTACTS);
             mContext.startService(serviceIntent1);
 
             //更新通话记录内存
             CallHelper.setHasRead(false);
             Intent serviceIntent2 = new Intent(mContext, MainService.class);
-            serviceIntent2.putExtra(MainService.TASK, MainService.TASK_TYPE.REFRESH_CALL_RECORDS);
+            serviceIntent2.putExtra(MainService.TASK, MainService.TASK_TYPE_REFRESH_CALL_RECORDS);
             mContext.startService(serviceIntent2);
 		};
 	}

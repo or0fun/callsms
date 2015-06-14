@@ -1,8 +1,5 @@
 package com.fang.sms;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.SparseIntArray;
@@ -18,6 +15,10 @@ import android.widget.TextView;
 
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
+import com.fang.datatype.ExtraName;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ContactCheckboxAdapter extends BaseAdapter {
 
@@ -79,10 +80,10 @@ public class ContactCheckboxAdapter extends BaseAdapter {
 		TextView username = (TextView) convertView
 				.findViewById(R.id.friend_username);
 		username.setText((String) mListData.get(index).get(
-				ContactHelper.PARAM_NAME));
+                ExtraName.PARAM_NAME));
 		TextView id = (TextView) convertView.findViewById(R.id.friend_id);
 		id.setText((String) mListData.get(index)
-				.get(ContactHelper.PARAM_NUMBER));
+				.get(ExtraName.PARAM_NUMBER));
 		boolean isSelected = (Boolean) mListData.get(index).get(
 				ContactHelper.PARAM_IS_SELECTED);
 
