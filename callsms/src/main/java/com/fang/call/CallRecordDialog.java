@@ -218,7 +218,9 @@ public class CallRecordDialog implements OnClickListener {
 		}
 		mSenderTextView.setText(senderString);
 		mTypeTip.setVisibility(View.GONE);
-		mTypeIcon.setImageBitmap(icon);
+        if (null != icon) {
+            mTypeIcon.setImageBitmap(icon);
+        }
         mTypeIcon.setLayoutParams(new LinearLayout.LayoutParams(ViewUtil.dip2px(mContext, 40), ViewUtil.dip2px(mContext, 40)));
 
 	}

@@ -73,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:maxHeight="@dimen/contact_photo_height"
-                android:maxWidth="@dimen/contact_photo_width" />
+                android:maxWidth="@dimen/contact_photo_width"
+                android:src="@drawable/contact_photo"/>
 
             <TextView
                 android:id="@+id/tip"
@@ -142,10 +143,9 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sms" />
 
-            <Button
+            <TextView
                 android:id="@+id/reply"
-                style="@style/mainButtonTransparent"
-                android:layout_height="40dp"
+                style="@style/buttonText"
                 android:text="@string/sms" />
         </LinearLayout>
 
@@ -165,10 +165,9 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_call" />
 
-            <Button
+            <TextView
                 android:id="@+id/call"
-                style="@style/mainButtonTransparent"
-                android:layout_height="40dp"
+                style="@style/buttonText"
                 android:text="@string/call" />
         </LinearLayout>
 
@@ -186,10 +185,9 @@
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_share"/>
-            <Button
+            <TextView
                 android:id="@+id/share"
-                style="@style/mainButtonTransparent"
-                android:layout_height="40dp"
+                style="@style/buttonText"
                 android:text="@string/share" />
             </LinearLayout>
 
@@ -206,10 +204,9 @@
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_close"/>
-            <Button
+            <TextView
                 android:id="@+id/close"
-                style="@style/mainButtonTransparent"
-                android:layout_height="40dp"
+                style="@style/buttonText"
                 android:text="@string/close" />
         </LinearLayout>
     </LinearLayout>

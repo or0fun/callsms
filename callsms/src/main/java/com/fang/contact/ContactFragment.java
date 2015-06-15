@@ -176,21 +176,24 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				int index = mContactPositionMapArray.get(position);
+                Bitmap bitmap = null;
+                Object object = mList.get(index).get(ContactHelper.PARAM_PHOTO);
+                if (null != object && object instanceof Bitmap) {
+                    bitmap = (Bitmap) object;
+                }
 				if (null == mCallRecordDialog) {
 					mCallRecordDialog = new CallRecordDialog(mContext,
 							(String) mList.get(index).get(
                                     ExtraName.PARAM_NUMBER), (String) mList
 									.get(index).get(ExtraName.PARAM_NAME),
-							(Bitmap) mList.get(index).get(
-									ContactHelper.PARAM_PHOTO_ID));
+                            bitmap);
 				} else {
 					mCallRecordDialog.setContent(
 							(String) mList.get(index).get(
                                     ExtraName.PARAM_NUMBER),
 							(String) mList.get(index).get(
                                     ExtraName.PARAM_NAME),
-							(Bitmap) mList.get(index).get(
-									ContactHelper.PARAM_PHOTO_ID));
+                            bitmap);
 				}
 				mCallRecordDialog.show();
 				// 日志
@@ -606,9 +609,9 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 
 	@Override
 	public boolean isNeedLoading() {
-		if (false == ContactHelper.hasReaded()) {
+		if (false == ContactHelper.hasReaded() ) {
 			return true;
-		} else if (null != mByNameList && mByNameList.size() == 0) {
+		} else if (null == mByNameList) {
             return true;
         }
 		return false;
