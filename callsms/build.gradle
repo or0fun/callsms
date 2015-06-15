@@ -29,15 +29,15 @@ android {
             signingConfig signingConfigs.release
         }
     }
-//    productFlavors {
-//        _develop {}
-//        wandoujia {}
-//        baidu {}
-//        c360 {}
-//        blog {}
-//        hiapk {}
-//        anzhi {}
-//    }
+    productFlavors {
+        _develop {}
+        wandoujia {}
+        baidu {}
+        c360 {}
+        blog {}
+        hiapk {}
+        anzhi {}
+    }
 }
 
 dependencies {
