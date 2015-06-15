@@ -220,7 +220,11 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	 *  搜索号码
 	 */
 	protected void searchBtnClick() {
-		String str = mSearchEditView.getText().toString();
+		String str = mSearchEditView.getText().toString().trim();
+        if (!str.matches(Patterns.PHONE_NUMBER_PATTERN)) {
+            Util.openUrl(CustomConstant.BAIDU + str);
+            return;
+        }
         if (null == mCallRecordDialog) {
             if (null == mContactBitmap) {
                 mContactBitmap = BitmapFactory.decodeResource(

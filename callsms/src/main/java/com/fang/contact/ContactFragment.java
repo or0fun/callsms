@@ -427,6 +427,13 @@ public class ContactFragment extends BaseFragment implements IContactListener {
             if (null != list.get(index).get(ContactHelper.PARAM_PHOTO)) {
                 holder.icon.setImageBitmap((Bitmap) list.get(index).get(
                         ContactHelper.PARAM_PHOTO));
+            } else {
+                Bitmap bitmap = ContactHelper.getContactPhoto(mContext, (long) list.get(index).get(
+                        ContactHelper.PARAM_PHOTO_ID));
+                if (null != bitmap) {
+                    list.get(index).put(ContactHelper.PARAM_PHOTO, bitmap);
+                    holder.icon.setImageBitmap(bitmap);
+                }
             }
 //			String lastString = (String) list.get(index).get(
 //					ContactHelper.PARAM_LAST_RECORD_DATE);

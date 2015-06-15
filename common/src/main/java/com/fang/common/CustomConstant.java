@@ -24,6 +24,9 @@ public class CustomConstant {
 
     /** 历史上的今天 **/
     public static final String HISTORY_OF_TODAY = "http://ie8384.com/we/today.php";
+    /** baidu **/
+    public static final String BAIDU = "https://www.baidu.com/s?wd=";
+
 	/** 收件箱Uri */
 	public static final Uri SMS_INBOX_URI = Uri.parse("content://sms/inbox");  
     /** 选择联系人 传递数据的参数名 */

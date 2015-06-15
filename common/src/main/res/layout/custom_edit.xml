@@ -11,8 +11,7 @@
         android:id="@+id/searchEdit"
         style="@style/singleLineEdit"
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:inputType="number"></EditText>
+        android:layout_weight="1"></EditText>
 
     <ImageView
         android:id="@+id/clearBtn"

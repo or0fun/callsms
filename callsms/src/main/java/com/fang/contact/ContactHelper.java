@@ -341,41 +341,45 @@ public class ContactHelper {
 		ContactHelper.setReaded(true);
         isReading = false;
 
-        getContactPhoto(context);
+//        getContactPhoto(context);
 	}
 
     /**
      * 获取姓名
      * @param context
      */
-    public static void getContactPhoto(final Context context) {
-        if (null == mByNameList) {
-            return;
-        }
-        if (null == mContactListeners) {
-            return;
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (Map<String, Object> map : mByNameList) {
-                    long id = (Long) map.get(PARAM_PHOTO_ID);
-                    Bitmap bitmap = getContactPhoto(context, id);
-                    if (null != bitmap) {
-                        map.put(PARAM_PHOTO, bitmap);
-                    }
-                }
-
-                mByTimesList.clear();
-                mByTimesList.addAll(mByNameList);
-                Collections.sort(mByTimesList, new ContactCompare());
-
-                for (IContactListener listener : mContactListeners) {
-                    listener.onResult(true);
-                }
-            }
-        }).run();
-    }
+//    public static void getContactPhoto(final Context context) {
+//        if (null == mByNameList) {
+//            return;
+//        }
+//        if (null == mContactListeners) {
+//            return;
+//        }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    for (Map<String, Object> map : mByNameList) {
+//                        long id = (Long) map.get(PARAM_PHOTO_ID);
+//                        Bitmap bitmap = getContactPhoto(context, id);
+//                        if (null != bitmap) {
+//                            map.put(PARAM_PHOTO, bitmap);
+//                        }
+//                    }
+//
+//                    mByTimesList.clear();
+//                    mByTimesList.addAll(mByNameList);
+//                    Collections.sort(mByTimesList, new ContactCompare());
+//
+//                    for (IContactListener listener : mContactListeners) {
+//                        listener.onResult(true);
+//                    }
+//                } catch (Exception e) {
+//                    BaseUtil.addCrashException(e);
+//                }
+//            }
+//        }).run();
+//    }
 
     /**
      * 获取头像
@@ -383,7 +387,7 @@ public class ContactHelper {
      * @param contactid
      * @return
      */
-    private static Bitmap getContactPhoto(Context context, long contactid) {
+    public static Bitmap getContactPhoto(Context context, long contactid) {
         if (contactid > 0) {
             Uri uri = ContentUris.withAppendedId(
                     ContactsContract.Contacts.CONTENT_URI, contactid);
