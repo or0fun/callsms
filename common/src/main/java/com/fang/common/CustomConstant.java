@@ -11,7 +11,7 @@ import android.net.Uri;
 public class CustomConstant {
 
     /** 调试状态 */
-    public static final boolean DEBUG = false;
+    public static boolean DEBUG = false;
 
     /** 应用渠道 */
     //wandoujia  hiapk  blog baidu  qq 360 appchina lenovo mi anzhi

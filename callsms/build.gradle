@@ -8,7 +8,7 @@ android {
         applicationId "com.fang.callsms"
         minSdkVersion 14
         targetSdkVersion 14
-        manifestPlaceholders = [CHANNEL:"develop"]
+        manifestPlaceholders = [channel:"develop", debug:"true"]
     }
 
     signingConfigs {
@@ -31,7 +31,6 @@ android {
         }
     }
     productFlavors {
-        develop {}
         wandoujia {}
         baidu {}
         c360 {}
@@ -41,7 +40,7 @@ android {
     }
 
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [CHANNEL: name]
+        flavor -> flavor.manifestPlaceholders = [channel: name, debug: "false"]
    }
 
 }
