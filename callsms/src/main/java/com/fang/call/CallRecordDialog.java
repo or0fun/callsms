@@ -135,8 +135,8 @@ public class CallRecordDialog implements OnClickListener {
 	public CallRecordDialog(Context context, String number, String name,
 			String type, int icon, boolean isMissed) {
 		this(context, number, name);
+        mIsMissed = isMissed;
 		setContent(number, name, type, icon, null);
-		mIsMissed = isMissed;
 	}
 	
 	public CallRecordDialog(Context context, String number, String name,
@@ -172,8 +172,10 @@ public class CallRecordDialog implements OnClickListener {
 		mLogoImageButton.setOnClickListener(this);
 
 		mView.findViewById(R.id.shareBtn).setOnClickListener(this);
+		mView.findViewById(R.id.closeBtn).setOnClickListener(this);
         mView.findViewById(R.id.callBtn).setOnClickListener(this);
         mView.findViewById(R.id.smsBtn).setOnClickListener(this);
+
 
 		mSenderTextView = (TextView) mView.findViewById(R.id.sender);
 		mInfoTextView = (TextView) mView.findViewById(R.id.info);
@@ -264,6 +266,14 @@ public class CallRecordDialog implements OnClickListener {
 			mTypeTip.setTextColor(mContext.getResources().getColor(
 					R.color.outgoing));
 		}
+
+        if (mIsMissed) {
+            mView.findViewById(R.id.closeBtn).setVisibility(View.VISIBLE);
+            mView.findViewById(R.id.shareBtn).setVisibility(View.GONE);
+        } else {
+            mView.findViewById(R.id.closeBtn).setVisibility(View.GONE);
+            mView.findViewById(R.id.shareBtn).setVisibility(View.VISIBLE);
+        }
 	}
 
 	/**
@@ -340,44 +350,47 @@ public class CallRecordDialog implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.shareBtn:
-			remove();
-            share();
-			break;
-		case R.id.copy:
-			copyNumber();
-			break;
-		case R.id.add:
-			// 复制姓名或者添加为联系人
-			if (TextUtils.isEmpty(mNameString)) {
-				remove();
-                ContactHelper.addContact(mContext, mNumberString);
-			} else {
-				copyName();
-			}
-			break;
-		case R.id.smsBtn:
-			remove();
-			gotoReply(mNumberString);
-			break;
-		case R.id.callBtn:
-			remove();
-			BaseUtil.gotoCall(mContext, mNumberString);
-			break;
-		case R.id.logo:
-			// 记录日志
-			LogOperate.updateLog(mContext, LogCode.ENTER_MAIN_ACTIVITY);
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.shareBtn:
+                remove();
+                share();
+                break;
+            case R.id.closeBtn:
+                remove();
+                break;
+            case R.id.copy:
+                copyNumber();
+                break;
+            case R.id.add:
+                // 复制姓名或者添加为联系人
+                if (TextUtils.isEmpty(mNameString)) {
+                    remove();
+                    ContactHelper.addContact(mContext, mNumberString);
+                } else {
+                    copyName();
+                }
+                break;
+            case R.id.smsBtn:
+                remove();
+                gotoReply(mNumberString);
+                break;
+            case R.id.callBtn:
+                remove();
+                BaseUtil.gotoCall(mContext, mNumberString);
+                break;
+            case R.id.logo:
+                // 记录日志
+                LogOperate.updateLog(mContext, LogCode.ENTER_MAIN_ACTIVITY);
 
-			Intent intent = new Intent(Intent.ACTION_MAIN);
-			intent.setClass(mContext, MainActivity.class);
-			BaseUtil.startActivityNewTask(mContext, intent);
-			break;
-		default:
-			break;
-		}
-	}
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setClass(mContext, MainActivity.class);
+                BaseUtil.startActivityNewTask(mContext, intent);
+                break;
+            default:
+                break;
+        }
+    }
 
 	/**
 	 * 是否正在显示

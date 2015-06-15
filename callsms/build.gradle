@@ -8,6 +8,7 @@ android {
         applicationId "com.fang.callsms"
         minSdkVersion 14
         targetSdkVersion 14
+        manifestPlaceholders = [CHANNEL:"develop"]
     }
 
     signingConfigs {
@@ -37,11 +38,11 @@ android {
         blog {}
         hiapk {}
         anzhi {}
-
-        productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [channel: name]
-        }
     }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [CHANNEL: name]
+   }
 
 }
 

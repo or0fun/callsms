@@ -32,7 +32,7 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
             ApplicationInfo appInfo = this.getPackageManager()
                     .getApplicationInfo(getPackageName(),
                             PackageManager.GET_META_DATA);
-            String channel = appInfo.metaData.getString("channel");
+            String channel = appInfo.metaData.getString("CHANNEL");
             if (!StringUtil.isEmpty(channel)) {
                 CustomConstant.sPACKAGE_CHANNEL = channel;
             }
