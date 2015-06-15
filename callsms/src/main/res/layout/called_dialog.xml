@@ -163,7 +163,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/call_nor" />
+                android:src="@drawable/ic_call" />
 
             <Button
                 android:id="@+id/call"
@@ -181,12 +181,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
-            android:gravity="center"
-            android:visibility="gone">
+            android:gravity="center">
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/share"/>
+                android:src="@drawable/ic_share"/>
             <Button
                 android:id="@+id/share"
                 style="@style/mainButtonTransparent"
@@ -201,7 +200,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
