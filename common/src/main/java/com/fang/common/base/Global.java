@@ -11,4 +11,10 @@ public class Global {
     public static Activity mContext;
     public static int fullScreenWidth;
     public static int fullScreeHeight;
+
+    public static boolean debug;
+    /** 应用渠道 */
+    //wandoujia  hiapk  blog baidu  qq 360 appchina lenovo mi anzhi
+    public static String channel;
+
 }

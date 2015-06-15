@@ -20,9 +20,14 @@ import android.widget.TextView;
 
 import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
+import com.fang.common.CustomConstant;
 import com.fang.common.controls.CustomWebView;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
+import com.fang.logs.LogCode;
+import com.fang.logs.LogOperate;
+import com.fang.net.NetResuestHelper;
+import com.fang.net.ServerUtil;
 import com.fang.weixin.WXConstants;
 import com.fang.weixin.WXShareHandler;
 
@@ -112,6 +117,9 @@ public class WebViewActivity extends BaseActivity {
         if (StringUtil.isEmpty(url)) {
             return;
         }
+        if (CustomConstant.HISTORY_OF_TODAY.equals(url)) {
+            LogOperate.updateLog(mContext, LogCode.HISTORY_OF_TODAY);
+        }
         mWebView.loadUrl(url);
     }
 
@@ -145,6 +153,7 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
+            ServerUtil.getInstance(mContext).request(NetResuestHelper.url, url, null);
         }
     }
     private class MyWebChromeClient extends WebChromeClient{

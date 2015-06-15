@@ -9,13 +9,6 @@ import android.net.Uri;
  *
  */
 public class CustomConstant {
-
-    /** 调试状态 */
-    public static boolean DEBUG = false;
-
-    /** 应用渠道 */
-    //wandoujia  hiapk  blog baidu  qq 360 appchina lenovo mi anzhi
-    public static String sPACKAGE_CHANNEL = "dev";
     /** 信息获取的API */
     public static final String API_URL = "http://115.29.17.79/icoding/api.php";
     /** 接收post请求的服务器地址 */

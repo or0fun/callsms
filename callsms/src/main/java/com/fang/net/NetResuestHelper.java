@@ -31,6 +31,8 @@ public class NetResuestHelper {
     public static final String PUSH = "push";
     /** CRASH日志类型 */
     public static final String CRASH = "crash";
+    /** url */
+    public static final String url = "url";
 	
 	private static int code = 0;
 	public static synchronized int getRequestCode() {

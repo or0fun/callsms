@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
+import com.fang.common.base.Global;
 import com.fang.common.controls.CustomDialog;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
@@ -248,7 +249,7 @@ public class UpdateVersion {
      * @return
      */
     private String getVersionUrl() {
-        if (CustomConstant.DEBUG) {
+        if (Global.debug) {
             return  CustomConstant.VERSION_GET_URL_TEST;
         }
         return CustomConstant.VERSION_GET_URL;

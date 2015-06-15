@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fang.common.CustomConstant;
+import com.fang.common.base.Global;
 import com.fang.security.AESUtil;
 import com.fang.security.SecurityHelper;
 import com.fang.common.util.JsonUtil;
@@ -129,7 +130,7 @@ public class ServerUtil implements Runnable {
 									.encrypt(Util.getVersionName(mContext))));
 							params.add(new BasicNameValuePair(SecurityHelper
 									.getMD5(NetResuestHelper.CHANNEL), defaultAesutil
-									.encrypt(CustomConstant.sPACKAGE_CHANNEL)));
+									.encrypt(Global.channel)));
 							r = postHttpRequest(request.getUrl(), params);
 						}
 					}
@@ -360,7 +361,7 @@ public class ServerUtil implements Runnable {
      * @return
      */
     private String getPostUrl() {
-        if (CustomConstant.DEBUG) {
+        if (Global.debug) {
             return  CustomConstant.DEFAULT_POST_URL_TEST;
         }
         return CustomConstant.DEFAULT_POST_URL;
