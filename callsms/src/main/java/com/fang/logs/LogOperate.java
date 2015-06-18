@@ -38,4 +38,12 @@ public class LogOperate {
             }
         });
     }
+
+    /**
+     * 上次request error日志
+     * @param context
+     */
+    public static void uploadRequestError(final Context context, final String str) {
+        ServerUtil.getInstance(context).request(NetResuestHelper.REQUEST_ERROR, str, null);
+    }
 }

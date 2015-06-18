@@ -6,6 +6,7 @@ import android.util.Log;
 import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
 import com.fang.common.util.BaseUtil;
+import com.fang.logs.LogOperate;
 import com.fang.security.AESUtil;
 import com.fang.security.SecurityHelper;
 import com.fang.common.util.JsonUtil;
@@ -139,6 +140,15 @@ public class ServerUtil implements Runnable {
                         result.setResultCode(r.getResultCode());
                         // 解密
                         result.setValue(defaultAesutil.decrypt(r.getValue()));
+
+                        //日志收集
+                        if (r.getResultCode() != NetRequestResultCode.HTTP_OK) {
+                            LogOperate.uploadRequestError(mContext, "request:" + request.toString()
+                                    + ", response:" + r.toString());
+                        }
+                    } else {
+                        LogOperate.uploadRequestError(mContext, "request:" + request.toString()
+                                + ", response: null");
                     }
                 }
                 if (null != listener) {
