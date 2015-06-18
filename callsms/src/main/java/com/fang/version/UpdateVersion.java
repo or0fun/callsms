@@ -91,14 +91,13 @@ public class UpdateVersion {
 	public static void checkVersion(final Context context, final boolean manualCheck,
 			final IDownloadListener downloadListener) {
 
-		new Thread() {
-			@Override
-			public void run() {
-				super.run();
-				UpdateVersion uv = new UpdateVersion(context, downloadListener);
-				uv.getLatestVerFromServer(manualCheck);
-			}
-		}.start();
+		BaseUtil.excute(new Runnable() {
+            @Override
+            public void run() {
+                UpdateVersion uv = new UpdateVersion(context, downloadListener);
+                uv.getLatestVerFromServer(manualCheck);
+            }
+        });
 	}
 
 	/**

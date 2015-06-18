@@ -17,7 +17,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import com.fang.common.base.Global;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -362,5 +366,23 @@ public class BaseUtil {
         String str = SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.CRASH_EXCEPTION, "");
         str += date + ":" + info + "|";
         SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.CRASH_EXCEPTION, str);
+    }
+
+    /** 增加线程 */
+    public static void excute(Runnable runnable) {
+        Global.fixedThreadPool.execute(runnable);
+    }
+
+    /**
+     * 强制显示或者关闭系统键盘
+     */
+    public static void showKeyBoard(final EditText txtSearchKey,final boolean visiable) {
+        InputMethodManager m = (InputMethodManager)
+                txtSearchKey.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (visiable) {
+            m.showSoftInput(txtSearchKey, InputMethodManager.SHOW_FORCED);
+        } else {
+            m.hideSoftInputFromWindow(txtSearchKey.getWindowToken(), 0);
+        }
     }
 }

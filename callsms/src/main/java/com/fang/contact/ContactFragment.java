@@ -259,14 +259,9 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 		mByTimesList = ContactHelper.getContactByTimesList();
 		
 		if (null == mByNameList || mByNameList.size() == 0) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					//获取通讯录
-					ContactHelper.readContact(mContext);
-				}
-			}).start();
-		}else {
+            //获取通讯录
+            ContactHelper.readContact(mContext);
+        }else {
 			mHandler.sendEmptyMessage(MessageWhat.FRESH_CONTACT_RECORD);
 		}
 	}

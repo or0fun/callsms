@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
+import com.fang.common.util.BaseUtil;
 import com.fang.security.AESUtil;
 import com.fang.security.SecurityHelper;
 import com.fang.common.util.JsonUtil;
@@ -82,69 +83,69 @@ public class ServerUtil implements Runnable {
 		if (null == request) {
 			return;
 		}
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				NetRequestResult result = new NetRequestResult();
-				result.setRequestCode(request.getRequestCode());
-				// 网络不可用
-				if (!NetWorkUtil.isNetworkConnected(mContext)) {
-					result.setResultCode(NetRequestResultCode.NETWORK_NOT_AVAILABLE);
-					if (request.getRequestType() == NetRequestConstant.TYPE_POST) {
-						addOfflineData(request.getValue());
-					}
-				}
-				//正常的上传地址，不是获取用户ID的情况下，当用户ID不存在时先存进离线数据
-				else if (mUserID == null && request.getUrl().equals(getPostUrl())
-						&& request.getValue() != null && !request.getValue().getName().equals(NetResuestHelper.USER_ID)) {
-					result.setResultCode(NetRequestResultCode.NO_USER_ID);
-					if (request.getRequestType() == NetRequestConstant.TYPE_POST) {
-						addOfflineData(request.getValue());
-					}
-				} else {
-					int type = request.getRequestType();
-					NetRequestResult r = null;
-					if (NetRequestConstant.TYPE_GET == type) {
-						r = getHttpRequest(request.getUrl());
-					} else if (NetRequestConstant.TYPE_POST == type) {
-						// 加密处理
-						List<NameValuePair> params = new ArrayList<NameValuePair>();
-						NameValuePair nl = request.getValue();
-						if (null != nl) {
-							params.add(new BasicNameValuePair(SecurityHelper
-									.getMD5(nl.getName()), defaultAesutil
-									.encrypt(nl.getValue())));
-							if (!nl.getName().equals(NetResuestHelper.USER_ID)) {
-								params.add(new BasicNameValuePair(SecurityHelper
-										.getMD5(NetResuestHelper.USER), defaultAesutil
-										.encrypt(mUserID)));
-							}else {
-								String mtype = android.os.Build.MODEL; // 手机型号
-								params.add(new BasicNameValuePair(SecurityHelper
-										.getMD5(NetResuestHelper.MODEL), defaultAesutil
-										.encrypt(mtype)));
-							}
-							//加上版本和渠道
-							params.add(new BasicNameValuePair(SecurityHelper
-									.getMD5(NetResuestHelper.VERSION), defaultAesutil
-									.encrypt(Util.getVersionName(mContext))));
-							params.add(new BasicNameValuePair(SecurityHelper
-									.getMD5(NetResuestHelper.CHANNEL), defaultAesutil
-									.encrypt(Global.channel)));
-							r = postHttpRequest(request.getUrl(), params);
-						}
-					}
-					if (null != r) {
-						result.setResultCode(r.getResultCode());
-						// 解密
-						result.setValue(defaultAesutil.decrypt(r.getValue()));
-					}
-				}
-				if (null != listener) {
-					listener.onResult(result);
-				}
-			}
-		}).start();
+        BaseUtil.excute(new Runnable() {
+            @Override
+            public void run() {
+                NetRequestResult result = new NetRequestResult();
+                result.setRequestCode(request.getRequestCode());
+                // 网络不可用
+                if (!NetWorkUtil.isNetworkConnected(mContext)) {
+                    result.setResultCode(NetRequestResultCode.NETWORK_NOT_AVAILABLE);
+                    if (request.getRequestType() == NetRequestConstant.TYPE_POST) {
+                        addOfflineData(request.getValue());
+                    }
+                }
+                //正常的上传地址，不是获取用户ID的情况下，当用户ID不存在时先存进离线数据
+                else if (mUserID == null && request.getUrl().equals(getPostUrl())
+                        && request.getValue() != null && !request.getValue().getName().equals(NetResuestHelper.USER_ID)) {
+                    result.setResultCode(NetRequestResultCode.NO_USER_ID);
+                    if (request.getRequestType() == NetRequestConstant.TYPE_POST) {
+                        addOfflineData(request.getValue());
+                    }
+                } else {
+                    int type = request.getRequestType();
+                    NetRequestResult r = null;
+                    if (NetRequestConstant.TYPE_GET == type) {
+                        r = getHttpRequest(request.getUrl());
+                    } else if (NetRequestConstant.TYPE_POST == type) {
+                        // 加密处理
+                        List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        NameValuePair nl = request.getValue();
+                        if (null != nl) {
+                            params.add(new BasicNameValuePair(SecurityHelper
+                                    .getMD5(nl.getName()), defaultAesutil
+                                    .encrypt(nl.getValue())));
+                            if (!nl.getName().equals(NetResuestHelper.USER_ID)) {
+                                params.add(new BasicNameValuePair(SecurityHelper
+                                        .getMD5(NetResuestHelper.USER), defaultAesutil
+                                        .encrypt(mUserID)));
+                            } else {
+                                String mtype = android.os.Build.MODEL; // 手机型号
+                                params.add(new BasicNameValuePair(SecurityHelper
+                                        .getMD5(NetResuestHelper.MODEL), defaultAesutil
+                                        .encrypt(mtype)));
+                            }
+                            //加上版本和渠道
+                            params.add(new BasicNameValuePair(SecurityHelper
+                                    .getMD5(NetResuestHelper.VERSION), defaultAesutil
+                                    .encrypt(Util.getVersionName(mContext))));
+                            params.add(new BasicNameValuePair(SecurityHelper
+                                    .getMD5(NetResuestHelper.CHANNEL), defaultAesutil
+                                    .encrypt(Global.channel)));
+                            r = postHttpRequest(request.getUrl(), params);
+                        }
+                    }
+                    if (null != r) {
+                        result.setResultCode(r.getResultCode());
+                        // 解密
+                        result.setValue(defaultAesutil.decrypt(r.getValue()));
+                    }
+                }
+                if (null != listener) {
+                    listener.onResult(result);
+                }
+            }
+        });
 	}
 
 	/**

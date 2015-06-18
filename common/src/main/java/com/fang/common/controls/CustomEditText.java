@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.fang.common.R;
+import com.fang.common.util.BaseUtil;
 
 /**
  * Created by benren.fj on 6/9/15.
@@ -77,6 +78,7 @@ public class CustomEditText extends LinearLayout {
             @Override
             public void onClick(View v) {
                 editText.setText("");
+                BaseUtil.showKeyBoard(editText, true);
             }
         });
         if (null != hint) {
@@ -94,6 +96,10 @@ public class CustomEditText extends LinearLayout {
 
     public void addTextChangedListener(TextWatcher watcher) {
         editText.addTextChangedListener(watcher);
+    }
+
+    public void setOnKeyListener(OnKeyListener listener) {
+        editText.setOnKeyListener(listener);
     }
 
     private void showClearBtn() {

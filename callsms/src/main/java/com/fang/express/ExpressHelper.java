@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.fang.business.BusinessHelper;
+import com.fang.common.util.BaseUtil;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
 import com.fang.net.IResponseListener;
@@ -61,47 +62,46 @@ public class ExpressHelper {
 		if (false == NetWorkUtil.isNetworkConnected(context)) {
 			return;
 		}
-		new Thread() {
-			@Override
-			public void run() {
-				super.run();
-				final List<ExpressInfo> infoList = getExpressInfos(context);
-				if (null == infoList) {
-					DebugLog.d(TAG, "infoList is null");
-					return;
-				}
-				for (final ExpressInfo expressInfo : infoList) {
-					BusinessHelper.getExpressInfo(context, expressInfo,
-							new IResponseListener() {
-								@Override
-								public void onResult(ResponseInfo info) {
-									if (null != info
-											&& info instanceof ExpressInfo) {
-										ExpressInfo responseInfo = (ExpressInfo)info;
-										if (expressInfo.isChanged()) {
+        BaseUtil.excute(new Runnable() {
+            @Override
+            public void run() {
+                final List<ExpressInfo> infoList = getExpressInfos(context);
+                if (null == infoList) {
+                    DebugLog.d(TAG, "infoList is null");
+                    return;
+                }
+                for (final ExpressInfo expressInfo : infoList) {
+                    BusinessHelper.getExpressInfo(context, expressInfo,
+                            new IResponseListener() {
+                                @Override
+                                public void onResult(ResponseInfo info) {
+                                    if (null != info
+                                            && info instanceof ExpressInfo) {
+                                        ExpressInfo responseInfo = (ExpressInfo) info;
+                                        if (expressInfo.isChanged()) {
 
-											if (SharedPreferencesHelper.getInstance()
-													.getBoolean(
+                                            if (SharedPreferencesHelper.getInstance()
+                                                    .getBoolean(
                                                             SharedPreferencesHelper.SETTING_EXPRESS_TRACK,
                                                             true)) {
 
-												expressInfo.setChanged(false);
-												expressInfo.setInfo(responseInfo
-														.getInfo());
-												String[] sentences = responseInfo
-														.getInfo().split("\n");
-												String content = "";
-												if (sentences.length > 1) {
-													content = sentences[0]
-															+ " "
-															+ sentences[1];
-												} else {
-													content = sentences[0];
-												}
-												Intent notificationIntent = new Intent(
-														context,
-														ExpressListActivity.class);
-												NotificationHelper.showNotification(
+                                                expressInfo.setChanged(false);
+                                                expressInfo.setInfo(responseInfo
+                                                        .getInfo());
+                                                String[] sentences = responseInfo
+                                                        .getInfo().split("\n");
+                                                String content = "";
+                                                if (sentences.length > 1) {
+                                                    content = sentences[0]
+                                                            + " "
+                                                            + sentences[1];
+                                                } else {
+                                                    content = sentences[0];
+                                                }
+                                                Intent notificationIntent = new Intent(
+                                                        context,
+                                                        ExpressListActivity.class);
+                                                NotificationHelper.showNotification(
                                                         context,
                                                         NotificationHelper.EXPRESS_ID,
                                                         NOTIFY_TITLE
@@ -111,17 +111,17 @@ public class ExpressHelper {
                                                         content,
                                                         notificationIntent,
                                                         true);
-												// 日志上传
-												LogOperate.updateLog(context, LogCode.NOTIFY_EXPRESS_CHANGED);
-											}
-										}
-									}
-								}
-							});
-				}
-				// 保存
-				saveExpressInfos(context, infoList);
-			}
-		}.start();
+                                                // 日志上传
+                                                LogOperate.updateLog(context, LogCode.NOTIFY_EXPRESS_CHANGED);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                }
+                // 保存
+                saveExpressInfos(context, infoList);
+            }
+        });
 	}
 }

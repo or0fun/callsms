@@ -49,6 +49,9 @@ public class CustomConstant {
 	
 	/** 5s */
 	public static final long FIVE_SECONDS = 5000;
+
+    /** 最大线程数 */
+    public static final int MAX_THREAD_COUNT = 4;
 	
 }
 

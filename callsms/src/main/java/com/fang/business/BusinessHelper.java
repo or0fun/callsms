@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.fang.callsms.R;
+import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
 import com.fang.database.NumberDatabaseManager;
@@ -35,7 +36,7 @@ public class BusinessHelper {
 		if (StringUtil.isEmpty(number)) {
 			return;
 		}
-		new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
 			@Override
 			public void run() {
 				String infoString = NumberDatabaseManager.getInstance(context).query(
@@ -57,7 +58,7 @@ public class BusinessHelper {
 							MessageWhat.NET_REQUEST_NUMBER, infoString));
 				}
 			}
-		}).start();
+		});
 	}
 	/**
 	 * 获取号码资源
@@ -71,7 +72,7 @@ public class BusinessHelper {
 		if (null == callRecords) {
 			return;
 		}
-		new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
 			@Override
 			public void run() {
                 int len = 5;
@@ -96,7 +97,7 @@ public class BusinessHelper {
 					handler.sendEmptyMessage(MessageWhat.UPDATE_NUMBER_DATABASE);
 				}
 			}
-		}).start();
+		});
 	}
 
 	/**
@@ -117,25 +118,26 @@ public class BusinessHelper {
 		if (StringUtil.isEmpty(info.getNumber()) || StringUtil.isEmpty(info.getCompany()) ) {
 			return;
 		}
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				String infoString = NetWorkUtil.getInstance().searchExpress(
-						context, 
-						info.getCompany(), 
-						info.getNumber(), 
-						ServerUtil.getInstance(context).getUserID());
-				
-				if (StringUtil.isEmpty(infoString)) {
-					infoString = context.getString(R.string.open_network_to_recognise_express);
-				}
+
+        BaseUtil.excute(new Runnable() {
+            @Override
+            public void run() {
+                String infoString = NetWorkUtil.getInstance().searchExpress(
+                        context,
+                        info.getCompany(),
+                        info.getNumber(),
+                        ServerUtil.getInstance(context).getUserID());
+
+                if (StringUtil.isEmpty(infoString)) {
+                    infoString = context.getString(R.string.open_network_to_recognise_express);
+                }
                 if (null != handler) {
                     info.setInfo(infoString);
                     handler.sendMessage(handler.obtainMessage(
                             MessageWhat.NET_REQUEST_EXPRESS, info));
                 }
             }
-		}).start();
+        });
 	}
 
 	/**
@@ -156,7 +158,7 @@ public class BusinessHelper {
 			return;
 		}
 		info.setChanged(false);
-		new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
 			@Override
 			public void run() {
 				String infoString = NetWorkUtil.getInstance().searchExpress(
@@ -177,11 +179,11 @@ public class BusinessHelper {
                 }
 
             }
-		}).start();
+		});
 	}
 
 	/**
-	 * 获取号码资源
+	 * 获取天气
 	 *
      * @param context
 	 * @param city
@@ -195,22 +197,19 @@ public class BusinessHelper {
 		if (StringUtil.isEmpty(city)) {
 			return;
 		}
-		new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
 			@Override
 			public void run() {
 				String infoString = NetWorkUtil.getInstance().searchWeather(
 						context, 
 						city,
 						ServerUtil.getInstance(context).getUserID());
-				
-				if (StringUtil.isEmpty(infoString)) {
-					infoString = context.getString(R.string.open_network_to_recognise_express);
-				}
+
                 if (null != handler) {
                     handler.sendMessage(handler.obtainMessage(
                             MessageWhat.NET_REQUEST_WEATHER, infoString));
                 }
             }
-		}).start();
+		});
 	}
 }

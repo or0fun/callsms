@@ -84,13 +84,6 @@ public class SMSDialog implements OnClickListener {
 	// 播报
 	protected Button mBroadcastButton;
 
-	// 回复
-	protected Button mReplyButton;
-	// 拨打
-	protected Button mCallButton;
-	// 关闭
-	protected Button mCloseButton;
-
 	protected Handler myHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -133,12 +126,9 @@ public class SMSDialog implements OnClickListener {
 		mBroadcastButton = (Button) mView.findViewById(R.id.broadcast);
 		mBroadcastButton.setOnClickListener(this);
 
-		mReplyButton = (Button) mView.findViewById(R.id.reply);
-		mReplyButton.setOnClickListener(this);
-		mCallButton = (Button) mView.findViewById(R.id.call);
-		mCallButton.setOnClickListener(this);
-		mCloseButton = (Button) mView.findViewById(R.id.close);
-		mCloseButton.setOnClickListener(this);
+        mView.findViewById(R.id.reply).setOnClickListener(this);
+        mView.findViewById(R.id.call).setOnClickListener(this);
+        mView.findViewById(R.id.close).setOnClickListener(this);
 
 		setContent(msg);
 	}

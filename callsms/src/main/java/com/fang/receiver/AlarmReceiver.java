@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.fang.common.util.BaseUtil;
 import com.fang.sms.SMSHelper;
 import com.fang.sms.SendSMSInfo;
 import com.fang.util.Util;
@@ -21,15 +22,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         	final Object object = intent.getSerializableExtra(INFO);
         	if (null != object) {
     			final SendSMSInfo info = (SendSMSInfo)object;
-        		new Thread(){
-					@Override
-					public void run() {
-						super.run();
-		    			List<String> receiverList = info.getmReceiverList();
-		    			SMSHelper.sendSMS(receiverList, info.getContent(), null, null);
-					}
-        			
-        		}.start();
+                BaseUtil.excute(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                List<String> receiverList = info.getmReceiverList();
+                                SMSHelper.sendSMS(receiverList, info.getContent(), null, null);
+                            }
+
+                        });
                 Util.cancelAlarm(context, info.getResultCode());
         		SMSHelper.removeSMSInfo(context, requestCode);
     		}

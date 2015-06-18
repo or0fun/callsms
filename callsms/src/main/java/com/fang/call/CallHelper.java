@@ -178,7 +178,7 @@ public class CallHelper {
         if (StringUtil.isEmpty(number)) {
             return;
         }
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 String lastDateString = getLastRecordDate(context, number);
@@ -190,7 +190,7 @@ public class CallHelper {
                     }
                 }
             }
-        }).start();
+        });
     }
 
     /**
@@ -206,7 +206,7 @@ public class CallHelper {
         if (StringUtil.isEmpty(number)) {
             return;
         }
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 StringBuilder result = new StringBuilder();
@@ -224,7 +224,7 @@ public class CallHelper {
                             MessageWhat.CALL_RECORDS, result.toString()));
                 }
             }
-        }).start();
+        });
     }
 
     private static List<Map<String, Object>> getCallRecordsList(Cursor cursor) {
@@ -316,7 +316,7 @@ public class CallHelper {
         if (null == context || null == handler || StringUtil.isEmpty(number)) {
             return;
         }
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 String sortOrder = String.format("%s desc", CallLog.Calls.DATE);
@@ -325,7 +325,7 @@ public class CallHelper {
                 handler.sendMessage(handler.obtainMessage(
                         MessageWhat.FRESH_CALL_RECORD, callRecords));
             }
-        }).start();
+        });
     }
 
     /**
@@ -399,7 +399,7 @@ public class CallHelper {
      * @param context
      * @return
      */
-    public static void getCallRecordsList(Context context) {
+    public static void getCallRecordsList(final Context context) {
         DebugLog.d(TAG, "getCallRecordsList");
         if (isReading) {
             DebugLog.d(TAG, "getCallRecordsList: isReading is true");
@@ -413,89 +413,95 @@ public class CallHelper {
         }
 
         isReading = true;
-        String sortOrder = String.format("%s desc", CallLog.Calls.DATE);
-        Cursor cursor = context.getContentResolver().query(
-                CallLog.Calls.CONTENT_URI, CALL_RECORD_PARAMETERS, null, null,
-                sortOrder);
-        List<Map<String, Object>> callRecords = new ArrayList<Map<String, Object>>();
 
-        if (null != cursor) {
-            if (cursor.moveToFirst()) {
-                int count = 0;
-                Map<String, Object> callRecord = null;
-                do {
-                    // id
-                    int id = cursor.getInt(cursor.getColumnIndex(Calls._ID));
-                    // 号码
-                    String numberString = cursor.getString(cursor
-                            .getColumnIndex(Calls.NUMBER));
-                    if (null == callRecord) {
-                        callRecord = new HashMap<String, Object>();
-                        count++;
-                    } else if (numberString
-                            .equals(callRecord.get(ExtraName.PARAM_NUMBER))) {
-                        count++;
-                        continue;
-                    } else {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String sortOrder = String.format("%s desc", CallLog.Calls.DATE);
+                Cursor cursor = context.getContentResolver().query(
+                        CallLog.Calls.CONTENT_URI, CALL_RECORD_PARAMETERS, null, null,
+                        sortOrder);
+                List<Map<String, Object>> callRecords = new ArrayList<Map<String, Object>>();
+
+                if (null != cursor) {
+                    if (cursor.moveToFirst()) {
+                        int count = 0;
+                        Map<String, Object> callRecord = null;
+                        do {
+                            // id
+                            int id = cursor.getInt(cursor.getColumnIndex(Calls._ID));
+                            // 号码
+                            String numberString = cursor.getString(cursor
+                                    .getColumnIndex(Calls.NUMBER));
+                            if (null == callRecord) {
+                                callRecord = new HashMap<String, Object>();
+                                count++;
+                            } else if (numberString
+                                    .equals(callRecord.get(ExtraName.PARAM_NUMBER))) {
+                                count++;
+                                continue;
+                            } else {
+                                callRecord.put(PARAM_COUNT, count);
+                                count = 0;
+                                callRecords.add(callRecord);
+
+                                callRecord = new HashMap<String, Object>();
+                            }
+
+                            callRecord.put(ExtraName.PARAM_ID, id);
+                            //号码
+                            callRecord.put(ExtraName.PARAM_NUMBER, numberString);
+
+                            // 联系人姓名
+                            String nameString = cursor.getString(cursor
+                                    .getColumnIndexOrThrow(Calls.CACHED_NAME));
+
+                            if (StringUtil.isEmpty(nameString)) {
+                                callRecord.put(ExtraName.PARAM_NAME, "");
+                            } else {
+                                callRecord.put(ExtraName.PARAM_NAME, nameString);
+                            }
+                            // 类型
+                            int callType = Integer.parseInt(cursor.getString(cursor
+                                    .getColumnIndex(Calls.TYPE)));
+                            callRecord.put(PARAM_TYPE, callType);
+                            //icon
+                            callRecord.put(PARAM_ICON, getIcon(callType));
+                            //日期
+                            callRecord.put(PARAM_DATE, cursor.getString(cursor
+                                    .getColumnIndexOrThrow(Calls.DATE)));
+                            long duration = Long.parseLong(cursor.getString(cursor
+                                    .getColumnIndexOrThrow(Calls.DURATION)));
+
+                            //时长
+                            callRecord.put(PARAM_DURATION,
+                                    BaseUtil.secondsToString(duration));
+                            //信息
+                            callRecord.put(
+                                    PARAM_INFO,
+                                    NumberDatabaseManager.getInstance(context).query(
+                                            numberString));
+
+                        } while (cursor.moveToNext());
+
+                        //次数
                         callRecord.put(PARAM_COUNT, count);
-                        count = 0;
                         callRecords.add(callRecord);
 
-                        callRecord = new HashMap<String, Object>();
+                    }
+                    cursor.close();
+
+                    mAllCallRecords = callRecords;
+
+                    for (ICallRecordListener listener : mCallRecordListeners) {
+                        listener.onResult(true);
                     }
 
-                    callRecord.put(ExtraName.PARAM_ID, id);
-                    //号码
-                    callRecord.put(ExtraName.PARAM_NUMBER, numberString);
-
-                    // 联系人姓名
-                    String nameString = cursor.getString(cursor
-                            .getColumnIndexOrThrow(Calls.CACHED_NAME));
-
-                    if (StringUtil.isEmpty(nameString)) {
-                        callRecord.put(ExtraName.PARAM_NAME, "");
-                    } else {
-                        callRecord.put(ExtraName.PARAM_NAME, nameString);
-                    }
-                    // 类型
-                    int callType = Integer.parseInt(cursor.getString(cursor
-                            .getColumnIndex(Calls.TYPE)));
-                    callRecord.put(PARAM_TYPE, callType);
-                    //icon
-                    callRecord.put(PARAM_ICON, getIcon(callType));
-                    //日期
-                    callRecord.put(PARAM_DATE, cursor.getString(cursor
-                            .getColumnIndexOrThrow(Calls.DATE)));
-                    long duration = Long.parseLong(cursor.getString(cursor
-                            .getColumnIndexOrThrow(Calls.DURATION)));
-
-                    //时长
-                    callRecord.put(PARAM_DURATION,
-                            BaseUtil.secondsToString(duration));
-                    //信息
-                    callRecord.put(
-                            PARAM_INFO,
-                            NumberDatabaseManager.getInstance(context).query(
-                                    numberString));
-
-                } while (cursor.moveToNext());
-
-                //次数
-                callRecord.put(PARAM_COUNT, count);
-                callRecords.add(callRecord);
-
+                    CallHelper.setHasRead(true);
+                    isReading = false;
+                }
             }
-            cursor.close();
-
-            mAllCallRecords = callRecords;
-
-            for (ICallRecordListener listener : mCallRecordListeners) {
-                listener.onResult(true);
-            }
-
-            CallHelper.setHasRead(true);
-            isReading = false;
-        }
+        }).start();
     }
 
     /**

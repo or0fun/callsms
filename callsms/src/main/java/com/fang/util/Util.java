@@ -64,14 +64,14 @@ public class Util {
             @Override
             public void onClick(View arg0) {
                 BaseUtil.removeView(windowManager, confirmView);
-                new Thread(new Runnable() {
+                BaseUtil.excute(new Runnable() {
                     @Override
                     public void run() {
                         if (null != deleteConfirm) {
                             deleteConfirm.delete(id, position);
                         }
                     }
-                }).start();
+                });
             }
         });
 		confirmView.findViewById(R.id.cancel).setOnClickListener(

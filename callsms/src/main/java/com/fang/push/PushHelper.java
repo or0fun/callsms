@@ -3,6 +3,7 @@ package com.fang.push;
 import android.content.Context;
 import android.util.Log;
 
+import com.fang.common.util.BaseUtil;
 import com.fang.net.NetRequestListener;
 import com.fang.net.NetRequestResult;
 import com.fang.net.NetRequestResultCode;
@@ -47,13 +48,13 @@ public class PushHelper {
     public void checkPushRequest(final Context context) {
         mContext = context;
 
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 ServerUtil server = ServerUtil.getInstance(context);
                 server.request(NetResuestHelper.PUSH, mNetRequestListener);
             }
-        }).start();
+        });
     }
     /**
      * 网络监听

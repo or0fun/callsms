@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -254,7 +255,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             DebugLog.d(TAG, "searchWeather: the time is too short");
             return;
         }
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 // 最多7天
@@ -264,7 +265,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
                     myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_WEATHER, weather));
                 }
             }
-        }).start();
+        });
     }
 
 
@@ -276,7 +277,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             DebugLog.d(TAG, "searchNongli: the time is too short");
             return;
         }
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 String nongli = NetWorkUtil.getInstance().searchNongli();
@@ -285,7 +286,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
                     myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_NONGLI, nongli));
                 }
             }
-        }).start();
+        });
     }
 
     /**
@@ -344,6 +345,11 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             Bundle bundle = data.getExtras();
             String scanResult = bundle.getString(ExtraName.RESULT);
             setResultText(scanResult);
+            if (!TextUtils.isEmpty(scanResult)) {
+                if (scanResult.matches(Patterns.URL_PATTERN)) {
+                    Util.openUrl(scanResult);
+                }
+            }
 
         }
     }

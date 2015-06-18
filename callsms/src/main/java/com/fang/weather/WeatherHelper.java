@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.CallFrom;
@@ -49,7 +50,7 @@ public class WeatherHelper {
             return;
         }
 
-        new Thread(new Runnable() {
+        BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 if (NetWorkUtil.isNetworkConnected(context)) {
@@ -73,7 +74,7 @@ public class WeatherHelper {
                     }
                 }
             }
-        }).start();
+        });
     }
 
 

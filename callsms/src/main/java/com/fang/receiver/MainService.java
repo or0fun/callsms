@@ -86,20 +86,12 @@ public class MainService extends Service {
             }
         }, 1000 * 10);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //获取通讯录
-                ContactHelper.readContact(mContext);
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //获取通话记录
-                CallHelper.getCallRecordsList(mContext);
-            }
-        }).start();
+        //获取通讯录
+        ContactHelper.readContact(mContext);
+
+        //获取通话记录
+        CallHelper.getCallRecordsList(mContext);
+
 
         //上次crash日志
         if (NetWorkUtil.isNetworkConnected(mContext)) {
@@ -127,21 +119,12 @@ public class MainService extends Service {
             } else if (TASK_TYPE_PUSH_REQUEST == task) {
                 PushHelper.getInstance().checkPushRequest(mContext);
             } else if (TASK_TYPE_REFRESH_CALL_RECORDS == task) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //获取通话记录
-                        CallHelper.getCallRecordsList(mContext);
-                    }
-                }).start();
+                //获取通话记录
+                CallHelper.getCallRecordsList(mContext);
+
             } else if (TASK_TYPE_REFRESH_CONTACTS == task) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //获取通讯录
-                        ContactHelper.readContact(mContext);
-                    }
-                }).start();
+                //获取通讯录
+                ContactHelper.readContact(mContext);
             }
         }
         return super.onStartCommand(intent, flags, startId);

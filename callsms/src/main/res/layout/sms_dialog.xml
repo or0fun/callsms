@@ -119,37 +119,64 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <Button
+        <LinearLayout
             android:id="@+id/call"
-            style="@style/mainButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/call" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_call"/>
+            <TextView
+                style="@style/buttonText"
+                android:text="@string/call" />
+        </LinearLayout>
 
         <View style="@style/vsplitViewWhite" />
 
-        <Button
+        <LinearLayout
             android:id="@+id/reply"
-            style="@style/mainButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/reply" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sms"/>
+            <TextView
+                style="@style/buttonText"
+                android:text="@string/reply" />
+        </LinearLayout>
 
         <View style="@style/vsplitViewWhite" />
 
-        <Button
+        <LinearLayout
             android:id="@+id/close"
-            style="@style/mainButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="@string/close" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/main_button_selector"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_close"/>
+            <TextView
+                style="@style/buttonText"
+                android:text="@string/close" />
+        </LinearLayout>
 
     </LinearLayout>
 

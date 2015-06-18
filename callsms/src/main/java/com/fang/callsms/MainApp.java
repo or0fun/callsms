@@ -9,10 +9,13 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.fang.background.BackgroundService;
+import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
 import com.fang.common.util.BaseUtil;
 import com.fang.receiver.MainService;
 import com.fang.weixin.WXCommon;
+
+import java.util.concurrent.Executors;
 
 /**
  * Created by fang on 3/2/15.
@@ -31,6 +34,8 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
         }
 
         Thread.setDefaultUncaughtExceptionHandler(this);
+
+        Global.fixedThreadPool = Executors.newFixedThreadPool(CustomConstant.MAX_THREAD_COUNT);
 
         WXCommon.init(this);
         com.fang.util.SharedPreferencesHelper.getInstance().init(this);

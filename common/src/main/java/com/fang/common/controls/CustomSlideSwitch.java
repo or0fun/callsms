@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.fang.common.R;
+import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.SharedPreferencesHelper;
 
@@ -113,7 +114,7 @@ public class CustomSlideSwitch extends View {
 				}
 				AnimationTransRunnable runnable = new AnimationTransRunnable(
 						xFrom, xTo, 1);
-				new Thread(runnable).start();
+                BaseUtil.excute(runnable);
 			} else {
 				invalidate();
 				mHasScrolled = false;
