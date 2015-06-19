@@ -332,6 +332,11 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
     public void setResultText(String scanResult) {
         mNumberInfoString = scanResult;
         MySpan.formatTextView(mContext, mResultTextView, scanResult, false);
+        if (!TextUtils.isEmpty(scanResult)) {
+            if (scanResult.matches(Patterns.URL_PATTERN)) {
+                Util.openUrl(scanResult);
+            }
+        }
     }
 
     @Override
@@ -342,11 +347,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             Bundle bundle = data.getExtras();
             String scanResult = bundle.getString(ExtraName.RESULT);
             setResultText(scanResult);
-            if (!TextUtils.isEmpty(scanResult)) {
-                if (scanResult.matches(Patterns.URL_PATTERN)) {
-                    Util.openUrl(scanResult);
-                }
-            }
 
         }
     }

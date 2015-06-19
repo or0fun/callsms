@@ -49,6 +49,9 @@ public class SharedPreferencesHelper extends AbsSharedPre {
     //扫一扫 快捷方式
     public static final String SCAN = "scan";
 
+    //l¥立即检查更新
+    public static final String UPDATE_VERSION = "UPDATE_VERSION";
+
     @Override
     public void init(Context context) {
         mSharedPreferences = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);

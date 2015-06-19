@@ -13,6 +13,7 @@ import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
 import com.fang.common.util.BaseUtil;
 import com.fang.receiver.MainService;
+import com.fang.util.SharedPreferencesHelper;
 import com.fang.weixin.WXCommon;
 
 import java.util.concurrent.Executors;
@@ -54,6 +55,8 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         BaseUtil.addCrashException(ex);
+
+        SharedPreferencesHelper.getInstance().setBoolean(SharedPreferencesHelper.UPDATE_VERSION, true);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -382,12 +382,15 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		long now = new Date().getTime();
 		long last = SharedPreferencesHelper.getInstance().getLong(
                 SharedPreferencesHelper.LAUNCH_LAST_TIME, 0);
-		if (manual || now - last > CustomConstant.ONE_DAY) {
+		if (manual || now - last > CustomConstant.ONE_DAY ||
+                SharedPreferencesHelper.getInstance().getBoolean(SharedPreferencesHelper.UPDATE_VERSION, false)) {
 			UpdateVersion.checkVersion(mContext, manual, mDownloadListener);
 
             //保持时间
             SharedPreferencesHelper.getInstance().setLong(
                     SharedPreferencesHelper.LAUNCH_LAST_TIME, new Date().getTime());
+
+            SharedPreferencesHelper.getInstance().setBoolean(SharedPreferencesHelper.UPDATE_VERSION, false);
 
             //日志
             LogOperate.updateLog(mContext, LogCode.ACTIVE_APP);
