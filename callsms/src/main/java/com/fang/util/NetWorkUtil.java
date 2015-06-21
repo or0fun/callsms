@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
-import com.fang.common.CustomConstant;
+import com.fang.base.RequestUrl;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.StringUtil;
 import com.fang.security.AESUtil;
@@ -147,7 +147,7 @@ public class NetWorkUtil {
 		str = str.replace(" ", "");
 		str = str.replace("-", "");
 		str = mAesUtil.encrypt(str);
-		String url = CustomConstant.API_URL + "?t=phone&w=" + str + "&u=" + uid+ "&e=1";
+		String url = RequestUrl.API_URL + "?t=phone&w=" + str + "&u=" + uid+ "&e=1";
 		String infoString = getHttpRequest(url);
 		if (StringUtil.isEmpty(infoString)) {
 			return "";
@@ -167,7 +167,7 @@ public class NetWorkUtil {
 		}
 		String str = company + number;
 		str = mAesUtil.encrypt(str);
-		String url = CustomConstant.API_URL + "?t=express&w=" + str + "&u=" + uid+ "&e=1";
+		String url = RequestUrl.API_URL + "?t=express&w=" + str + "&u=" + uid+ "&e=1";
 		String infoString = getHttpRequest(url);
 		if (StringUtil.isEmpty(infoString)) {
 			return "";
@@ -184,7 +184,7 @@ public class NetWorkUtil {
 		}
 		String str = city;
 		str = mAesUtil.encrypt(str);
-		String url = CustomConstant.API_URL + "?t=weather&w=" + str + "&u=" + uid+ "&e=1";
+		String url = RequestUrl.API_URL + "?t=weather&w=" + str + "&u=" + uid+ "&e=1";
 		String infoString = getHttpRequest(url);
 		if (StringUtil.isEmpty(infoString)) {
 			return "";
@@ -197,7 +197,7 @@ public class NetWorkUtil {
      */
     public String searchWeather(int days) {
 
-        String url = CustomConstant.API_URL + "?t=weather&w=&u=&e=1&d=" + days;
+        String url = RequestUrl.API_URL + "?t=weather&w=&u=&e=1&d=" + days;
         String infoString = getHttpRequest(url);
         if (StringUtil.isEmpty(infoString)) {
             return "";
@@ -210,7 +210,7 @@ public class NetWorkUtil {
      */
     public String searchNongli() {
 
-        String url = CustomConstant.API_URL + "?t=nongli&w=&u=&e=1";
+        String url = RequestUrl.API_URL + "?t=nongli&w=&u=&e=1";
         String infoString = getHttpRequest(url);
         if (StringUtil.isEmpty(infoString)) {
             return "";
