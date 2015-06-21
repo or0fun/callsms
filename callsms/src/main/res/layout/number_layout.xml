@@ -86,6 +86,12 @@
             android:layout_weight="1" >
         </TextView>
 
+        <TextView
+            android:id="@+id/news"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/news_of_today"
+            android:textColor="@color/button"/>
         <!-- 历史上的今天 -->
         <TextView
             android:id="@+id/today"

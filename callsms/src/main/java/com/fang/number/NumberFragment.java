@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
+import com.fang.base.RequestUrl;
 import com.fang.business.BusinessHelper;
 import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
@@ -155,8 +156,10 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         mWeatherCity = (TextView) rootView.findViewById(R.id.weather_city);
 
         mToday = (TextView) rootView.findViewById(R.id.today);
-        mHistory = (TextView) rootView.findViewById(R.id.history);
-        mHistory.setOnClickListener(this);
+
+        rootView.findViewById(R.id.history).setOnClickListener(this);
+
+        rootView.findViewById(R.id.news).setOnClickListener(this);
 
         rootView.findViewById(R.id.scan).setOnClickListener(this);
 
@@ -194,15 +197,15 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         int id = view.getId();
 		if (view == mFoodListLayout) {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_FOOD));
-		}else if (view == mHouseListLayout) {
+		} else if (view == mHouseListLayout) {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_HOUSE));
-		}else if (view == mExpressListLayout) {
+		} else if (view == mExpressListLayout) {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_EXPRESS));
-		}else if (view == mServiceListLayout) {
+		} else if (view == mServiceListLayout) {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_SERVICE));
-		}else if (view == mSearchBtn) {
+		} else if (view == mSearchBtn) {
 			searchBtnClick();
-		}else if (view == mSearchExpressBtn) {
+		} else if (view == mSearchExpressBtn) {
 			mContext.startActivity(new Intent(mContext, ExpressListActivity.class));
 		} else if (id == R.id.scan) {//扫一扫
             Intent openCameraIntent = new Intent(mContext,
@@ -210,7 +213,9 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             startActivityForResult(openCameraIntent, 0);
             LogOperate.updateLog(mContext, LogCode.SCAN);
         } else if (id == R.id.history) {
-            Util.openUrl(CustomConstant.HISTORY_OF_TODAY);
+            Util.openUrl(RequestUrl.HISTORY_OF_TODAY);
+        } else if (id == R.id.news) {
+            Util.openUrl(RequestUrl.NEWS_OF_TODAY);
         }
 	}
 	
@@ -220,7 +225,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	protected void searchBtnClick() {
 		String str = mSearchEditView.getText().toString().trim();
         if (!str.matches(Patterns.PHONE_NUMBER_PATTERN)) {
-            Util.openUrl(CustomConstant.BAIDU + str);
+            Util.openUrl(RequestUrl.BAIDU + str);
             return;
         }
         if (null == mCallRecordDialog) {

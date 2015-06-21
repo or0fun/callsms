@@ -19,8 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fang.base.BaseActivity;
+import com.fang.base.RequestUrl;
 import com.fang.callsms.R;
-import com.fang.common.CustomConstant;
 import com.fang.common.controls.CustomWebView;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
@@ -117,7 +117,7 @@ public class WebViewActivity extends BaseActivity {
         if (StringUtil.isEmpty(url)) {
             return;
         }
-        if (CustomConstant.HISTORY_OF_TODAY.equals(url)) {
+        if (RequestUrl.HISTORY_OF_TODAY.equals(url)) {
             LogOperate.updateLog(mContext, LogCode.HISTORY_OF_TODAY);
         }
         mWebView.loadUrl(url);

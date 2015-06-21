@@ -26,7 +26,6 @@ import android.widget.ListView;
 
 import com.fang.base.BaseActivity;
 import com.fang.callsms.R;
-import com.fang.common.CustomConstant;
 import com.fang.contact.ContactHelper;
 import com.fang.contact.ContactInfo;
 import com.fang.datatype.ExtraName;
@@ -100,7 +99,7 @@ public class SelectContactActivity extends BaseActivity implements OnClickListen
 
 		mContactListData = new ArrayList<HashMap<String, Object>>();
 
-		mSelectedContacts = (ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra(CustomConstant.SELECT_CONTACT_PARAMETER);
+		mSelectedContacts = (ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra(ExtraName.PARAM_SELECT_CONTACT_PARAMETER);
 		mContactPositionMapArray = new SparseIntArray();
 		
 		getPhoneContacts();
@@ -193,7 +192,7 @@ public class SelectContactActivity extends BaseActivity implements OnClickListen
 						listDatachecked.add(hashMap);
 					}
 				}
-				intent.putExtra(CustomConstant.SELECT_CONTACT_PARAMETER, listDatachecked);
+				intent.putExtra(ExtraName.PARAM_SELECT_CONTACT_PARAMETER, listDatachecked);
 			}
 			setResult(RESULT_OK, intent);
 			this.finish();

@@ -3,13 +3,13 @@ package com.fang.net;
 import android.content.Context;
 import android.util.Log;
 
-import com.fang.common.CustomConstant;
+import com.fang.base.RequestUrl;
 import com.fang.common.base.Global;
 import com.fang.common.util.BaseUtil;
+import com.fang.common.util.JsonUtil;
 import com.fang.logs.LogOperate;
 import com.fang.security.AESUtil;
 import com.fang.security.SecurityHelper;
-import com.fang.common.util.JsonUtil;
 import com.fang.util.NetWorkUtil;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
@@ -373,9 +373,9 @@ public class ServerUtil implements Runnable {
      */
     private String getPostUrl() {
         if (Global.debug) {
-            return  CustomConstant.DEFAULT_POST_URL_TEST;
+            return  RequestUrl.DEFAULT_POST_URL_TEST;
         }
-        return CustomConstant.DEFAULT_POST_URL;
+        return RequestUrl.DEFAULT_POST_URL;
     }
 
 }

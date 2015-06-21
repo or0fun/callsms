@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.fang.base.BaseActivity;
 import com.fang.base.BaseFragment;
 import com.fang.callsms.R;
-import com.fang.common.CustomConstant;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
@@ -143,7 +142,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 				mReceiverList = new ArrayList<String>();
 
 				mListDataSelected = (ArrayList<HashMap<String, Object>>) data
-						.getSerializableExtra(CustomConstant.SELECT_CONTACT_PARAMETER);
+						.getSerializableExtra(ExtraName.PARAM_SELECT_CONTACT_PARAMETER);
 				if (mListDataSelected != null) {
                     StringBuilder contactsBuffer = new StringBuilder();
 					for (HashMap<String, Object> map : mListDataSelected) {
@@ -224,7 +223,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 		} else if (view == mSelectContact) {
 			// 选择联系人
 			Intent intent = new Intent(mContext, SelectContactActivity.class);
-			intent.putExtra(CustomConstant.SELECT_CONTACT_PARAMETER,
+			intent.putExtra(ExtraName.PARAM_SELECT_CONTACT_PARAMETER,
 					mListDataSelected);
 			startActivityForResult(intent, REQUEST_CODE);
 		} else if (mSendTimeTextView == view) {

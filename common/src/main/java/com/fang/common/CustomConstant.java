@@ -9,28 +9,9 @@ import android.net.Uri;
  *
  */
 public class CustomConstant {
-    /** 信息获取的API */
-    public static final String API_URL = "http://115.29.17.79/icoding/api.php";
-    /** 接收post请求的服务器地址 */
-    public static final String DEFAULT_POST_URL = "http://115.29.17.79/we/api.php";
-    /** 接收post请求的服务器地址 测试地址*/
-    public static final String DEFAULT_POST_URL_TEST = "http://115.29.17.79/we/api_test.php";
-    /** 接收get请求的服务器地址 */
-    public static final String DEFAULT_GET_URL = "";
-	/** 版本更新地址 */
-	public static final String VERSION_GET_URL = "http://115.29.17.79/we/version.php";
-	/** 版本更新地址 测试地址 */
-	public static final String VERSION_GET_URL_TEST = "http://115.29.17.79/we/version_test.php";
 
-    /** 历史上的今天 **/
-    public static final String HISTORY_OF_TODAY = "http://ie8384.com/we/today.php";
-    /** baidu **/
-    public static final String BAIDU = "https://www.baidu.com/s?wd=";
-
-	/** 收件箱Uri */
-	public static final Uri SMS_INBOX_URI = Uri.parse("content://sms/inbox");  
-    /** 选择联系人 传递数据的参数名 */
-	public static final String SELECT_CONTACT_PARAMETER =  "contact_selected";
+    /** 收件箱Uri */
+    public static final Uri SMS_INBOX_URI = Uri.parse("content://sms/inbox");
 
     /** 一小时 */
     public static final long ONE_HOUR = 1000 * 3600;

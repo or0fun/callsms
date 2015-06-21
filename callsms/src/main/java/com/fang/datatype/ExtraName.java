@@ -14,4 +14,7 @@ public class ExtraName {
     public static final String PARAM_ID = "id";
     public static final String PARAM_NAME = "name";
     public static final String PARAM_NUMBER = "number";
+
+    /** 选择联系人 传递数据的参数名 */
+    public static final String PARAM_SELECT_CONTACT_PARAMETER =  "contact_selected";
 }

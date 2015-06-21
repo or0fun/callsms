@@ -7,9 +7,9 @@ import android.os.Handler;
 
 import com.fang.callsms.MySMSMessage;
 import com.fang.common.CustomConstant;
+import com.fang.common.util.DebugLog;
 import com.fang.sms.SMSHandler;
 import com.fang.sms.SMSHelper;
-import com.fang.common.util.DebugLog;
 import com.fang.util.SharedPreferencesHelper;
 
 public class SMSContentObserver extends ContentObserver {
