@@ -51,7 +51,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/green"/>
+        android:progressDrawable="@drawable/progress_horizontal"
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
