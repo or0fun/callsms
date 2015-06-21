@@ -181,6 +181,11 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.startsWith("mailto:") || url.startsWith("geo:") ||url.startsWith("tel:")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
+            }
             return super.shouldOverrideUrlLoading(view, url);
 
         }
