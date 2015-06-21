@@ -1,14 +1,11 @@
 package com.fang.number;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,16 +16,12 @@ import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
 import com.fang.base.RequestUrl;
-import com.fang.business.BusinessHelper;
-import com.fang.call.CallRecordDialog;
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
-import com.fang.common.controls.CustomEditText;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.Patterns;
 import com.fang.common.util.StringUtil;
-import com.fang.contact.ContactHelper;
 import com.fang.datatype.ExtraName;
 import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
@@ -39,6 +32,7 @@ import com.fang.util.NetWorkUtil;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.util.Util;
 import com.fang.weather.WeatherHelper;
+import com.fang.widget.SearchView;
 import com.fang.zxing.activity.CaptureActivity;
 
 public class NumberFragment extends BaseFragment implements OnClickListener {
@@ -46,10 +40,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 	private final String TAG = "NumberFragment";
 	//显示结果
 	TextView mResultTextView;
-	//搜索框
-    CustomEditText mSearchEditView;
-	//搜索按钮
-	Button mSearchBtn;
 	//订餐
 	LinearLayout mFoodListLayout;
 	//订酒店
@@ -78,9 +68,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
     //天气更新时间
     long mLastWeatherUpdateTime = 0;
 
-    // 号码信息对话框
-    CallRecordDialog mCallRecordDialog;
-    Bitmap mContactBitmap;
+    SearchView mSearchView;
 
 	protected Handler myHandler = new Handler() {
 		@Override
@@ -127,18 +115,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		mResultTextView = (TextView) rootView.findViewById(R.id.result);
         MySpan.formatTextView(mContext, mResultTextView, mNumberInfoString, false);
 
-		mSearchBtn = (Button) rootView.findViewById(R.id.searchBtn);
-		mSearchBtn.setOnClickListener(this);
-		mSearchEditView = (CustomEditText) rootView.findViewById(R.id.search);
-		mSearchEditView.setOnKeyListener(new View.OnKeyListener() {
-		    @Override
-		    public boolean onKey(View v, int keyCode, KeyEvent event) {
-		        if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-					searchBtnClick();
-				}
-		        return false;
-		    }
-		});
+        mSearchView = new SearchView(mContext, rootView.findViewById(R.id.search_view));
 		
 		mFoodListLayout = (LinearLayout) rootView.findViewById(R.id.foodlistBtn);
 		mFoodListLayout.setOnClickListener(this);
@@ -176,7 +153,7 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 		DebugLog.d(TAG, "onResume");
 		String str = BaseUtil.paste(mContext);
 		if (str != null && str.matches(Patterns.NUMBER_PATTERN) && !str.equals(mPasteNumberString)) {
-			mSearchEditView.setText(str);
+			mSearchView.setText(str);
 			mPasteNumberString = str;
 		}
 
@@ -203,8 +180,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_EXPRESS));
 		} else if (view == mServiceListLayout) {
 			mContext.startActivity(new Intent(NumberServiceHelper.ACTION_SERVICE));
-		} else if (view == mSearchBtn) {
-			searchBtnClick();
 		} else if (view == mSearchExpressBtn) {
 			mContext.startActivity(new Intent(mContext, ExpressListActivity.class));
 		} else if (id == R.id.scan) {//扫一扫
@@ -217,39 +192,6 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         } else if (id == R.id.news) {
             Util.openUrl(RequestUrl.NEWS_OF_TODAY);
         }
-	}
-	
-	/**
-	 *  搜索号码
-	 */
-	protected void searchBtnClick() {
-		String str = mSearchEditView.getText().toString().trim();
-        if (!str.matches(Patterns.PHONE_NUMBER_PATTERN)) {
-            Util.openUrl(RequestUrl.BAIDU + str);
-            return;
-        }
-        if (null == mCallRecordDialog) {
-            if (null == mContactBitmap) {
-                mContactBitmap = BitmapFactory.decodeResource(
-                        mContext.getResources(), R.drawable.contact_photo);
-            }
-            mCallRecordDialog = new CallRecordDialog(mContext, str,
-                    ContactHelper.getPerson(mContext, str), mContactBitmap);
-        } else {
-            if (!str.equals(mNumberString)) {
-                mCallRecordDialog.setContent(str,
-                        ContactHelper.getPerson(mContext, str), mContactBitmap);
-                mResultTextView.setText(mContext.getString(R.string.number_seaching));
-                mNumberString = String.format("%s", str);
-                BusinessHelper.getNumberInfo(mContext, mNumberString, myHandler);
-
-                SharedPreferencesHelper.getInstance().setString(SharedPreferencesHelper.NUMBER_SEARCH, str);
-            }
-        }
-        mCallRecordDialog.show();
-
-		//日志
-		LogOperate.updateLog(mContext, LogCode.SEARCH_NUMBER);
 	}
 
     private void searchWeather() {

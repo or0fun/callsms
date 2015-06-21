@@ -18,10 +18,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.fang.base.BaseActivity;
 import com.fang.base.RequestUrl;
+import com.fang.base.WEActivity;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomWebView;
+import com.fang.common.util.BaseUtil;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
 import com.fang.logs.LogCode;
@@ -30,18 +31,21 @@ import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 import com.fang.weixin.WXConstants;
 import com.fang.weixin.WXShareHandler;
+import com.fang.widget.SearchView;
 
 
 /**
  * Created by benren.fj on 6/11/15.
  */
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends WEActivity implements View.OnClickListener {
 
     private CustomWebView mWebView;
     private TextView mTitleTV;
     private ProgressBar mProgressBar;
     private ImageView mBack;
     private ImageView mShare;
+    private SearchView mSearchView;
+    private View mSearchFrame;
 
     private View myView;
     private WebChromeClient.CustomViewCallback myCallback;
@@ -75,6 +79,13 @@ public class WebViewActivity extends BaseActivity {
             }
         });
         initWebView();
+
+        mSearchView = new SearchView(mContext, findViewById(R.id.search_view));
+        mSearchFrame = findViewById(R.id.search_frame);
+        mSearchFrame.setVisibility(View.GONE);
+        mSearchFrame.setOnClickListener(this);
+
+        findViewById(R.id.search_icon).setOnClickListener(this);
 
         open(getIntent());
     }
@@ -136,6 +147,30 @@ public class WebViewActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.search_icon) {
+            if (mSearchFrame.getVisibility() == View.VISIBLE) {
+                BaseUtil.showKeyBoard(mSearchView.getSearchEditView(), false);
+                mSearchFrame.setVisibility(View.GONE);
+            } else {
+                mSearchFrame.setVisibility(View.VISIBLE);
+                mSearchView.getSearchEditView().requestFocus();
+                BaseUtil.showKeyBoard(mSearchView.getSearchEditView(), true);
+            }
+        } else if (id == R.id.share) {
+            if (null == shareHandler) {
+                shareHandler = new WXShareHandler(mContext);
+            }
+            shareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
+                    BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
+        } else if (id == R.id.search_frame) {
+            BaseUtil.showKeyBoard(mSearchView.getSearchEditView(), false);
+            mSearchFrame.setVisibility(View.GONE);
+        }
+     }
+
     private class MyWebViewClient extends WebViewClient {
 
         @Override
@@ -153,6 +188,7 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
+            mSearchFrame.setVisibility(View.GONE);
             ServerUtil.getInstance(mContext).request(NetResuestHelper.url, url, null);
         }
     }

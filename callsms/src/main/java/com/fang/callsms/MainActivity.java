@@ -18,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fang.base.BaseActivity;
 import com.fang.base.BaseFragment;
 import com.fang.base.Model;
+import com.fang.base.WEActivity;
 import com.fang.call.CallFragment;
 import com.fang.call.CallHelper;
 import com.fang.common.CustomConstant;
@@ -46,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements OnClickListener {
+public class MainActivity extends WEActivity implements OnClickListener {
 
 	private final String TAG = "MainActivity";
 	

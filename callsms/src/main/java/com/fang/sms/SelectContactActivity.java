@@ -24,7 +24,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.fang.base.BaseActivity;
+import com.fang.base.WEActivity;
 import com.fang.callsms.R;
 import com.fang.contact.ContactHelper;
 import com.fang.contact.ContactInfo;
@@ -41,7 +41,7 @@ import java.util.List;
  * @author fang
  * 
  */
-public class SelectContactActivity extends BaseActivity implements OnClickListener {
+public class SelectContactActivity extends WEActivity implements OnClickListener {
 
 	/** 所有联系人信息 */
 	private ArrayList<HashMap<String, Object>> mContactListData;

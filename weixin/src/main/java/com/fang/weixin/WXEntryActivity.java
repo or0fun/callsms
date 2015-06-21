@@ -1,11 +1,11 @@
 package com.fang.weixin;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.fang.common.base.BaseActivity;
 import com.tencent.mm.sdk.openapi.BaseReq;
 import com.tencent.mm.sdk.openapi.BaseResp;
 import com.tencent.mm.sdk.openapi.ConstantsAPI;
@@ -14,7 +14,7 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.ShowMessageFromWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 	
     private IWXAPI api;
 	

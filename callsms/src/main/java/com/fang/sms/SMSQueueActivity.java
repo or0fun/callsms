@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.fang.base.BaseActivity;
+import com.fang.base.WEActivity;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomProgressDialog;
 import com.fang.common.util.BaseUtil;
@@ -19,7 +19,7 @@ import com.fang.util.Util;
 
 import java.util.List;
 
-public class SMSQueueActivity extends BaseActivity {
+public class SMSQueueActivity extends WEActivity {
 
 	private List<SendSMSInfo> mSmsList;
 	private MyAdapter mAdapter;

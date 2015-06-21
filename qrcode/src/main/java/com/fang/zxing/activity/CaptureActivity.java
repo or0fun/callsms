@@ -1,6 +1,5 @@
 package com.fang.zxing.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
@@ -18,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.fang.common.base.BaseActivity;
 import com.fang.zxing.R;
 import com.fang.zxing.camera.CameraManager;
 import com.fang.zxing.decoding.CaptureActivityHandler;
@@ -33,7 +33,7 @@ import java.util.Vector;
  * Initial the camera
  * @author Ryan.Tang
  */
-public class CaptureActivity extends Activity implements Callback {
+public class CaptureActivity extends BaseActivity implements Callback {
 
 	private CaptureActivityHandler handler;
 	private ViewfinderView viewfinderView;

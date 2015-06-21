@@ -52,7 +52,7 @@ public class NumberServiceHelper {
 	 */
 	public static final Map<String,String> NUMBERS_EXPRESS = new HashMap<String,String>(){//构造方法
 		{
-		put("顺丰快递","4008111111");
+		put("顺丰快递","95338");
 		put("EMS","11183");
 		put("UPS快递","4008208388");
 		put("联邦快递","4008891888");

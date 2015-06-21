@@ -61,4 +61,5 @@
         <item name="android:textSize">@dimen/editTextSize</item>
         <item name="android:singleLine">true</item>
     </style>
+
 </resources>

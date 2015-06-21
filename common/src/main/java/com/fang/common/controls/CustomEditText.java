@@ -109,4 +109,8 @@ public class CustomEditText extends LinearLayout {
             clearBtn.setVisibility(GONE);
         }
     }
+
+    public EditText getEditText() {
+        return editText;
+    }
 }

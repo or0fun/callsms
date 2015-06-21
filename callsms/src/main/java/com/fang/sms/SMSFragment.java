@@ -17,8 +17,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.fang.base.BaseActivity;
 import com.fang.base.BaseFragment;
+import com.fang.base.WEActivity;
 import com.fang.callsms.R;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.StringUtil;
@@ -268,7 +268,7 @@ public class SMSFragment extends BaseFragment implements Runnable,
 				}
 				clearSMSInfo();
 				mReceiverList = null;
-				((BaseActivity)getActivity()).showTip(getString(R.string.sms_into_queue));
+				((WEActivity)getActivity()).showTip(getString(R.string.sms_into_queue));
 			}
 		}
 	}

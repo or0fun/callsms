@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.fang.base.BaseActivity;
+import com.fang.base.WEActivity;
 import com.fang.callsms.R;
 import com.fang.common.util.DebugLog;
 import com.fang.datatype.ExtraName;
@@ -30,7 +30,7 @@ import org.json.JSONObject;
  * @author fang
  *
  */
-public class CommentActivity extends BaseActivity {
+public class CommentActivity extends WEActivity {
 
 	private String TAG = "CommentActivity";
 	

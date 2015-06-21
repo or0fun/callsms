@@ -8,11 +8,11 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.fang.base.BaseActivity;
+import com.fang.base.WEActivity;
 import com.fang.call.CallHelper;
 import com.fang.contact.ContactHelper;
 
-public class WelcomeActivity extends BaseActivity implements AnimationListener {
+public class WelcomeActivity extends WEActivity implements AnimationListener {
 
 	@Override
 	protected void onResume() {

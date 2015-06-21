@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fang.callsms"
-    android:versionCode="23"
-    android:versionName="2.4.3" >
+    android:versionCode="24"
+    android:versionName="2.4.4" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -105,7 +105,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.fang.webview.WebViewActivity"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="com.fang.url" />
                 <category android:name="android.intent.category.DEFAULT" />

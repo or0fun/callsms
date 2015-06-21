@@ -1,12 +1,5 @@
 package com.fang.number;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +10,18 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.fang.callsms.R;
+import com.fang.common.base.BaseListActivity;
+import com.fang.common.util.BaseUtil;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.common.util.BaseUtil;
 
-public class NumberServiceActivity extends ListActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+
+public class NumberServiceActivity extends BaseListActivity {
 
 	private Context mContext;
 	private SimpleAdapter mAdapter;

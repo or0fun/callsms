@@ -17,7 +17,7 @@
             android:layout_width="@dimen/title_bar_icon_width"
             android:layout_height="@dimen/title_bar_icon_height"
             android:layout_margin="@dimen/smallmargin"
-            android:src="@drawable/back" />
+            android:src="@drawable/ic_close" />
 
         <View
             android:layout_width="1dp"
@@ -50,11 +50,33 @@
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="3dp" />
+        android:layout_height="3dp"
+        android:background="@color/green"/>
 
-    <com.fang.common.controls.CustomWebView
-        android:id="@+id/webview"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.fang.common.controls.CustomWebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/search_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_black">
+            <include layout="@layout/search_view"></include>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="@dimen/buttonHeight"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin"
+            android:src="@drawable/search"
+            android:layout_gravity="bottom|right"/>
+        </FrameLayout>
 
 </LinearLayout>

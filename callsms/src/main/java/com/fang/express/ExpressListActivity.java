@@ -17,7 +17,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.fang.base.BaseActivity;
+import com.fang.base.WEActivity;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
 import com.fang.logs.LogCode;
@@ -29,7 +29,7 @@ import com.fang.util.SharedPreferencesHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpressListActivity extends BaseActivity {
+public class ExpressListActivity extends WEActivity {
 
 	private Spinner mSpinner;
 	private ArrayAdapter<String> mAdapter;

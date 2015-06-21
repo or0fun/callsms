@@ -31,46 +31,15 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <Button
+        <ImageView
             android:id="@+id/scan"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:padding="3dp"
-            android:background="#dd333333"
-            android:textColor="@color/white"
-            android:text="@string/scan_short"/>
+            android:layout_width="@dimen/title_bar_icon_width"
+            android:layout_height="@dimen/title_bar_icon_width"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/ic_scan"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/smallmargin"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <com.fang.common.controls.CustomEditText
-                android:id="@+id/search"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                custom:hintText="@string/number_search"
-                android:inputType="number"/>
-        </LinearLayout>
-        <Button
-            android:id="@+id/searchBtn"
-            style="@style/mainButton"
-            android:layout_width="@dimen/small_button_width"
-            android:layout_margin="@dimen/smallmargin"
-            android:text="@string/number_searchBtn" />
-    </LinearLayout>
+    <include layout="@layout/search_view"></include>
 
     <LinearLayout
         android:layout_width="match_parent"

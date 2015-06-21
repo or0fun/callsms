@@ -125,4 +125,5 @@
         <item name="android:textSize">@dimen/buttonTextSize</item>
         <item name="android:layout_margin">@dimen/margin</item>
     </style>
+
 </resources>

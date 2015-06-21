@@ -1,5 +1,7 @@
 <resources>
 
+    <dimen name="d30">30dp</dimen>
+
     <dimen name="xmargin">16dp</dimen>
     <dimen name="margin">10dp</dimen>
     <dimen name="smallmargin">5dp</dimen>

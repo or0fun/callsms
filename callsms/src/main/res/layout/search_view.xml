@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/smallmargin"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.fang.common.controls.CustomEditText
+            android:id="@+id/search"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            custom:hintText="@string/number_search"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            style="@style/mainButton"
+            android:layout_width="@dimen/small_button_width"
+            android:layout_margin="@dimen/smallmargin"
+            android:text="@string/number_searchBtn" />
+
+    </LinearLayout>
+</merge>

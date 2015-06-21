@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fang.base.BaseActivity;
+import com.fang.base.WEActivity;
 import com.fang.callsms.R;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
@@ -18,7 +18,7 @@ import com.fang.util.NetWorkUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class FeedbackActivity extends BaseActivity {
+public class FeedbackActivity extends WEActivity {
 
 	private String TAG = "FeedbackActivity";
 	

@@ -2,7 +2,7 @@
 <!-- 号码通 -->
 <resources>
     <string name="number_unknow">未知号码</string>
-    <string name="number_search">查找号码</string>
+    <string name="number_search">查你所想</string>
     <string name="number_searchBtn">搜索</string>
     <string name="number_seaching">正在查询…</string>
     <string name="number_common">常用服务号码</string>
