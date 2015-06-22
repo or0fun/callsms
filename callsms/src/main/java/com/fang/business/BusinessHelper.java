@@ -39,24 +39,37 @@ public class BusinessHelper {
         BaseUtil.excute(new Runnable() {
 			@Override
 			public void run() {
+                boolean isKnown = false;
 				String infoString = NumberDatabaseManager.getInstance(context).query(
 						number);
-				if ((StringUtil.isEmpty(infoString) || infoString.endsWith(context.getString(R.string.number_unknow)))
-						&& NetWorkUtil.isNetworkConnected(context)) {
+                if (!StringUtil.isEmpty(infoString) &&
+                        !infoString.endsWith(context.getString(R.string.number_unknow))) {
+                    isKnown = true;
+                    if (null != handler) {
+                        handler.sendMessage(handler.obtainMessage(
+                                MessageWhat.NET_REQUEST_NUMBER, infoString));
+                    }
+                }
+				if (NetWorkUtil.isNetworkConnected(context)) {
 					infoString = NetWorkUtil.getInstance().searchPhone(context, number, ServerUtil.getInstance(context).getUserID());
 					if (!infoString.endsWith(context.getString(R.string.number_unknow))) {
 						NumberDatabaseManager.getInstance(context).update(number, infoString);
+                        if (null != handler) {
+                            handler.sendMessage(handler.obtainMessage(
+                                    MessageWhat.NET_REQUEST_NUMBER, infoString));
+                        }
 					}
-				}
-				
-				if (StringUtil.isEmpty(infoString) && !NetWorkUtil.isNetworkConnected(context)) {
-					infoString = context.getString(R.string.open_network_to_recognise_number);
-				}
-				
-				if (null != handler) {
-					handler.sendMessage(handler.obtainMessage(
-							MessageWhat.NET_REQUEST_NUMBER, infoString));
-				}
+				} else {
+                    if (false == isKnown) {
+                        if (StringUtil.isEmpty(infoString) && !NetWorkUtil.isNetworkConnected(context)) {
+                            infoString = context.getString(R.string.open_network_to_recognise_number);
+                            if (null != handler) {
+                                handler.sendMessage(handler.obtainMessage(
+                                        MessageWhat.NET_REQUEST_NUMBER, infoString));
+                            }
+                        }
+                    }
+                }
 			}
 		});
 	}
@@ -101,7 +114,7 @@ public class BusinessHelper {
 	}
 
 	/**
-	 * 获取号码资源
+	 * 获取快递信息
 	 * 
 	 * @param context
      * @param info

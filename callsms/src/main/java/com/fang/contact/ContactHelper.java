@@ -154,10 +154,18 @@ public class ContactHelper {
         BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
+                int len = 0;
                 for (Map<String, Object> map : callRecords) {
                     String number = map.get(ExtraName.PARAM_NUMBER).toString();
                     String name = getPerson(context, number);
                     map.put(ExtraName.PARAM_NAME, name);
+                    len++;
+
+                    if (len % 20 == 0) {
+                        if (null != handler) {
+                            handler.sendEmptyMessage(MessageWhat.UPDATE_NUMBER_DATABASE);
+                        }
+                    }
                 }
                 if (null != handler) {
                     handler.sendEmptyMessage(MessageWhat.UPDATE_NUMBER_DATABASE);

@@ -20,6 +20,7 @@ import com.fang.base.BaseFragment;
 import com.fang.business.BusinessHelper;
 import com.fang.callsms.R;
 import com.fang.common.controls.CustomEditText;
+import com.fang.contact.ContactHelper;
 import com.fang.datatype.ExtraName;
 import com.fang.listener.IDeleteConfirmListener;
 import com.fang.listener.IPhoneStateListener;
@@ -95,6 +96,8 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
                 case MessageWhat.FRESH_CALL_RECORD:
                     // 获取号码信息
                     BusinessHelper.getNumberInfo(mContext, mAllCallRecords, mHandler);
+                    // 获取名字
+                    ContactHelper.getPersonInfo(mContext, mAllCallRecords, mHandler);
                     //获取姓名
 //                ContactHelper.getPersonInfo(mContext, mAllCallRecords, mHandler);
 
