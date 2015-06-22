@@ -360,7 +360,7 @@ public class MainActivity extends WEActivity implements OnClickListener {
 			mContactFragment.updateContacts(true);
 			mShowingFragment = mContactFragment;
 		} else if (index == Model.SETTING_FRAGMENT) {
-			mTitleBar.setVisibility(View.VISIBLE);
+			mTitleBar.setVisibility(View.GONE);
 			mSettingIcon.setImageResource(R.drawable.setting_foucs);
 			mShowingFragment = mSettingFragment;
 		}

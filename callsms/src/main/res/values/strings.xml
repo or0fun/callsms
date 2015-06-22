@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="company">白湾路工作室</string>
     <string name="check_update"><u>检查更新</u></string>
-    
+
     <string name="title_bar">知号码</string>
     <string name="title_bar_call">通话记录</string>
     <string name="title_bar_sms">定时短信</string>
@@ -177,4 +177,7 @@
 
     <string name="history_of_today"><u>历史上的今天</u></string>
     <string name="news_of_today"><u>今日热点新闻</u></string>
+
+    <string name="share_title">下载 知号码, 掌握号码 便利生活</string>
+    <string name="share_description">提供完善的云端号码库，为你识别中介、推销、骚扰号码，免除打扰；轻松掌握和处理来电和来信信息，告诉你错过的未接来电来自哪里；轻松获取号码接听和拨打历史，一目了然通话记录里的信息，将你的通讯录按通话次数排序；</string>
 </resources>

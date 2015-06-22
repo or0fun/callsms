@@ -9,6 +9,7 @@ import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.weixin.WXEntryActivity;
+import com.fang.weixin.WXShareHandler;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public abstract class WEActivity extends WXEntryActivity {
 	
 	protected Context mContext;
 	private static Toast mToast;
+    protected WXShareHandler mShareHandler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,10 @@ public abstract class WEActivity extends WXEntryActivity {
 
         Global.mContext = this;
         overridePendingTransition(R.anim.right_in, 0);
+
+        if (null == mShareHandler) {
+            mShareHandler = new WXShareHandler(mContext);
+        }
 	}
 
     @Override
@@ -77,5 +83,9 @@ public abstract class WEActivity extends WXEntryActivity {
 		}
 		return false;
 	}
+
+    public WXShareHandler getShareHandler() {
+        return mShareHandler;
+    }
 	
 }

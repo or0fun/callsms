@@ -30,14 +30,18 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <Button
+        <LinearLayout
             android:id="@+id/system_call"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:padding="3dp"
-            android:background="#dd333333"
-            android:textColor="@color/white"
-            android:text="@string/system_call"/>
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/icon_button_selector">
+
+            <ImageView
+                android:layout_width="@dimen/title_bar_icon_width"
+                android:layout_height="@dimen/title_bar_icon_width"
+                android:src="@drawable/ic_calllist" />
+        </LinearLayout>
     </LinearLayout>
 
     <com.fang.common.controls.CustomEditText

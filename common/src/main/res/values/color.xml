@@ -47,4 +47,14 @@
 
     <!-- 半透明背景色 -->
     <color name="light_black">#99000000</color>
+
+    <!-- 主按钮 -->
+    <drawable name="main_normal">@color/background</drawable>
+    <drawable name="main_pressed">#ff1884DF</drawable>
+    <!-- icon按钮 -->
+    <drawable name="icon_normal">@color/title_backgound</drawable>
+    <drawable name="icon_pressed">#ff191919</drawable>
+    <!-- 子按钮 -->
+    <drawable name="sub_normal">#ff463265</drawable>
+    <drawable name="sub_pressed">#aa463265</drawable>
 </resources>

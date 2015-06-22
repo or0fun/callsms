@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +14,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fang.base.BaseFragment;
+import com.fang.base.RequestUrl;
+import com.fang.base.WEActivity;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.common.util.DebugLog;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.common.util.DebugLog;
+import com.fang.weixin.WXConstants;
 
 /**
  * 设置页面
  * @author fang
  *
  */
-public class SettingFragment extends BaseFragment {
+public class SettingFragment extends BaseFragment implements OnClickListener {
 
 	protected Context mContext;
     private final String TAG = "SettingFragment";
@@ -68,6 +72,8 @@ public class SettingFragment extends BaseFragment {
             }
         });
 
+        rootView.findViewById(R.id.share).setOnClickListener(this);
+
 //		Button adsBtn = (Button)rootView.findViewById(R.id.ads);
 //		adsBtn.setOnClickListener(new OnClickListener() {
 //			@Override
@@ -79,4 +85,14 @@ public class SettingFragment extends BaseFragment {
 		return rootView;
 	}
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (R.id.share == id) {
+            ((WEActivity)getActivity()).getShareHandler().share(RequestUrl.DOWNLOAD,
+                    mContext.getString(R.string.share_title),
+                    mContext.getString(R.string.share_description),
+                    BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
+        }
+    }
 }

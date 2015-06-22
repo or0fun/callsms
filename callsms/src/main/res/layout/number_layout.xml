@@ -31,12 +31,18 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/scan"
-            android:layout_width="@dimen/title_bar_icon_width"
-            android:layout_height="@dimen/title_bar_icon_width"
-            android:layout_margin="@dimen/margin"
-            android:background="@drawable/ic_scan"/>
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/icon_button_selector">
+
+            <ImageView
+                android:layout_width="@dimen/title_bar_icon_width"
+                android:layout_height="@dimen/title_bar_icon_width"
+                android:src="@drawable/ic_scan" />
+        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/search_view"></include>

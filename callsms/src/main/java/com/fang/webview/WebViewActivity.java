@@ -30,7 +30,6 @@ import com.fang.logs.LogOperate;
 import com.fang.net.NetResuestHelper;
 import com.fang.net.ServerUtil;
 import com.fang.weixin.WXConstants;
-import com.fang.weixin.WXShareHandler;
 import com.fang.widget.SearchView;
 
 
@@ -49,7 +48,6 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
 
     private View myView;
     private WebChromeClient.CustomViewCallback myCallback;
-    private WXShareHandler shareHandler;
 
 
     @Override
@@ -71,10 +69,7 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null == shareHandler) {
-                    shareHandler = new WXShareHandler(mContext);
-                }
-                shareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
+                mShareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
                         BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
             }
         });
@@ -160,10 +155,7 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
                 BaseUtil.showKeyBoard(mSearchView.getSearchEditView(), true);
             }
         } else if (id == R.id.share) {
-            if (null == shareHandler) {
-                shareHandler = new WXShareHandler(mContext);
-            }
-            shareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
+            mShareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
                     BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
         } else if (id == R.id.search_frame) {
             BaseUtil.showKeyBoard(mSearchView.getSearchEditView(), false);

@@ -23,6 +23,9 @@ public class RequestUrl {
 
     /** 今天新闻 **/
     public static final String NEWS_OF_TODAY = "http://ie8384.com/we/news.php";
+
+    /** 下载链接 **/
+    public static final String DOWNLOAD = "http://ie8384.com/we/download.php";
     /** baidu **/
     public static final String BAIDU = "https://www.baidu.com/s?wd=";
 

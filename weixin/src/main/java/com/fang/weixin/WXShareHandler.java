@@ -47,7 +47,7 @@ public class WXShareHandler implements View.OnClickListener {
     public void share(String url, String title, String description, Bitmap thumb, int shareType) {
         this.url = url;
         this.title = title;
-        this.title = title;
+        this.description = description;
         this.thumb = thumb;
         contentType = TYPE.WEBPAGE;
         showDialog(context, shareType);
