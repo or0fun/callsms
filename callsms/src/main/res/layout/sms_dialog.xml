@@ -119,7 +119,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/button_height"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -127,13 +127,13 @@
             android:id="@+id/call"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
             android:gravity="center" >
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_call"/>
             <TextView
                 style="@style/buttonText"
@@ -146,13 +146,13 @@
             android:id="@+id/reply"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
             android:gravity="center" >
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_sms"/>
             <TextView
                 style="@style/buttonText"
@@ -165,13 +165,13 @@
             android:id="@+id/close"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
             android:gravity="center" >
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"/>
             <TextView
                 style="@style/buttonText"

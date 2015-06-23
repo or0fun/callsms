@@ -125,7 +125,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -133,13 +133,13 @@
             android:id="@+id/smsBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="30dp"
+                android:layout_width="@dimen/icon_width"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sms" />
 
@@ -155,14 +155,14 @@
             android:id="@+id/callBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_call" />
 
             <TextView
@@ -177,13 +177,13 @@
             android:id="@+id/shareBtn"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/main_button_selector"
             android:gravity="center">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_share"/>
             <TextView
                 android:id="@+id/share"
@@ -201,8 +201,8 @@
             android:gravity="center"
             android:visibility="gone">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/icon_width"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"/>
             <TextView
                 android:id="@+id/close"
