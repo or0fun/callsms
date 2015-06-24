@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -110,7 +112,6 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
         WebSettings settings = mWebView.getSettings();
         settings.setSupportZoom(true);
         settings.setJavaScriptEnabled(true);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setDomStorageEnabled(true);
 
         mWebView.setWebChromeClient(new MyWebChromeClient());
@@ -180,6 +181,12 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
             }
             return super.shouldOverrideUrlLoading(view, url);
 
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            super.onReceivedSslError(view, handler, error);
+            handler.proceed();  // 接受所有网站的证书
         }
 
         @Override

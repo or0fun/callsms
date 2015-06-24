@@ -110,6 +110,9 @@
                 android:gravity="center"
                 android:orientation="horizontal"></LinearLayout>
         </HorizontalScrollView>
+
+        <!-- 阅读 -->
+
         <!-- 常用服务号码 -->
         <TextView
             android:layout_width="fill_parent"

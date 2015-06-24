@@ -1,6 +1,12 @@
 <resources>
 
     <dimen name="d30">30dp</dimen>
+    <dimen name="d40">40dp</dimen>
+    <dimen name="d50">50dp</dimen>
+
+    <dimen name="f30">30sp</dimen>
+    <dimen name="f40">40sp</dimen>
+    <dimen name="f50">50.0sp</dimen>
 
     <dimen name="xmargin">16dp</dimen>
     <dimen name="margin">10dp</dimen>

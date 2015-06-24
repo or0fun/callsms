@@ -6,10 +6,17 @@
     <string name="number_searchBtn">搜索</string>
     <string name="number_seaching">正在查询…</string>
     <string name="number_common">常用服务号码</string>
+    <string name="number_reading">我的阅读</string>
     <string name="number_weather">天气预报</string>
     <string name="number_house">订酒店</string>
     <string name="number_meal">订餐</string>
     <string name="number_express">找快递</string>
     <string name="number_service">找客服</string>
     <string name="number_searchExpress">快递追踪</string>
+
+
+    <string name="reading_today">历史上的今天</string>
+    <string name="reading_joke">糗事笑话</string>
+    <string name="reading_icon_history">史</string>
+    <string name="reading_icon_joke">乐</string>
 </resources>
