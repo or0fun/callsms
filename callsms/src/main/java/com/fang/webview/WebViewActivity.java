@@ -50,6 +50,7 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
 
     private View myView;
     private WebChromeClient.CustomViewCallback myCallback;
+    private String mUrl;
 
 
     @Override
@@ -83,6 +84,7 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
         mSearchFrame.setOnClickListener(this);
 
         findViewById(R.id.search_icon).setOnClickListener(this);
+        findViewById(R.id.reload_icon).setOnClickListener(this);
 
         open(getIntent());
     }
@@ -127,6 +129,7 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
         if (RequestUrl.HISTORY_OF_TODAY.equals(url)) {
             LogOperate.updateLog(mContext, LogCode.HISTORY_OF_TODAY);
         }
+        mUrl = url;
         mWebView.loadUrl(url);
     }
 
@@ -155,7 +158,9 @@ public class WebViewActivity extends WEActivity implements View.OnClickListener 
                 mSearchView.getSearchEditView().requestFocus();
                 BaseUtil.showKeyBoard(mSearchView.getSearchEditView(), true);
             }
-        } else if (id == R.id.share) {
+        } else if(id == R.id.reload_icon) {
+            mWebView.loadUrl(mUrl);
+        } else if(id == R.id.share) {
             mShareHandler.share(mWebView.getUrl(), mWebView.getTitle(), "",
                     BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
         } else if (id == R.id.search_frame) {

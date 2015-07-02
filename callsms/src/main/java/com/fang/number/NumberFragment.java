@@ -20,12 +20,15 @@ import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
 import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
+import com.fang.common.util.MapUtil;
 import com.fang.common.util.Patterns;
 import com.fang.common.util.StringUtil;
 import com.fang.datatype.ExtraName;
 import com.fang.express.ExpressListActivity;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.map.BDMapListener;
+import com.fang.net.ServerUtil;
 import com.fang.span.MySpan;
 import com.fang.util.MessageWhat;
 import com.fang.util.NetWorkUtil;
@@ -135,8 +138,10 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
         mToday = (TextView) rootView.findViewById(R.id.today);
 
         rootView.findViewById(R.id.history).setOnClickListener(this);
-
         rootView.findViewById(R.id.news).setOnClickListener(this);
+        rootView.findViewById(R.id.qiushi).setOnClickListener(this);
+        rootView.findViewById(R.id.yisi).setOnClickListener(this);
+        rootView.findViewById(R.id.zhihu).setOnClickListener(this);
 
         rootView.findViewById(R.id.scan).setOnClickListener(this);
 
@@ -191,19 +196,34 @@ public class NumberFragment extends BaseFragment implements OnClickListener {
             Util.openUrl(RequestUrl.HISTORY_OF_TODAY);
         } else if (id == R.id.news) {
             Util.openUrl(RequestUrl.NEWS_OF_TODAY);
+        } else if (id == R.id.qiushi) {
+            Util.openUrl(RequestUrl.QIUSHI);
+        } else if (id == R.id.yisi) {
+            Util.openUrl(RequestUrl.YISI);
+        } else if (id == R.id.zhihu) {
+            Util.openUrl(RequestUrl.ZHIHU);
         }
 	}
 
     private void searchWeather() {
-        if (System.currentTimeMillis() - mLastWeatherUpdateTime  < CustomConstant.QUARTER_HOUR) {
-            DebugLog.d(TAG, "searchWeather: the time is too short");
+        if (SharedPreferencesHelper.getInstance().getString(SharedPreferencesHelper.WEATHER, "").length() > 0) {
+            if (System.currentTimeMillis() - mLastWeatherUpdateTime < CustomConstant.QUARTER_HOUR) {
+                DebugLog.d(TAG, "searchWeather: the time is too short");
+                return;
+            }
+        }
+        if (null == BDMapListener.getInstance().getBdLocation()) {
+            MapUtil.getInstance().getLocationClient().requestLocation();
             return;
         }
+
         BaseUtil.excute(new Runnable() {
             @Override
             public void run() {
                 // 最多7天
-                String weather = NetWorkUtil.getInstance().searchWeather(7);
+                String weather = NetWorkUtil.getInstance().searchWeather(7,
+                        BDMapListener.getInstance().getBdLocation().getCity(),
+                        ServerUtil.getInstance(mContext).getUserID());
                 if (!StringUtil.isEmpty(weather)) {
                     mLastWeatherUpdateTime = System.currentTimeMillis();
                     myHandler.sendMessage(myHandler.obtainMessage(MessageWhat.NET_REQUEST_WEATHER, weather));

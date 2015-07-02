@@ -20,11 +20,17 @@ public class RequestUrl {
     public static final String VERSION_GET_URL_TEST = HOST + "we/version_test.php";
 
     /** 历史上的今天 **/
-    public static final String HISTORY_OF_TODAY = HOST + "we/today.php";
+    public static final String HISTORY_OF_TODAY = HOST + "we/reading.php?id=0";
 
     /** 今天新闻 **/
-    public static final String NEWS_OF_TODAY = HOST + "we/news.php";
+    public static final String NEWS_OF_TODAY = HOST + "we/reading.php?id=2";
+    /** 糗事百科 **/
+    public static final String QIUSHI = HOST + "we/reading.php?id=1";
 
+    /** 有意思吧 **/
+    public static final String YISI = HOST + "we/reading.php?id=3";
+    /** 知乎 **/
+    public static final String ZHIHU = HOST + "we/reading.php?id=4";
     /** 下载链接 **/
     public static final String DOWNLOAD = HOST + "we/download.php";
     /** baidu **/

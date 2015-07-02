@@ -180,4 +180,7 @@
 
     <string name="share_title">下载 知号码, 掌握号码 便利生活</string>
     <string name="share_description">提供完善的云端号码库，为你识别中介、推销、骚扰号码，免除打扰；轻松掌握和处理来电和来信信息，告诉你错过的未接来电来自哪里；轻松获取号码接听和拨打历史，一目了然通话记录里的信息，将你的通讯录按通话次数排序；</string>
+    <string name="reading">阅读是一种习惯</string>
+
+
 </resources>

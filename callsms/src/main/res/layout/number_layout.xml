@@ -3,7 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <!-- 标题栏 -->
 
@@ -12,7 +12,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/title_backgound"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/title_bar_icon_width"
@@ -51,64 +51,106 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/smallmargin"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/result"
             style="@style/number_info"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
-        </TextView>
+            android:layout_weight="1"></TextView>
 
-        <TextView
-            android:id="@+id/news"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/news_of_today"
-            android:textColor="@color/button"/>
-        <!-- 历史上的今天 -->
+        <!-- 日历 -->
         <TextView
             android:id="@+id/today"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/green" />
+            android:textColor="@color/green"
+            android:layout_marginBottom="@dimen/margin"/>
+
+        <!-- 阅读 -->
         <TextView
-            android:id="@+id/history"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/history_of_today"
-            android:textColor="@color/button"/>
+            android:textColor="@color/green"
+            android:text="@string/reading"/>
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/yt_line" />
 
+        <HorizontalScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/history"
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:layout_margin="@dimen/smallmargin"
+                    android:src="@drawable/history_today"></ImageView>
+
+                <ImageView
+                    android:id="@+id/qiushi"
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:layout_margin="@dimen/smallmargin"
+                    android:src="@drawable/qiushi"></ImageView>
+
+
+                <ImageView
+                    android:id="@+id/news"
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:layout_margin="@dimen/smallmargin"
+                    android:src="@drawable/hot_news"></ImageView>
+
+                <ImageView
+                    android:id="@+id/yisi"
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:layout_margin="@dimen/smallmargin"
+                    android:src="@drawable/yisi"></ImageView>
+
+                <ImageView
+                    android:id="@+id/zhihu"
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:layout_margin="@dimen/smallmargin"
+                    android:src="@drawable/zhihu"></ImageView>
+            </LinearLayout>
+        </HorizontalScrollView>
+
         <!-- 天气预报 -->
         <TextView
             android:id="@+id/weather_city"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/green" >
-        </TextView>
+            android:textColor="@color/green"></TextView>
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/yt_line" >
-        </ImageView>
+            android:background="@drawable/yt_line"></ImageView>
 
         <HorizontalScrollView
             android:layout_height="wrap_content"
             android:layout_width="fill_parent">
+
             <LinearLayout
                 android:id="@+id/weatherList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallmargin"
-                android:gravity="center"
-                android:orientation="horizontal"></LinearLayout>
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            </LinearLayout>
         </HorizontalScrollView>
 
         <!-- 阅读 -->
@@ -118,21 +160,19 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/number_common"
-            android:textColor="@color/green" >
-        </TextView>
+            android:textColor="@color/green"></TextView>
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/yt_line" >
-        </ImageView>
+            android:background="@drawable/yt_line"></ImageView>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallmargin"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/foodlistBtn"
@@ -140,20 +180,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallmargin"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/food" >
-                </ImageView>
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:src="@drawable/food"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_meal"
-                    android:textColor="@color/number_service" >
-                </TextView>
+                    android:textColor="@color/number_service"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -162,20 +200,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallmargin"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/house" >
-                </ImageView>
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:src="@drawable/house"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_house"
-                    android:textColor="@color/number_service" >
-                </TextView>
+                    android:textColor="@color/number_service"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -184,20 +220,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallmargin"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/express" >
-                </ImageView>
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:src="@drawable/express"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_express"
-                    android:textColor="@color/number_service" >
-                </TextView>
+                    android:textColor="@color/number_service"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -206,20 +240,18 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smallmargin"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/service" >
-                </ImageView>
+                    android:layout_width="@dimen/icon_item_size"
+                    android:layout_height="@dimen/icon_item_size"
+                    android:src="@drawable/service"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_service"
-                    android:textColor="@color/number_service" >
-                </TextView>
+                    android:textColor="@color/number_service"></TextView>
             </LinearLayout>
         </LinearLayout>
 

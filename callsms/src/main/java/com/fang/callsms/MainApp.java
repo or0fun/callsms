@@ -12,6 +12,8 @@ import com.fang.background.BackgroundService;
 import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
 import com.fang.common.util.BaseUtil;
+import com.fang.common.util.MapUtil;
+import com.fang.map.BDMapListener;
 import com.fang.receiver.MainService;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.weixin.WXCommon;
@@ -41,6 +43,8 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
         WXCommon.init(this);
         com.fang.util.SharedPreferencesHelper.getInstance().init(this);
         com.fang.util.SharedPreferencesHelper.getInstance().init(this);
+
+        MapUtil.init(getApplicationContext(), BDMapListener.getInstance());
 
         this.startService(new Intent(this, MainService.class));
         this.startService(new Intent(this, BackgroundService.class));
