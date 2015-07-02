@@ -195,9 +195,13 @@ public class NetWorkUtil {
     /**
      * 查询天气
      */
-    public String searchWeather(int days) {
-
-        String url = RequestUrl.API_URL + "?t=weather&w=&u=&e=1&d=" + days;
+    public String searchWeather(int days, final String city, String uid) {
+        if (StringUtil.isEmpty(city)) {
+            return "";
+        }
+        String str = city;
+        str = mAesUtil.encrypt(str);
+        String url = RequestUrl.API_URL + "?t=weather&w=" + str + "&u=" + uid+ "&e=1&d=" + days;
         String infoString = getHttpRequest(url);
         if (StringUtil.isEmpty(infoString)) {
             return "";
@@ -213,6 +217,9 @@ public class NetWorkUtil {
         String url = RequestUrl.API_URL + "?t=nongli&w=&u=&e=1";
         String infoString = getHttpRequest(url);
         if (StringUtil.isEmpty(infoString)) {
+            return "";
+        }
+        if (infoString.startsWith("公元")) {
             return "";
         }
         return infoString.trim();
