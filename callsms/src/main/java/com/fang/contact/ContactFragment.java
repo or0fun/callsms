@@ -105,7 +105,7 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 				for (int i = 0; i < len; i++) {
 					mContactPositionMapArray.put(i, i);
 				}
-				setAdapter(mList);
+				updateList(mList);
 				
 				mTitleTextView.setText("共有" + len + "个联系人");
 				hideLoading();
@@ -320,15 +320,21 @@ public class ContactFragment extends BaseFragment implements IContactListener {
 	public void updateContacts(boolean showProgressDialog) {
 		if (mIsViewCreated) {
 			if (null != mList && mList.size() > 0) {
-				setAdapter(mList);
+				updateList(mList);
 			}
 		}
 	}
 
-	private void setAdapter(List<HashMap<String, Object>> list) {
-		mAdapter = new ListAdapter(mContext, list);
-		mListView.setAdapter(mAdapter);
+	private void updateList(List<HashMap<String, Object>> list) {
+        if (null == mAdapter) {
+            mAdapter = new ListAdapter(mContext, list);
+            mListView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setData(list);
+            mAdapter.notifyDataSetChanged();
+        }
 
+        searchContacts(mSearchEditText.getText().toString());
 	}
 
 	/**

@@ -283,6 +283,8 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
         mAdapter.setPositionMapArray(mContactPositionMapArray);
         mAdapter.setData(mCallRecords);
         mAdapter.notifyDataSetChanged();
+
+        searchContacts(mSearchEditText.getText().toString());
     }
 
     /**
