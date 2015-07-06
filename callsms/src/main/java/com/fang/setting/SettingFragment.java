@@ -18,9 +18,12 @@ import com.fang.base.RequestUrl;
 import com.fang.base.WEActivity;
 import com.fang.callsms.MainActivity;
 import com.fang.callsms.R;
+import com.fang.common.controls.CustomSlideSwitch;
+import com.fang.common.controls.CustomSwitchPreference;
 import com.fang.common.util.DebugLog;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
+import com.fang.weather.WeatherHelper;
 import com.fang.weixin.WXConstants;
 
 /**
@@ -47,6 +50,9 @@ public class SettingFragment extends BaseFragment implements OnClickListener {
         }
 
         View rootView = inflater.inflate(R.layout.setting_layout, container, false);
+        ((CustomSwitchPreference)rootView.findViewById(R.id.weather_notification)).setOnSwitchChangedListener(mSwitchListener);
+
+
 		Button feedbackBtn = (Button)rootView.findViewById(R.id.feedback);
 		feedbackBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -95,4 +101,21 @@ public class SettingFragment extends BaseFragment implements OnClickListener {
                     BitmapFactory.decodeResource(mContext.getResources(), R.drawable.we108x108), WXConstants.SHARE_ALL);
         }
     }
+
+    /**
+     * 设置监听
+     */
+    private CustomSlideSwitch.OnSwitchChangedListener mSwitchListener = new CustomSlideSwitch.OnSwitchChangedListener() {
+        @Override
+        public void onSwitchChanged(CustomSlideSwitch slideSwitch, int status) {
+            String key = slideSwitch.getKey();
+            if (mContext.getString(R.string.SETTING_WEATHER_NOTIFICATION).equals(key)) {
+                if (status == CustomSlideSwitch.SWITCH_ON) {
+                    WeatherHelper.postWeatherNotification(mContext);
+                } else if (status == CustomSlideSwitch.SWITCH_OFF) {
+                    WeatherHelper.cancelWeatherNotification(mContext);
+                }
+            }
+        }
+    };
 }

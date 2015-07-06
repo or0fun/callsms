@@ -108,6 +108,7 @@
         </com.fang.common.controls.CustomSwitchPreference>
 
         <com.fang.common.controls.CustomSwitchPreference
+            android:id="@+id/weather_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             custom:defaultValue="true"

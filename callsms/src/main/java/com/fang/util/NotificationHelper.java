@@ -66,9 +66,8 @@ public class NotificationHelper {
     public static void showNotification(Context context, int id, String title,
                                         String content, Intent notificationIntent, boolean quiet) {
 
-        String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(ns);
+                .getSystemService(Context.NOTIFICATION_SERVICE);
 
         // 定义Notification的各种属性
         int icon = R.drawable.icon;
@@ -102,17 +101,17 @@ public class NotificationHelper {
     public static void showResidentNotification(Context context, int id, String title,
                                                 String content, Intent notificationIntent) {
 
-        String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager notificationManager = (NotificationManager) context
-                .getSystemService(ns);
+                .getSystemService(Context.NOTIFICATION_SERVICE);
 
         // 定义Notification的各种属性
         int icon = R.drawable.icon;
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, content, when);
 
-        notification.flags |= Notification.FLAG_ONGOING_EVENT;
-        notification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
+        notification.flags |= Notification.FLAG_NO_CLEAR;
+//        notification.flags |= Notification.FLAG_ONGOING_EVENT;
+//        notification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
                 notificationIntent, 0);
@@ -121,4 +120,14 @@ public class NotificationHelper {
         notificationManager.notify(id, notification);
     }
 
+    /**
+     * 取消通知栏
+     * @param context
+     * @param id
+     */
+    public static void cancelNotification(Context context, int id) {
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(id);
+    }
 }

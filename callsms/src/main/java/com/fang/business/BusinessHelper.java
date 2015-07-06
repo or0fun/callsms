@@ -54,21 +54,17 @@ public class BusinessHelper {
 					infoString = NetWorkUtil.getInstance().searchPhone(context, number, ServerUtil.getInstance(context).getUserID());
 					if (!infoString.endsWith(context.getString(R.string.number_unknow))) {
 						NumberDatabaseManager.getInstance(context).update(number, infoString);
-                        if (null != handler) {
-                            handler.sendMessage(handler.obtainMessage(
-                                    MessageWhat.NET_REQUEST_NUMBER, infoString));
-                        }
 					}
 				} else {
                     if (false == isKnown) {
                         if (StringUtil.isEmpty(infoString) && !NetWorkUtil.isNetworkConnected(context)) {
                             infoString = context.getString(R.string.open_network_to_recognise_number);
-                            if (null != handler) {
-                                handler.sendMessage(handler.obtainMessage(
-                                        MessageWhat.NET_REQUEST_NUMBER, infoString));
-                            }
                         }
                     }
+                }
+                if (null != handler) {
+                    handler.sendMessage(handler.obtainMessage(
+                            MessageWhat.NET_REQUEST_NUMBER, infoString));
                 }
 			}
 		});

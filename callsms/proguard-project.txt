@@ -19,6 +19,9 @@
 #   public *;
 #}
 
+ -printmapping out.map
+ -renamesourcefileattribute SourceFile
+ -keepattributes SourceFile,LineNumberTable
 
 -keep public class * extends android.app.Fragment  
 -keep public class * extends android.app.Activity

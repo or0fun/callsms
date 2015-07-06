@@ -10,13 +10,13 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
 import com.fang.common.R;
-import com.fang.common.util.BaseUtil;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.SharedPreferencesHelper;
 
@@ -33,6 +33,7 @@ public class CustomSlideSwitch extends View {
 	public static final int SWITCH_SCROLING = 2;// 滚动状态
 
 	private int mSwitchStatus = SWITCH_OFF;
+	private boolean mStatus = false;
 
 	private boolean mHasScrolled = false;// 表示是否发生过滚动
 
@@ -104,24 +105,18 @@ public class CustomSlideSwitch extends View {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-			if (mHasScrolled == false)// 如果没有发生过滑动，就意味着这是一次单击过程
-			{
+			if (mHasScrolled == false) {// 如果没有发生过滑动，就意味着这是一次单击过程
 				mSwitchStatus = Math.abs(mSwitchStatus - 1);
 				int xFrom = 10, xTo = 62;
 				if (mSwitchStatus == SWITCH_OFF) {
 					xFrom = 62;
 					xTo = 10;
 				}
-				AnimationTransRunnable runnable = new AnimationTransRunnable(
-						xFrom, xTo, 1);
-                BaseUtil.excute(runnable);
+                AnimationAsyncTask asyncTask = new AnimationAsyncTask(xFrom, xTo, 1);
+                asyncTask.execute();
 			} else {
 				invalidate();
 				mHasScrolled = false;
-			}
-			// 状态改变的时候 回调事件函数
-			if (mOnSwitchChangedListener != null) {
-				mOnSwitchChangedListener.onSwitchChanged(this, mSwitchStatus);
 			}
 			break;
 
@@ -216,62 +211,67 @@ public class CustomSlideSwitch extends View {
 		invalidate();
 	}
 
-	/**
-	 * AnimationTransRunnable 做滑动动画所使用的线程
-	 */
-	public class AnimationTransRunnable implements Runnable {
-		private int srcX, dstX;
-		private int duration;
+    public String getKey() {
+        return mKeyString;
+    }
 
-		/**
-		 * 滑动动画
-		 * 
-		 * @param srcX
-		 *            滑动起始点
-		 * @param dstX
-		 *            滑动终止点
-		 * @param duration
-		 *            是否采用动画，1采用，0不采用
-		 */
-		public AnimationTransRunnable(float srcX, float dstX, final int duration) {
-			this.srcX = (int) srcX;
-			this.dstX = (int) dstX;
-			this.duration = duration;
-		}
+    /**
+     * 做滑动动画所使用的线程
+     */
+    public class AnimationAsyncTask extends AsyncTask<Integer, Integer, String> {
 
-		@Override
-		public void run() {
-			final int patch = (dstX > srcX ? 5 : -5);
-			if (duration == 0) {
-				CustomSlideSwitch.this.mSwitchStatus = SWITCH_SCROLING;
-				CustomSlideSwitch.this.postInvalidate();
-			} else {
-				DebugLog.d(TAG, "start Animation: [ " + srcX + " , " + dstX + " ]");
-				int x = srcX + patch;
-				while (Math.abs(x - dstX) > 5) {
-					mDstX = x;
-					CustomSlideSwitch.this.mSwitchStatus = SWITCH_SCROLING;
-					CustomSlideSwitch.this.postInvalidate();
-					x += patch;
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				mDstX = dstX;
-				CustomSlideSwitch.this.mSwitchStatus = mDstX > 35 ? SWITCH_ON
-						: SWITCH_OFF;
-				CustomSlideSwitch.this.postInvalidate();
-				if (CustomSlideSwitch.this.mSwitchStatus == SWITCH_ON) {
-					SharedPreferencesHelper.getInstance().setBoolean(mKeyString, true);
-				}else {
-					SharedPreferencesHelper.getInstance().setBoolean(mKeyString, false);
-				}
-			}
-		}
+        private int srcX, dstX;
+        private int duration;
 
-	}
+        public AnimationAsyncTask(float srcX, float dstX, final int duration) {
+            super();
+            this.srcX = (int) srcX;
+            this.dstX = (int) dstX;
+            this.duration = duration;
+        }
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            final int patch = (dstX > srcX ? 5 : -5);
+            if (duration == 0) {
+                CustomSlideSwitch.this.mSwitchStatus = SWITCH_SCROLING;
+                CustomSlideSwitch.this.postInvalidate();
+            } else {
+                DebugLog.d(TAG, "start Animation: [ " + srcX + " , " + dstX + " ]");
+                int x = srcX + patch;
+                while (Math.abs(x - dstX) > 5) {
+                    mDstX = x;
+                    CustomSlideSwitch.this.mSwitchStatus = SWITCH_SCROLING;
+                    CustomSlideSwitch.this.postInvalidate();
+                    x += patch;
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mDstX = dstX;
+                CustomSlideSwitch.this.mSwitchStatus = mDstX > 35 ? SWITCH_ON
+                        : SWITCH_OFF;
+                CustomSlideSwitch.this.postInvalidate();
+                if (CustomSlideSwitch.this.mSwitchStatus == SWITCH_ON) {
+                    SharedPreferencesHelper.getInstance().setBoolean(mKeyString, true);
+                }else {
+                    SharedPreferencesHelper.getInstance().setBoolean(mKeyString, false);
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            // 状态改变的时候 回调事件函数
+            if (mOnSwitchChangedListener != null) {
+                mOnSwitchChangedListener.onSwitchChanged(CustomSlideSwitch.this, mSwitchStatus);
+            }
+        }
+    }
 
 	public static interface OnSwitchChangedListener {
 		/**

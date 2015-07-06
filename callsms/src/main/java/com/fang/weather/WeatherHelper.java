@@ -86,6 +86,11 @@ public class WeatherHelper {
         });
     }
 
+    public static void cancelWeatherNotification(final Context context) {
+        NotificationHelper.cancelNotification(context, NotificationHelper.WEATHER_ID);
+        mIsShowWeatherNotification = false;
+    }
+
 
     /**
      * 天气预报的项

@@ -55,6 +55,19 @@ public class CustomSwitchPreference extends LinearLayout {
         freshView();
 	}
 
+    /**
+     * 为开关控件设置状态改变监听函数
+     *
+     * @param listener
+     *            参见 {@link com.fang.common.controls.CustomSlideSwitch.OnSwitchChangedListener}
+     */
+    public void setOnSwitchChangedListener(
+            CustomSlideSwitch.OnSwitchChangedListener listener) {
+        if (null != mSlideSwitch) {
+            mSlideSwitch.setOnSwitchChangedListener(listener);
+        }
+    }
+
 	/**
 	 * 初始化
 	 */
