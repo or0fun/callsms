@@ -32,7 +32,7 @@ public class CustomConstant {
 	public static final long FIVE_SECONDS = 5000;
 
     /** 最大线程数 */
-    public static final int MAX_THREAD_COUNT = 4;
+    public static final int MAX_THREAD_COUNT = 10;
 	
 }
 

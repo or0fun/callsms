@@ -20,4 +20,7 @@ public class Global {
     public static String channel;
 
     public static ExecutorService fixedThreadPool;
+
+    //网络广播时间
+    public static long netBroadcastTime = 0;
 }

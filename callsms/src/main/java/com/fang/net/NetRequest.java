@@ -36,4 +36,13 @@ public class NetRequest {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+    @Override
+    public String toString() {
+        if (null != value) {
+            return url + ";" + value.getName() + ":" + value.getName();
+        } else {
+            return url + ";value is null";
+        }
+    }
 }

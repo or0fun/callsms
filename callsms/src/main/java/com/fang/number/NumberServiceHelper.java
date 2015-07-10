@@ -1,5 +1,24 @@
 package com.fang.number;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.fang.common.base.Global;
+import com.fang.common.util.BaseUtil;
+import com.fang.common.util.StringUtil;
+import com.fang.database.NumberDatabaseManager;
+import com.fang.datatype.ExtraName;
+import com.fang.net.NetRequestListener;
+import com.fang.net.NetRequestResult;
+import com.fang.net.NetRequestResultCode;
+import com.fang.net.NetResuestHelper;
+import com.fang.net.ServerUtil;
+import com.fang.util.SharedPreferencesHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +28,8 @@ import java.util.Map;
  *
  */
 public class NumberServiceHelper {
+
+    private static final String TAG = "NumberServiceHelper";
 
 	public static final String PARAM_NAME = "name";
 	public static final String PARAM_NUMBER = "number";
@@ -84,4 +105,68 @@ public class NumberServiceHelper {
 		put("联想客服","4009908888");
 		}
 	};
+
+    /**
+     * 获取离线数据
+     * @param context
+     */
+    public static void getNumberInfo(final Context context) {
+        int startID = SharedPreferencesHelper.getInstance().getInt(SharedPreferencesHelper.OFFLINE_NUMBER_STARTID, 0);
+        getNumberInfo(context, startID);
+    }
+    /**
+     * 获取离线数据
+     * @param context
+     * @param startID
+     */
+    private static void getNumberInfo(final Context context, final int startID) {
+        BaseUtil.excute(new Runnable() {
+            @Override
+            public void run() {
+                ServerUtil server = ServerUtil.getInstance(context);
+                server.request(NetResuestHelper.OFFLINE_NUMBER, String.valueOf(startID), mNetRequestListener);
+            }
+        });
+    }
+
+    /**
+     * 网络监听
+     */
+    protected static NetRequestListener mNetRequestListener = new NetRequestListener() {
+        @Override
+        public void onResult(NetRequestResult result) {
+            if (null == result) {
+                return;
+            }
+            if (result.getResultCode() == NetRequestResultCode.HTTP_OK) {
+
+                JSONArray infos;
+                int startID = SharedPreferencesHelper.getInstance().getInt(SharedPreferencesHelper.OFFLINE_NUMBER_STARTID, 0);
+                try {
+                    infos = new JSONArray(result.getValue());
+                    if (null != infos) {
+                        JSONObject infoObject;
+                        String number, info;
+                        for (int i = 0; i < infos.length(); i++) {
+                            infoObject = (JSONObject) infos.get(i);
+                            number = infoObject.getString(ExtraName.PARAM_NUMBER);
+                            info = infoObject.getString(ExtraName.PARAM_INFO);
+                            if (StringUtil.isEmpty(NumberDatabaseManager.getInstance(Global.mContext).query(
+                                    number))) {
+                                NumberDatabaseManager.getInstance(Global.mContext).update(number, info);
+                            }
+                            startID = infoObject.getInt(ExtraName.PARAM_ID);
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error parsing data " + e.toString());
+                } catch (Exception e) {
+                    Log.e(TAG, "Error parsing data " + e.toString());
+                } finally {
+                    SharedPreferencesHelper.getInstance().setInt(SharedPreferencesHelper.OFFLINE_NUMBER_STARTID, startID);
+                }
+            }
+        }
+    };
 }

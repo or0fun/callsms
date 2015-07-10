@@ -31,6 +31,8 @@ public class NetResuestHelper {
     public static final String PUSH = "push";
     /** CRASH日志类型 */
     public static final String CRASH = "crash";
+    /** 离线数据 */
+    public static final String OFFLINE_NUMBER = "offline_number";
     /** url */
     public static final String url = "url";
     /** request error */

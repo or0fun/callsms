@@ -49,8 +49,11 @@ public class SharedPreferencesHelper extends AbsSharedPre {
     //扫一扫 快捷方式
     public static final String SCAN = "scan";
 
-    //l¥立即检查更新
+    //立即检查更新
     public static final String UPDATE_VERSION = "UPDATE_VERSION";
+
+    //离线数据startID
+    public static final String OFFLINE_NUMBER_STARTID = "OFFLINE_NUMBER_STARTID";
 
     @Override
     public void init(Context context) {

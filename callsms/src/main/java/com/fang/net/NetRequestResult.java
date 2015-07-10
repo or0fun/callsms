@@ -46,4 +46,9 @@ public class NetRequestResult {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+    @Override
+    public String toString() {
+        return "requestCode:" + requestCode + ";resultCode:" + resultCode + ";value:" + value ;
+    }
 }
