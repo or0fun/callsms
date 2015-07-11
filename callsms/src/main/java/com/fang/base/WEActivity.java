@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.fang.callsms.R;
 import com.fang.common.CustomConstant;
-import com.fang.common.base.Global;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.weixin.WXEntryActivity;
 import com.fang.weixin.WXShareHandler;
@@ -24,7 +23,6 @@ public abstract class WEActivity extends WXEntryActivity {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 
-        Global.mContext = this;
         overridePendingTransition(R.anim.right_in, 0);
 
         if (null == mShareHandler) {
@@ -40,8 +38,6 @@ public abstract class WEActivity extends WXEntryActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        Global.mContext = this;
     }
 
     @Override

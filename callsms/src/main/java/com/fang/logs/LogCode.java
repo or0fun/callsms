@@ -54,4 +54,6 @@ public class LogCode {
     public final static String ENTER_SYSTEM_CONTACT_LIST = "10025";
     /** 历史上的今天 */
     public final static String HISTORY_OF_TODAY = "10026";
+    /** 聊天 */
+    public final static String CHAT = "10027";
 }

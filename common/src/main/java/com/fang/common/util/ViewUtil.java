@@ -3,6 +3,7 @@ package com.fang.common.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.view.View;
 
 /**
  * UI工具类
@@ -31,5 +32,23 @@ public class ViewUtil {
         matrix.postScale(scale, scale); //等比例缩放
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         return resizeBmp;
+    }
+
+    /**
+     * scrollView滑到底部
+     * @param scroll
+     * @param inner
+     */
+    public static void scrollToBottom(final View scroll, final View inner) {
+        if (scroll == null || inner == null) {
+            return;
+        }
+
+        int offset = inner.getMeasuredHeight() - scroll.getHeight();
+        if (offset < 0) {
+            offset = 0;
+        }
+
+        scroll.scrollTo(0, offset);
     }
 }

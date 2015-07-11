@@ -8,6 +8,7 @@
     <dimen name="f40">40sp</dimen>
     <dimen name="f50">50.0sp</dimen>
 
+    <dimen name="xxmargin">32dp</dimen>
     <dimen name="xmargin">16dp</dimen>
     <dimen name="margin">10dp</dimen>
     <dimen name="smallmargin">5dp</dimen>

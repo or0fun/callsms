@@ -26,4 +26,10 @@ public class MessageWhat {
 
     /* 查农历 */
     public static final int NET_REQUEST_NONGLI = 1010;
+
+    /* 查空气*/
+    public static final int NET_REQUEST_AIR = 1011;
+
+    /* 聊天*/
+    public static final int NET_REQUEST_CHAT = 1012;
 }

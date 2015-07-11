@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fang.common.R;
+import com.fang.common.base.Global;
 
 /**
  * 自定义dialog
@@ -47,7 +48,7 @@ public class CustomDialog extends Dialog {
 		public Builder(Context context) {
 			this.context = context;
             height = WindowManager.LayoutParams.WRAP_CONTENT;
-            width = WindowManager.LayoutParams.MATCH_PARENT;
+            width = Global.fullScreenWidth * 14 / 15;
 		}
 
 		public Builder setMessage(String message) {

@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
  */
 public class Global {
     public static Application application;
-    public static Activity mContext;
+    public static Activity context;
     public static int fullScreenWidth;
     public static int fullScreeHeight;
 

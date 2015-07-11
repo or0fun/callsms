@@ -72,10 +72,10 @@
 
                 <ImageView
                     android:id="@+id/numberIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/tab_icon_size"
+                    android:layout_height="@dimen/tab_icon_size"
                     android:gravity="bottom"
-                    android:src="@drawable/sms_nor" />
+                    android:src="@drawable/life_nor" />
 
                 <TextView
                     android:id="@+id/numberTitle"
@@ -100,8 +100,8 @@
 
                 <ImageView
                     android:id="@+id/callIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/tab_icon_size"
+                    android:layout_height="@dimen/tab_icon_size"
                     android:gravity="bottom"
                     android:src="@drawable/call_nor" />
 
@@ -127,8 +127,8 @@
 
                 <ImageView
                     android:id="@+id/contactIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/tab_icon_size"
+                    android:layout_height="@dimen/tab_icon_size"
                     android:gravity="bottom"
                     android:src="@drawable/contact_nor" />
 
@@ -155,10 +155,10 @@
 
                 <ImageView
                     android:id="@+id/settingIcon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/tab_icon_size"
+                    android:layout_height="@dimen/tab_icon_size"
                     android:gravity="bottom"
-                    android:src="@drawable/setting_button_style" />
+                    android:src="@drawable/setting_nor" />
 
                 <TextView
                     android:id="@+id/settingTitle"
@@ -180,6 +180,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFEBEBEB"
-        android:src="@drawable/welcome" />
+        android:src="@drawable/welcome"
+        android:visibility="gone"/>
 
 </FrameLayout>

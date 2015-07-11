@@ -17,7 +17,6 @@ import com.fang.map.BDMapListener;
 import com.fang.receiver.MainService;
 import com.fang.util.SharedPreferencesHelper;
 import com.fang.weixin.WXCommon;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.util.concurrent.Executors;
 
@@ -39,9 +38,9 @@ public class MainApp extends Application implements Thread.UncaughtExceptionHand
 
         Thread.setDefaultUncaughtExceptionHandler(this);
 
-        if (Global.debug) {
-            LeakCanary.install(this);
-        }
+//        if (Global.debug) {
+//            LeakCanary.install(this);
+//        }
 
         Global.fixedThreadPool = Executors.newFixedThreadPool(CustomConstant.MAX_THREAD_COUNT);
 

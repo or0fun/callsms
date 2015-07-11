@@ -17,7 +17,7 @@ public abstract class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		mContext = this;
 
-        Global.mContext = this;
+        Global.context = this;
         overridePendingTransition(R.anim.right_in, 0);
 	}
 
@@ -30,7 +30,7 @@ public abstract class BaseActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        com.fang.common.base.Global.mContext = this;
+        Global.context = this;
     }
 
     @Override

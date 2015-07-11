@@ -255,12 +255,27 @@
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/searchExpressBtn"
-            style="@style/mainButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/buttonHeight"
-            android:text="@string/number_searchExpress" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/mylove"
+                style="@style/mainButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/buttonHeight"
+                android:layout_weight="2"
+                android:text="@string/life_mylove"
+                android:layout_marginRight="@dimen/margin"/>
+
+            <Button
+                android:id="@+id/searchExpressBtn"
+                style="@style/subButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/buttonHeight"
+                android:text="@string/number_searchExpress" />
+            </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

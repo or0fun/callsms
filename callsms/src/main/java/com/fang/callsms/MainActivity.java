@@ -26,16 +26,17 @@ import com.fang.base.WEActivity;
 import com.fang.call.CallFragment;
 import com.fang.call.CallHelper;
 import com.fang.common.CustomConstant;
+import com.fang.common.base.Global;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.MIUIHelper;
 import com.fang.contact.ContactFragment;
 import com.fang.contact.ContactHelper;
 import com.fang.datatype.CallFrom;
 import com.fang.datatype.ExtraName;
+import com.fang.life.LifeFragment;
 import com.fang.listener.IDownloadListener;
 import com.fang.logs.LogCode;
 import com.fang.logs.LogOperate;
-import com.fang.number.NumberFragment;
 import com.fang.push.ActionType;
 import com.fang.receiver.MainService;
 import com.fang.receiver.PhoneReceiver;
@@ -68,7 +69,7 @@ public class MainActivity extends WEActivity implements OnClickListener {
 	/** 通讯录页面 */
 	protected ContactFragment mContactFragment;
 	/** 号码通页面 */
-	protected NumberFragment mNumberFragment;
+	protected LifeFragment mLifeFragment;
 	/** 设置页面 */
 	protected SettingFragment mSettingFragment;
 
@@ -146,11 +147,11 @@ public class MainActivity extends WEActivity implements OnClickListener {
         mCallFragment.setModel(mModel);
 		mContactFragment = new ContactFragment();
         mCallFragment.setModel(mModel);
-		mNumberFragment = new NumberFragment();
+		mLifeFragment = new LifeFragment();
         mCallFragment.setModel(mModel);
 
 		mFragmentList = new ArrayList<>();
-		mFragmentList.add(mNumberFragment);
+		mFragmentList.add(mLifeFragment);
 		mFragmentList.add(mCallFragment);
 		mFragmentList.add(mContactFragment);
 		mFragmentList.add(mSettingFragment);
@@ -229,6 +230,7 @@ public class MainActivity extends WEActivity implements OnClickListener {
         if(ContactHelper.hasReaded() && CallHelper.hasRead()) {
             mWelcomeImageView.setVisibility(View.GONE);
         }else {
+            mWelcomeImageView.setVisibility(View.VISIBLE);
             Animation alphaAnimation = AnimationUtils.loadAnimation(this,
                     R.anim.welcome_alpha);
             alphaAnimation.setFillEnabled(true);
@@ -278,7 +280,13 @@ public class MainActivity extends WEActivity implements OnClickListener {
 
 	}
 
-	@Override
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Global.context = null;
+    }
+
+    @Override
 	public void onBackPressed() {
 		if (mShowingFragment == mSettingFragment) {
 			super.onBackPressed();
@@ -286,8 +294,8 @@ public class MainActivity extends WEActivity implements OnClickListener {
 			if (false == mCallFragment.onBackPressed()) {
 				super.onBackPressed();
 			}
-		}else if (mShowingFragment == mNumberFragment){
-			if (false == mNumberFragment.onBackPressed()) {
+		}else if (mShowingFragment == mLifeFragment){
+			if (false == mLifeFragment.onBackPressed()) {
 				super.onBackPressed();
 			}
 		}else if (mShowingFragment == mContactFragment){
@@ -355,38 +363,38 @@ public class MainActivity extends WEActivity implements OnClickListener {
 					.getColor(R.color.hint));
 		}
 		mCallIcon.setImageResource(R.drawable.call_nor);
-		mNumberIcon.setImageResource(R.drawable.sms_nor);
+		mNumberIcon.setImageResource(R.drawable.life_nor);
 		mSettingIcon.setImageResource(R.drawable.setting_nor);
 		mContactIcon.setImageResource(R.drawable.contact_nor);
 		
 		mCallFragment.setSelected(false);
 		mContactFragment.setSelected(false);
-		mNumberFragment.setSelected(false);
+		mLifeFragment.setSelected(false);
 		mSettingFragment.setSelected(false);
 
 		if (index == Model.CALL_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
-			mCallIcon.setImageResource(R.drawable.call_foucs);
+			mCallIcon.setImageResource(R.drawable.call_focus);
 			mShowingFragment = mCallFragment;
 		} else if (index == Model.NUMBER_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
-			mNumberIcon.setImageResource(R.drawable.sms_foucs);
-			mShowingFragment = mNumberFragment;
+			mNumberIcon.setImageResource(R.drawable.life_focus);
+			mShowingFragment = mLifeFragment;
 		} else if (index == Model.CONTACT_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
-			mContactIcon.setImageResource(R.drawable.contact_foucs);
+			mContactIcon.setImageResource(R.drawable.contact_focus);
 			mContactFragment.updateContacts(true);
 			mShowingFragment = mContactFragment;
 		} else if (index == Model.SETTING_FRAGMENT) {
 			mTitleBar.setVisibility(View.GONE);
-			mSettingIcon.setImageResource(R.drawable.setting_foucs);
+			mSettingIcon.setImageResource(R.drawable.setting_focus);
 			mShowingFragment = mSettingFragment;
 		}
 		
 		SharedPreferencesHelper.getInstance().setInt(SharedPreferencesHelper.SELECTED_PAGE, index);
 		mShowingFragment.setSelected(true);
 		mTextViewList.get(index).setTextColor(mContext.getResources().getColor(
-				R.color.blue));
+				R.color.focus));
 		
 		if (mShowingFragment.isNeedLoading()) {
             mShowingFragment.showLoading();
@@ -485,7 +493,7 @@ public class MainActivity extends WEActivity implements OnClickListener {
             mViewPager.setCurrentItem(Model.NUMBER_FRAGMENT);
             pageSelected(Model.NUMBER_FRAGMENT);
 
-            mNumberFragment.setResultText(scanResult);
+            mLifeFragment.setResultText(scanResult);
 
         }
     }

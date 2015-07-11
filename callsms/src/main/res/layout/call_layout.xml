@@ -98,33 +98,42 @@
 
         <View style="@style/vsplitViewWhite" />
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/byOutgoing"
             style="@style/subButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/outgoing_type"
-            android:text="@string/record_outgoing" />
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/tab_icon_size"
+                android:layout_height="@dimen/tab_icon_size"
+                android:src="@drawable/outgoing_type"/>
+        </LinearLayout>
 
         <View style="@style/vsplitViewWhite" />
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/byIncoming"
             style="@style/subButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/incoming_type"
-            android:text="@string/record_incoming" />
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/tab_icon_size"
+                android:layout_height="@dimen/tab_icon_size"
+                android:src="@drawable/incoming_type"/>
+        </LinearLayout>
 
         <View style="@style/vsplitViewWhite" />
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/byMissed"
             style="@style/subButton"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/missed_type"
-            android:text="@string/record_missed" />
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="@dimen/tab_icon_size"
+                android:layout_height="@dimen/tab_icon_size"
+                android:src="@drawable/missed_type" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

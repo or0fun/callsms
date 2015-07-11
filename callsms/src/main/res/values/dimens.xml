@@ -59,9 +59,10 @@
 
     <!-- 按钮 -->
     <dimen name="button_height">40dp</dimen>
-    <dimen name="icon_width">30dp</dimen>
+    <dimen name="icon_size">30dp</dimen>
 
     <!--icon 按钮 首页-->
     <dimen name="icon_item_size">60dp</dimen>
+    <dimen name="tab_icon_size">25dp</dimen>
 </resources>
 

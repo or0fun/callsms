@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.fang.base.BaseFragment;
@@ -74,9 +73,9 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
      * 排序按钮
      */
     private Button mOrderByAllButton;
-    private ImageButton mOrderByOutgoingButton;
-    private ImageButton mOrderByIncomingButton;
-    private ImageButton mOrderByMissedButton;
+    private View mOrderByOutgoingButton;
+    private View mOrderByIncomingButton;
+    private View mOrderByMissedButton;
 
     private View mProgressBar;
     /**
@@ -98,8 +97,6 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
                     BusinessHelper.getNumberInfo(mContext, mAllCallRecords, mHandler);
                     // 获取名字
                     ContactHelper.getPersonInfo(mContext, mAllCallRecords, mHandler);
-                    //获取姓名
-//                ContactHelper.getPersonInfo(mContext, mAllCallRecords, mHandler);
 
                     mOutgoingCallRecords.clear();
                     mIncomingCallRecords.clear();
@@ -166,11 +163,11 @@ public class CallFragment extends BaseFragment implements OnClickListener, ICall
         View view = inflater.inflate(R.layout.call_layout, container, false);
         mProgressBar = view.findViewById(R.id.progressBar);
         mOrderByAllButton = (Button) view.findViewById(R.id.byAll);
-        mOrderByOutgoingButton = (ImageButton) view
+        mOrderByOutgoingButton = view
                 .findViewById(R.id.byOutgoing);
-        mOrderByIncomingButton = (ImageButton) view
+        mOrderByIncomingButton = view
                 .findViewById(R.id.byIncoming);
-        mOrderByMissedButton = (ImageButton) view.findViewById(R.id.byMissed);
+        mOrderByMissedButton = view.findViewById(R.id.byMissed);
         mOrderByAllButton.setOnClickListener(this);
         mOrderByOutgoingButton.setOnClickListener(this);
         mOrderByIncomingButton.setOnClickListener(this);

@@ -4,8 +4,10 @@
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
     <color name="blue">#ff1874CD</color>   
-    <color name="green">#458B00</color>     
-    
+    <color name="green">#458B00</color>
+
+    <color name="focus">#28bb0e</color>
+
     <!-- 主界面背景色 -->
     <color name="main_background">#FFEBEBEB</color>
     <!-- 水印色 -->
@@ -15,11 +17,11 @@
     <!-- 标题栏背景色 -->
     <color name="title_backgound">#ff262626</color>
     <!-- 未接 -->
-    <color name="missed">#FFCD2626</color>
+    <color name="missed">#CD2626</color>
     <!-- 呼入 -->
-    <color name="incoming">#FF4C79F9</color>
+    <color name="incoming">#4C79F9</color>
     <!-- 呼出 -->
-    <color name="outgoing">#FF0BA541</color>
+    <color name="outgoing">#0BA541</color>
     
     <color name="purple">#ff463265</color>
     <!-- 灰色 -->

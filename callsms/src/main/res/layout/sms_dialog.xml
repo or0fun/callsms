@@ -132,7 +132,7 @@
             android:background="@drawable/main_button_selector"
             android:gravity="center" >
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_call"/>
             <TextView
@@ -151,7 +151,7 @@
             android:background="@drawable/main_button_selector"
             android:gravity="center" >
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_sms"/>
             <TextView
@@ -170,7 +170,7 @@
             android:background="@drawable/main_button_selector"
             android:gravity="center" >
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"/>
             <TextView

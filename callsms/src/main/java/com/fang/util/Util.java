@@ -258,6 +258,7 @@ public class Util {
         Intent intent = new Intent();
         intent.setAction(ACTION_URL);
         intent.putExtra(ExtraName.URL, url);
-        Global.mContext.startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Global.application.startActivity(intent);
     }
 }

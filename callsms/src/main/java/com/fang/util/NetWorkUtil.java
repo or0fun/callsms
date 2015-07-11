@@ -225,6 +225,43 @@ public class NetWorkUtil {
         return infoString.trim();
     }
 
+    /**
+     * 获取空气质量
+     * @param city
+     * @return
+     */
+    public String searchAir(final String city) {
+        if (StringUtil.isEmpty(city)) {
+            return "";
+        }
+        String str = city;
+        str = mAesUtil.encrypt(str);
+        String url = RequestUrl.API_URL + "?t=air&w=" + str + "&e=1";
+        String infoString = getHttpRequest(url);
+        if (StringUtil.isEmpty(infoString)) {
+            return "";
+        }
+        return infoString.trim();
+    }
+
+    /**
+     * 聊天
+     * @param content
+     * @return
+     */
+    public String chat(final String content, String uid) {
+        if (StringUtil.isEmpty(content)) {
+            return "";
+        }
+        String str = mAesUtil.encrypt(content);
+        String url = RequestUrl.API_URL + "?t=chat&w=" + str + "u=" + uid + "&e=1";
+        String infoString = getHttpRequest(url);
+        if (StringUtil.isEmpty(infoString)) {
+            return "";
+        }
+        return infoString.trim();
+    }
+
 	/**
 	 * 发起请求
 	 * 

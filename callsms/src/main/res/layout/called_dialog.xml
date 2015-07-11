@@ -69,11 +69,9 @@
 
             <ImageView
                 android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_margin="@dimen/margin"
-                android:maxHeight="@dimen/contact_photo_height"
-                android:maxWidth="@dimen/contact_photo_width"
                 android:src="@drawable/contact_photo"/>
 
             <TextView
@@ -139,7 +137,7 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_sms" />
 
@@ -161,7 +159,7 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_call" />
 
@@ -182,7 +180,7 @@
             android:background="@drawable/main_button_selector"
             android:gravity="center">
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_share"/>
             <TextView
@@ -201,7 +199,7 @@
             android:gravity="center"
             android:visibility="gone">
             <ImageView
-                android:layout_width="@dimen/icon_width"
+                android:layout_width="@dimen/icon_size"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_close"/>
             <TextView

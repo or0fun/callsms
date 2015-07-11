@@ -9,7 +9,7 @@ import com.fang.common.CustomConstant;
 import com.fang.common.base.Global;
 import com.fang.logs.LogOperate;
 import com.fang.net.ServerUtil;
-import com.fang.number.NumberServiceHelper;
+import com.fang.life.NumberServiceHelper;
 import com.fang.util.NetWorkUtil;
 
 public class NetBroadcastReceiver extends BroadcastReceiver {

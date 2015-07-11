@@ -45,6 +45,8 @@ public class SharedPreferencesHelper extends AbsSharedPre {
     public static final String NONGLI = "NONGLI";
     /** 天气 */
     public static final String WEATHER = "WEATHER";
+    /** 天气 */
+    public static final String AIR = "AIR";
 
     //扫一扫 快捷方式
     public static final String SCAN = "scan";
