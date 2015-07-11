@@ -194,6 +194,8 @@ public class ContactHelper {
                 num = num.replace(" ", "");
             } else if (num.contains("-")) {
                 num = num.replace("-", "");
+            }  else if (num.contains("+86")) {
+                num = num.replace("+86", "");
             } else {
                 if (num.length() == 11) {
                     num = num.substring(0, 3) + " " + num.substring(3, 7) + " "

@@ -14,6 +14,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.fang.common.CustomConstant;
 import com.fang.common.util.DebugLog;
 import com.fang.common.util.MIUIHelper;
 import com.fang.contact.ContactFragment;
+import com.fang.contact.ContactHelper;
 import com.fang.datatype.CallFrom;
 import com.fang.datatype.ExtraName;
 import com.fang.listener.IDownloadListener;
@@ -87,6 +90,8 @@ public class MainActivity extends WEActivity implements OnClickListener {
 	protected TextView mContactTitleTextView;
 	protected TextView mNumberTitleTextView;
 	protected TextView mSettingTitleTextView;
+
+    protected ImageView mWelcomeImageView;
 
 	protected final int REQUEST_CODE_SEARCH = 0;
 	/** 检查是否更新的消息 */
@@ -218,6 +223,19 @@ public class MainActivity extends WEActivity implements OnClickListener {
 
         //  处理消息
         handleIntent(getIntent());
+
+        //闪屏
+        mWelcomeImageView = (ImageView) findViewById(R.id.welcome_image_view);
+        if(ContactHelper.hasReaded() && CallHelper.hasRead()) {
+            mWelcomeImageView.setVisibility(View.GONE);
+        }else {
+            Animation alphaAnimation = AnimationUtils.loadAnimation(this,
+                    R.anim.welcome_alpha);
+            alphaAnimation.setFillEnabled(true);
+            alphaAnimation.setFillAfter(true);
+            mWelcomeImageView.setAnimation(alphaAnimation);
+            alphaAnimation.setAnimationListener(welcomeAnimationListener);
+        }
 	}
 
     @Override
@@ -471,4 +489,16 @@ public class MainActivity extends WEActivity implements OnClickListener {
 
         }
     }
+    Animation.AnimationListener welcomeAnimationListener = new Animation.AnimationListener() {
+        @Override
+        public void onAnimationStart(Animation animation) {
+        }
+        @Override
+        public void onAnimationEnd(Animation animation) {
+            mWelcomeImageView.setVisibility(View.GONE);
+        }
+        @Override
+        public void onAnimationRepeat(Animation animation) {
+        }
+    };
 }

@@ -1,172 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/main_background"
-    android:orientation="vertical" >
-
-    <!-- 标题栏 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/titleBar"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@color/title_backgound"
-        android:gravity="center_vertical"
-        android:visibility="gone"
-        android:orientation="horizontal" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_background"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/title_bar_icon_width"
-            android:layout_height="@dimen/title_bar_icon_height"
-            android:layout_margin="@dimen/smallmargin"
-            android:src="@drawable/we" />
+        <!-- 标题栏 -->
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:paddingTop="1dip"
-            android:text="@string/title_bar"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-<!--         <Button
-            android:id="@+id/show_apps_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/titleBar"
+            android:layout_width="fill_parent"
             android:layout_height="@dimen/title_bar_height"
-            android:background="@android:color/transparent"
-            android:textColor="@color/main_background"
-            android:layout_margin="@dimen/smallmargin"
-            android:text="@string/hot_app" /> -->
+            android:background="@color/title_backgound"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/title_bar_icon_width"
+                android:layout_height="@dimen/title_bar_icon_height"
+                android:layout_margin="@dimen/smallmargin"
+                android:src="@drawable/we" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingTop="1dip"
+                android:text="@string/title_bar"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <!--         <Button
+                        android:id="@+id/show_apps_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/title_bar_height"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/main_background"
+                        android:layout_margin="@dimen/smallmargin"
+                        android:text="@string/hot_app" /> -->
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"></android.support.v4.view.ViewPager>
+        <!-- 导航栏 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/title_backgound"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 号码通 -->
+
+            <LinearLayout
+                android:id="@+id/numberTab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/numberIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="bottom"
+                    android:src="@drawable/sms_nor" />
+
+                <TextView
+                    android:id="@+id/numberTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="1dip"
+                    android:text="@string/title_bar_number"
+                    android:textColor="@color/hint"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 通话记录 -->
+
+            <LinearLayout
+                android:id="@+id/callTab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/callIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="bottom"
+                    android:src="@drawable/call_nor" />
+
+                <TextView
+                    android:id="@+id/callTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="1dip"
+                    android:text="@string/title_bar_call"
+                    android:textColor="@color/hint"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <!-- 通讯录 -->
+
+            <LinearLayout
+                android:id="@+id/contactTab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/contactIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="bottom"
+                    android:src="@drawable/contact_nor" />
+
+                <TextView
+                    android:id="@+id/contactTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="1dip"
+                    android:text="@string/title_bar_contact"
+                    android:textColor="@color/hint"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <!-- 设置 -->
+
+            <LinearLayout
+                android:id="@+id/settingTab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/settingIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="bottom"
+                    android:src="@drawable/setting_button_style" />
+
+                <TextView
+                    android:id="@+id/settingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="1dip"
+                    android:text="@string/title_bar_setting"
+                    android:textColor="@color/hint"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
-    </android.support.v4.view.ViewPager>
-    <!-- 导航栏 -->
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/title_backgound"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+    <ImageView
+        android:id="@+id/welcome_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFEBEBEB"
+        android:src="@drawable/welcome" />
 
-        <!-- 号码通 -->
-
-        <LinearLayout
-            android:id="@+id/numberTab"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/numberIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:gravity="bottom"
-                android:src="@drawable/sms_nor" />
-
-            <TextView
-                android:id="@+id/numberTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="1dip"
-                android:text="@string/title_bar_number"
-                android:textColor="@color/hint"
-                android:textSize="12sp" />
-        </LinearLayout>
-        
-        <!-- 通话记录 -->
-
-        <LinearLayout
-            android:id="@+id/callTab"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/callIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:gravity="bottom"
-                android:src="@drawable/call_nor" />
-
-            <TextView
-                android:id="@+id/callTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="1dip"
-                android:text="@string/title_bar_call"
-                android:textColor="@color/hint"
-                android:textSize="12sp" />
-        </LinearLayout>
-        <!-- 通讯录 -->
-
-        <LinearLayout
-            android:id="@+id/contactTab"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/contactIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:gravity="bottom"
-                android:src="@drawable/contact_nor" />
-
-            <TextView
-                android:id="@+id/contactTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="1dip"
-                android:text="@string/title_bar_contact"
-                android:textColor="@color/hint"
-                android:textSize="12sp" />
-        </LinearLayout>
-        <!-- 设置 -->
-
-        <LinearLayout
-            android:id="@+id/settingTab"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:id="@+id/settingIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:gravity="bottom"
-                android:src="@drawable/setting_button_style" />
-
-            <TextView
-                android:id="@+id/settingTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="1dip"
-                android:text="@string/title_bar_setting"
-                android:textColor="@color/hint"
-                android:textSize="12sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

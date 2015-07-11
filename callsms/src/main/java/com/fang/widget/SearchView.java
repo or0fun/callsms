@@ -72,6 +72,10 @@ public class SearchView implements View.OnClickListener {
      */
     protected void searchBtnClick() {
         String str = mSearchEditView.getText().toString().trim();
+        if (str.length() < 3) {
+            Util.openUrl(RequestUrl.BAIDU + str);
+            return;
+        }
         if (!str.matches(Patterns.PHONE_NUMBER_PATTERN) &&
                 !str.matches(Patterns.NUMBER_PATTERN)) {
             Util.openUrl(RequestUrl.BAIDU + str);
